@@ -1506,7 +1506,6 @@ footer {
 }
 
 /* ── LANDING BOARD SECTION ──────────────────────────────────────── */
-#community { padding: 96px 0; border-top: 1px solid #EFEFEF; }
 .community-head { text-align: center; margin-bottom: 48px; }
 .community-head h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 10px; color: #111; }
 .community-head p  { font-size: 0.95rem; color: #777; max-width: 480px; margin: 0 auto; line-height: 1.65; }
@@ -1845,6 +1844,123 @@ footer {
   cursor: pointer; font-size: 1rem; flex-shrink: 0; padding: 2px;
 }
 
+/* ── APP HOME SCREEN ─────────────────────────────────────────── */
+.home-inner {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 28px 24px; gap: 14px;
+}
+.home-greeting {
+  font-size: 1.35rem; font-weight: 700; letter-spacing: -0.04em;
+  color: #111; text-align: center; margin-bottom: 4px;
+}
+.home-sub {
+  font-size: 0.85rem; color: #999; text-align: center;
+  margin-bottom: 14px; line-height: 1.6; max-width: 280px;
+}
+.home-card {
+  width: 100%; max-width: 340px; padding: 22px 20px;
+  border-radius: 18px; border: 1.5px solid #E5E5E5;
+  background: #fff; cursor: pointer; text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-family: inherit;
+}
+.home-card:hover { border-color: #BBB; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.home-card.primary { background: #111; border-color: #111; }
+.home-card.primary:hover { background: #333; }
+.home-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.home-card-title {
+  font-size: 1.02rem; font-weight: 700; letter-spacing: -0.02em;
+  color: #111; margin-bottom: 4px;
+}
+.home-card.primary .home-card-title { color: #fff; }
+.home-card-desc { font-size: 0.8rem; color: #888; line-height: 1.55; }
+.home-card.primary .home-card-desc { color: rgba(255,255,255,0.55); }
+
+/* ── APP BOARD SCREEN ────────────────────────────────────────── */
+.app-board-wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.app-board-compose {
+  background: #fff; border-bottom: 1.5px solid #EBEBEB;
+  padding: 14px 18px; flex-shrink: 0;
+}
+.app-board-name-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+}
+.app-board-name-label { font-size: 0.75rem; color: #888; white-space: nowrap; }
+.app-board-name-input {
+  flex: 1; border: 1.5px solid #E5E5E5; border-radius: 8px;
+  padding: 7px 11px; font-size: 0.83rem; font-family: inherit;
+  color: #111; background: #FAFAFA; max-width: 140px;
+}
+.app-board-name-input:focus { outline: none; border-color: #111; background: #fff; }
+.app-board-name-input::placeholder { color: #CCC; }
+.app-board-name-saved { font-size: 0.77rem; color: #888; }
+.app-board-name-change {
+  font-size: 0.7rem; color: #BBB; text-decoration: underline;
+  cursor: pointer; background: none; border: none; padding: 0; font-family: inherit;
+}
+.app-board-post-input {
+  width: 100%; border: 1.5px solid #E5E5E5; border-radius: 10px;
+  padding: 10px 13px; font-size: 0.9rem; font-family: inherit;
+  color: #111; background: #FAFAFA; margin-bottom: 8px;
+}
+.app-board-post-input:focus { outline: none; border-color: #111; background: #fff; }
+.app-board-post-input::placeholder { color: #CCC; }
+.app-board-post-textarea {
+  width: 100%; border: 1.5px solid #E5E5E5; border-radius: 10px;
+  padding: 10px 13px; font-size: 0.85rem; font-family: inherit;
+  color: #111; background: #FAFAFA; resize: none; margin-bottom: 8px; display: block;
+}
+.app-board-post-textarea:focus { outline: none; border-color: #111; background: #fff; }
+.app-board-post-textarea::placeholder { color: #CCC; }
+.app-board-compose-footer { display: flex; align-items: center; justify-content: space-between; }
+.app-board-compose-hint { font-size: 0.7rem; color: #CCC; }
+.app-board-post-btn {
+  padding: 8px 20px; border-radius: 9999px; background: #111; color: #fff;
+  font-size: 0.82rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; border: none; transition: background 0.15s;
+}
+.app-board-post-btn:disabled { background: #DDD; cursor: not-allowed; }
+.app-board-post-btn:hover:not(:disabled) { background: #333; }
+.app-board-feed { flex: 1; overflow-y: auto; }
+.app-post-card {
+  padding: 16px 18px; border-bottom: 1px solid #F3F3F3;
+  cursor: pointer; transition: background 0.1s;
+}
+.app-post-card:hover { background: #FAFAFA; }
+.app-post-card-top {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 7px;
+}
+.app-post-avatar {
+  width: 30px; height: 30px; border-radius: 50%; background: #111;
+  color: #fff; font-size: 0.75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.app-post-author { font-size: 0.82rem; font-weight: 700; color: #111; }
+.app-post-time   { font-size: 0.7rem; color: #CCC; margin-left: auto; }
+.app-post-title  {
+  font-size: 0.97rem; font-weight: 600; color: #111;
+  line-height: 1.4; margin-bottom: 5px; letter-spacing: -0.01em;
+}
+.app-post-body {
+  font-size: 0.84rem; color: #666; line-height: 1.55; margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.app-post-footer { display: flex; align-items: center; gap: 12px; }
+.app-post-comment-count { font-size: 0.74rem; color: #BBB; }
+.app-post-view-btn {
+  margin-left: auto; padding: 5px 14px; border-radius: 9999px;
+  border: 1.5px solid #E5E5E5; background: none;
+  font-size: 0.74rem; font-weight: 600; color: #555;
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.app-post-view-btn:hover { border-color: #111; color: #111; }
+.app-board-empty {
+  text-align: center; padding: 60px 24px;
+  font-size: 0.88rem; color: #CCC; line-height: 2;
+}
+.app-board-empty strong { display: block; color: #AAA; font-size: 0.95rem; margin-bottom: 6px; }
+
 </style>
 </head>
 <body>
@@ -1865,7 +1981,6 @@ footer {
   <div class="nav-logo">Out</div>
   <div class="nav-links">
     <a href="#how">How it works</a>
-    <a href="#community">Board</a>
     <a href="#safety">Safety</a>
   </div>
   <a href="#cta" class="nav-btn">I'm Out →</a>
@@ -1875,7 +1990,6 @@ footer {
 </nav>
 <div class="mobile-nav" id="mobileNav">
   <a href="#how" onclick="closeMobile()">How it works</a>
-  <a href="#community" onclick="closeMobile()">Board</a>
   <a href="#safety" onclick="closeMobile()">Safety</a>
   <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()">I'm Out →</a>
 </div>
@@ -2119,48 +2233,6 @@ footer {
   </div>
 </section>
 
-<!-- COMMUNITY BOARD -->
-<section id="community">
-  <div class="container">
-    <div class="community-head reveal">
-      <div class="section-label">Community Board</div>
-      <h2>Going somewhere? Post it.</h2>
-      <p>No need to go live. Post where you're heading, let people comment, and chat directly — even when no one's live nearby.</p>
-    </div>
-    <div class="community-inner">
-
-      <!-- Compose card -->
-      <div class="community-compose-card">
-        <!-- Auth prompt (shown when not signed in) -->
-        <div class="community-auth-row" id="communityAuthRow">
-          <span class="community-auth-placeholder">What are you up to today?</span>
-          <button class="community-signin-btn" onclick="communitySignIn()">Sign in to post</button>
-        </div>
-        <div id="communityGoogleBtnWrap" style="display:none;justify-content:center;margin-top:10px"></div>
-        <!-- Compose form (shown when signed in) -->
-        <div class="community-compose-form" id="communityComposeForm" style="display:none">
-          <div class="community-compose-user" id="communityUserLabel"></div>
-          <input class="community-title-input" id="cpTitle" type="text"
-            placeholder="Where are you going? (e.g. Prospect Park Saturday 3pm)"
-            maxlength="100" autocomplete="off">
-          <textarea class="community-body-textarea" id="cpBody"
-            placeholder="Tell people more... (optional)" maxlength="400" rows="2"></textarea>
-          <div class="community-compose-footer">
-            <span class="community-compose-hint">Anyone can see and comment</span>
-            <button class="community-post-btn" id="cpPostBtn" onclick="submitCommunityPost()">Post</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Posts list -->
-      <div class="community-post-list" id="communityPostList">
-        <div class="community-empty"><strong>No posts yet</strong>Be the first to post something.</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="container reveal">
@@ -2296,6 +2368,66 @@ footer {
       <div class="age-blocked" id="ageBlocked">
         <div class="age-blocked-icon">🚫</div>
         <div class="age-blocked-msg">Out is only available to users 18 and over.<br><br>Come back when you're old enough.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home screen: choose Go Live or Board -->
+  <div class="app-screen" id="screen-home">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="closeApp()">✕ Close</button>
+    </div>
+    <div class="home-inner">
+      <div class="home-greeting">What do you want to do?</div>
+      <div class="home-sub">Go live to find people nearby, or browse the Community Board — no location needed.</div>
+      <button class="home-card primary" onclick="goToLiveFlow()">
+        <div class="home-card-icon">🟢</div>
+        <div class="home-card-title">Go Live</div>
+        <div class="home-card-desc">See real people within 3 miles who are free right now. Ephemeral, instant, real.</div>
+      </button>
+      <button class="home-card" onclick="goToBoardScreen()">
+        <div class="home-card-icon">📋</div>
+        <div class="home-card-title">Community Board</div>
+        <div class="home-card-desc">Post where you're going, comment, chat with people — no location or account needed.</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Board screen -->
+  <div class="app-screen" id="screen-board">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="showScreen('screen-home')">← Back</button>
+    </div>
+    <div class="app-board-wrap">
+      <!-- Compose -->
+      <div class="app-board-compose">
+        <!-- Name not yet set -->
+        <div class="app-board-name-row" id="appBoardNameRow">
+          <span class="app-board-name-label">Your name:</span>
+          <input class="app-board-name-input" id="appBoardNameInput" type="text"
+            placeholder="e.g. Alex" maxlength="12"
+            autocomplete="off" autocorrect="off" spellcheck="false">
+        </div>
+        <!-- Name saved -->
+        <div class="app-board-name-row" id="appBoardNameSaved" style="display:none">
+          <span class="app-board-name-saved" id="appBoardNameDisplay"></span>
+          <button class="app-board-name-change" onclick="changeBoardName()">change</button>
+        </div>
+        <input class="app-board-post-input" id="appBoardTitleInput" type="text"
+          placeholder="What are you up to? (e.g. Anyone for coffee at 3pm?)"
+          maxlength="100" autocomplete="off" autocorrect="off" spellcheck="false">
+        <textarea class="app-board-post-textarea" id="appBoardBodyInput"
+          placeholder="More details… (optional)" maxlength="400" rows="2"></textarea>
+        <div class="app-board-compose-footer">
+          <span class="app-board-compose-hint">Posts are anonymous · anyone can see</span>
+          <button class="app-board-post-btn" id="appBoardPostBtn" onclick="submitAppPost()">Post</button>
+        </div>
+      </div>
+      <!-- Feed -->
+      <div class="app-board-feed" id="appBoardFeed">
+        <div class="app-board-empty"><strong>Loading…</strong></div>
       </div>
     </div>
   </div>
@@ -3544,10 +3676,10 @@ var boardChatRoomId = null;
 function initBoardUser() {
   try {
     var stored = JSON.parse(localStorage.getItem('out_board_user') || 'null');
-    if (stored && stored.uid) {
-      boardUser = stored;
-      showCommunityComposeForm();
-    }
+    if (stored && stored.uid) { boardUser = stored; return; }
+    // Fallback: plain name from in-app board flow
+    var name = localStorage.getItem('out_board_name');
+    if (name) { boardUser = { name: name, uid: getOrCreateUid(), email: null }; }
   } catch(e) {}
 }
 
@@ -3728,8 +3860,18 @@ function renderCommunityComments(comments) {
 }
 
 function submitCommunityComment() {
-  if (!boardUser) { communitySignIn(); return; }
   if (!currentCommunityPost) return;
+  // Ensure boardUser — no Google needed
+  if (!boardUser || !boardUser.uid) {
+    var name = null;
+    try { name = localStorage.getItem('out_board_name'); } catch(e) {}
+    if (!name) {
+      name = (prompt('Enter your name to comment:') || '').trim().slice(0, 12);
+      if (!name) return;
+      try { localStorage.setItem('out_board_name', name); } catch(e) {}
+    }
+    saveBoardUser({ name: name, uid: getOrCreateUid(), email: null });
+  }
   var input = document.getElementById('cdCommentInput');
   var text = (input ? input.value : '').trim();
   if (!text) return;
@@ -3746,8 +3888,18 @@ function submitCommunityComment() {
 }
 
 function chatWithPostAuthor() {
-  if (!boardUser) { communitySignIn(); return; }
   if (!currentCommunityPost) return;
+  // Ensure boardUser is set — no Google needed, just a name
+  if (!boardUser || !boardUser.uid) {
+    var name = null;
+    try { name = localStorage.getItem('out_board_name'); } catch(e) {}
+    if (!name) {
+      name = (prompt('Enter your name to start chatting:') || '').trim().slice(0, 12);
+      if (!name) return;
+      try { localStorage.setItem('out_board_name', name); } catch(e) {}
+    }
+    saveBoardUser({ name: name, uid: getOrCreateUid(), email: null });
+  }
   var post = currentCommunityPost;
   if (boardUser.uid === post.author_uid) return;
   closeCommunityPost();
@@ -4122,7 +4274,6 @@ function signInWithGoogle() {
 document.addEventListener('DOMContentLoaded', function() {
   initGSI();
   initBoardUser();
-  loadCommunityPosts();
   initLiveCounter();
 });
 // Also try immediately in case script already loaded
@@ -4145,6 +4296,10 @@ function openApp() {
 }
 
 function proceedAfterAge() {
+  showScreen('screen-home');
+}
+
+function goToLiveFlow() {
   try {
     var stored = JSON.parse(localStorage.getItem('out_user') || 'null');
     if (stored && stored.name) {
@@ -4160,6 +4315,135 @@ function proceedAfterAge() {
     }
   } catch(e) {}
   showScreen('screen-auth');
+}
+
+function goToBoardScreen() {
+  showScreen('screen-board');
+  initAppBoardName();
+  loadAppBoardPosts();
+}
+
+// ── App Board name management ─────────────────────────────────
+function initAppBoardName() {
+  var name = null;
+  try { name = localStorage.getItem('out_board_name'); } catch(e) {}
+  if (name) {
+    document.getElementById('appBoardNameRow').style.display   = 'none';
+    document.getElementById('appBoardNameSaved').style.display = '';
+    document.getElementById('appBoardNameDisplay').textContent = 'Posting as ' + name;
+    // Sync boardUser
+    if (!boardUser || !boardUser.uid) {
+      saveBoardUser({ name: name, uid: getOrCreateUid(), email: null });
+    }
+  } else {
+    document.getElementById('appBoardNameRow').style.display   = '';
+    document.getElementById('appBoardNameSaved').style.display = 'none';
+  }
+}
+
+function changeBoardName() {
+  try { localStorage.removeItem('out_board_name'); } catch(e) {}
+  boardUser = null;
+  document.getElementById('appBoardNameRow').style.display   = '';
+  document.getElementById('appBoardNameSaved').style.display = 'none';
+  var inp = document.getElementById('appBoardNameInput');
+  if (inp) { inp.value = ''; inp.focus(); }
+}
+
+// ── App Board post submit ─────────────────────────────────────
+function submitAppPost() {
+  var title = (document.getElementById('appBoardTitleInput').value || '').trim();
+  var body  = (document.getElementById('appBoardBodyInput').value  || '').trim();
+  if (!title) {
+    document.getElementById('appBoardTitleInput').focus();
+    return;
+  }
+
+  // Resolve or create name
+  var name = null;
+  try { name = localStorage.getItem('out_board_name'); } catch(e) {}
+  if (!name) {
+    var inp = document.getElementById('appBoardNameInput');
+    name = (inp ? inp.value.trim() : '') || 'Anonymous';
+    name = name.slice(0, 12);
+    try { localStorage.setItem('out_board_name', name); } catch(e) {}
+    initAppBoardName();
+  }
+  if (!boardUser || !boardUser.uid) {
+    saveBoardUser({ name: name, uid: getOrCreateUid(), email: null });
+  }
+
+  var btn = document.getElementById('appBoardPostBtn');
+  btn.disabled = true; btn.textContent = 'Posting…';
+  sb.from('community_posts').insert({
+    author_uid:  boardUser.uid,
+    author_name: boardUser.name,
+    title:       title,
+    body:        body || null,
+  }).then(function(res) {
+    btn.disabled = false; btn.textContent = 'Post';
+    if (res.error) { alert('Could not post. Try again.'); return; }
+    document.getElementById('appBoardTitleInput').value = '';
+    document.getElementById('appBoardBodyInput').value  = '';
+    loadAppBoardPosts();
+  });
+}
+
+// ── App Board feed ────────────────────────────────────────────
+function loadAppBoardPosts() {
+  var feed = document.getElementById('appBoardFeed');
+  if (feed) feed.innerHTML = '<div class="app-board-empty">Loading…</div>';
+  sb.from('community_posts')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(30)
+    .then(function(res) {
+      if (res.error || !res.data) {
+        if (feed) feed.innerHTML = '<div class="app-board-empty">Could not load posts.</div>';
+        return;
+      }
+      renderAppBoardPosts(res.data);
+      res.data.forEach(function(p) { loadAppCommentCount(p.id); });
+    });
+}
+
+function loadAppCommentCount(postId) {
+  sb.from('post_comments')
+    .select('id', { count: 'exact', head: true })
+    .eq('post_id', postId)
+    .then(function(res) {
+      var el = document.getElementById('apc-' + postId);
+      if (el) el.textContent = '💬 ' + (res.count || 0) + ' comment' + (res.count === 1 ? '' : 's');
+    });
+}
+
+function renderAppBoardPosts(posts) {
+  var feed = document.getElementById('appBoardFeed');
+  if (!feed) return;
+  if (!posts || !posts.length) {
+    feed.innerHTML = '<div class="app-board-empty"><strong>No posts yet</strong>Be the first to share what you\'re up to!</div>';
+    return;
+  }
+  feed.innerHTML = '';
+  posts.forEach(function(p) {
+    var initial = (p.author_name || '?').charAt(0).toUpperCase();
+    var card = document.createElement('div');
+    card.className = 'app-post-card';
+    card.innerHTML =
+      '<div class="app-post-card-top">' +
+        '<div class="app-post-avatar">' + esc(initial) + '</div>' +
+        '<span class="app-post-author">' + esc(p.author_name) + '</span>' +
+        '<span class="app-post-time">'   + timeAgo(p.created_at) + '</span>' +
+      '</div>' +
+      '<div class="app-post-title">' + esc(p.title) + '</div>' +
+      (p.body ? '<div class="app-post-body">' + esc(p.body) + '</div>' : '') +
+      '<div class="app-post-footer">' +
+        '<span class="app-post-comment-count" id="apc-' + p.id + '">💬 0 comments</span>' +
+        '<button class="app-post-view-btn" onclick="event.stopPropagation();openCommunityPost(\'' + p.id + '\')">View →</button>' +
+      '</div>';
+    card.onclick = function() { openCommunityPost(p.id); };
+    feed.appendChild(card);
+  });
 }
 
 function confirmAge(isAdult) {
@@ -4195,12 +4479,23 @@ function closeApp() {
   // Reset age blocked state
   document.getElementById('ageQuestion').style.display='';
   document.getElementById('ageBlocked').classList.remove('show');
-  // Reset board
+  // Reset live board
   var btIn = document.getElementById('boardTitleInput');
   var bbIn = document.getElementById('boardBodyInput');
   if (btIn) btIn.value='';
   if (bbIn) bbIn.value='';
   document.getElementById('boardList').innerHTML='<div class="board-empty"><strong>Nothing posted nearby yet</strong>Be the first — post where you\'re heading.</div>';
+  // Reset app board compose
+  var abt = document.getElementById('appBoardTitleInput');
+  var abb = document.getElementById('appBoardBodyInput');
+  if (abt) abt.value='';
+  if (abb) abb.value='';
+  // Close any open board chat
+  if (boardChatChannel) { sb.removeChannel(boardChatChannel); boardChatChannel=null; }
+  boardChatRoomId=null; currentCommunityPost=null;
+  document.getElementById('boardChatOverlay').classList.remove('show');
+  document.getElementById('communityPostDetail').classList.remove('show');
+  document.getElementById('feedbackOverlay').classList.remove('show');
 }
 
 function showScreen(id) {
