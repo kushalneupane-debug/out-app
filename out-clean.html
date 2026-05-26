@@ -1243,7 +1243,7 @@ footer {
     <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
     <div class="app-step-label">Enter your code</div>
     <div class="app-title">Check your inbox.</div>
-    <div class="app-sub" id="otpSub">Enter the 6-digit code we sent you.</div>
+    <div class="app-sub" id="otpSub">We emailed you a <strong>6-digit code</strong>. Type it below — or click the link in the email to verify instantly. Check spam if you don't see it.</div>
     <div class="otp-inputs" id="otpInputs">
       <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
       <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*">
@@ -2099,7 +2099,10 @@ function sendOTP() {
   if (btn.disabled) return;
   currentEmail = document.getElementById('emailInput').value.trim();
   btn.disabled = true; btn.textContent = 'Sending…';
-  sb.auth.signInWithOtp({ email: currentEmail, options: { shouldCreateUser: true } })
+  sb.auth.signInWithOtp({
+    email: currentEmail,
+    options: { shouldCreateUser: true, emailRedirectTo: window.location.href }
+  })
     .then(function(res) {
       btn.textContent = 'Send Code →';
       if (res.error) {
@@ -2139,7 +2142,10 @@ function startResendTimer() {
 function resendOTP() {
   var btn = document.getElementById('resendBtn');
   btn.disabled = true; btn.textContent = 'Sending…';
-  sb.auth.signInWithOtp({ email: currentEmail, options: { shouldCreateUser: true } })
+  sb.auth.signInWithOtp({
+    email: currentEmail,
+    options: { shouldCreateUser: true, emailRedirectTo: window.location.href }
+  })
     .then(function(res) {
       if (res.error) {
         document.getElementById('otpError').textContent = 'Could not resend. Try again.';
@@ -2206,12 +2212,34 @@ function closeLegal(page) {
   document.body.style.overflow = '';
 }
 
+// ── Auth state — handles magic-link returns ───────────────────
+sb.auth.onAuthStateChange(function(event, session) {
+  if (session && (event === 'SIGNED_IN' || event === 'USER_UPDATED')) {
+    var overlay = document.getElementById('app-overlay');
+    if (!overlay || !overlay.classList.contains('show')) return;
+    var onAuth = document.getElementById('screen-auth');
+    var onOtp  = document.getElementById('screen-otp');
+    if ((onAuth && onAuth.classList.contains('active')) ||
+        (onOtp  && onOtp.classList.contains('active'))) {
+      showScreen('screen-name');
+      setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
+    }
+  }
+});
+
 // ── UI helpers ────────────────────────────────────────────────
 function openApp() {
   document.getElementById('app-overlay').classList.add('show');
   document.body.style.overflow='hidden';
-  showScreen('screen-name');
-  setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
+  sb.auth.getSession().then(function(res) {
+    if (res.data && res.data.session) {
+      showScreen('screen-name');
+      setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
+    } else {
+      showScreen('screen-auth');
+      setTimeout(function(){ var i=document.getElementById('emailInput'); if(i) i.focus(); }, 50);
+    }
+  });
 }
 
 function closeApp() {
