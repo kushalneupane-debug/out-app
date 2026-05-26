@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Out — Find someone free right now, near you</title>
+<meta name="description" content="No profiles. No swiping. No algorithm. Just real people within 3 miles who are free right now.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F8F8F7;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+:focus-visible { outline: 2px solid #111; outline-offset: 3px; border-radius: 4px; }
+
+/* ── NAV ───────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  background: rgba(248, 248, 247, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E8E8E8;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+}
+.nav-logo {
+  font-size: 1.15rem; font-weight: 700; letter-spacing: -0.03em;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.nav-links a {
+  font-size: 0.875rem; font-weight: 400; color: #555;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: #111; }
+.nav-btn {
+  padding: 9px 20px; border-radius: 9999px;
+  background: #111; color: #fff;
+  font-size: 0.82rem; font-weight: 600;
+  transition: background 0.15s;
+}
+.nav-btn:hover { background: #333; }
+.nav-btn:active { transform: scale(0.97); }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px;
+  background: #111; border-radius: 2px; transition: all 0.2s;
+}
+.mobile-nav {
+  display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+  background: #F8F8F7; border-bottom: 1px solid #E8E8E8;
+  padding: 20px 40px 28px;
+  opacity: 0; pointer-events: none; transform: translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.mobile-nav.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+.mobile-nav a {
+  display: block; padding: 13px 0;
+  font-size: 1rem; color: #555;
+  border-bottom: 1px solid #EFEFEF;
+}
+.mobile-nav-btn {
+  display: block; margin-top: 18px; text-align: center;
+  padding: 14px; border-radius: 9999px;
+  background: #111; color: #fff;
+  font-size: 0.95rem; font-weight: 600;
+}
+
+/* ── SCROLL REVEAL ─────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── SHARED ────────────────────────────────────────────────── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+.section-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #999; margin-bottom: 14px;
+}
+.pill-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 48px; padding: 0 28px; border-radius: 9999px;
+  background: #111; color: #fff;
+  font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.pill-btn:hover { background: #2A2A2A; }
+.pill-btn:active { transform: scale(0.97); }
+
+/* ── HERO ──────────────────────────────────────────────────── */
+#hero {
+  min-height: 100dvh;
+  padding: 60px 40px 0;
+  display: flex; align-items: center;
+}
+.hero-inner {
+  max-width: 1120px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 80px;
+  padding: 80px 0;
+}
+.hero-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #999; margin-bottom: 20px;
+}
+.hero-headline {
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 700; letter-spacing: -0.035em; line-height: 1.08;
+  margin-bottom: 20px;
+}
+.hero-sub {
+  font-size: 1.05rem; line-height: 1.7; color: #555;
+  max-width: 420px; margin-bottom: 32px; font-weight: 400;
+}
+.hero-footnote {
+  margin-top: 14px; font-size: 0.82rem; color: #999;
+}
+
+/* ── PHONE MOCKUP ──────────────────────────────────────────── */
+.phone-wrap {
+  display: flex; justify-content: center;
+  animation: phoneFloat 3s ease-in-out infinite;
+}
+.phone-frame {
+  width: 320px; height: 620px;
+  border: 12px solid #111;
+  border-radius: 44px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.06);
+  overflow: hidden;
+  position: relative;
+  background: #111;
+}
+.phone-screen {
+  width: 100%; height: 100%;
+  background: #111;
+  display: flex; flex-direction: column;
+  border-radius: 32px;
+  overflow: hidden;
+}
+/* status bar */
+.phone-status {
+  padding: 12px 18px 6px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.phone-time {
+  font-size: 13px; font-weight: 600; color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.status-icons { display: flex; align-items: center; gap: 5px; }
+.bat {
+  width: 20px; height: 10px; border-radius: 2px;
+  border: 1.5px solid rgba(255,255,255,0.5); position: relative;
+}
+.bat::before {
+  content: ''; position: absolute;
+  right: -5px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 5px; border-radius: 0 1px 1px 0;
+  background: rgba(255,255,255,0.4);
+}
+.bat::after {
+  content: ''; position: absolute;
+  left: 2px; top: 50%; transform: translateY(-50%);
+  width: 60%; height: 5px; border-radius: 1px; background: #fff;
+}
+.sig {
+  display: flex; align-items: flex-end; gap: 1.5px;
+}
+.sig span {
+  width: 3px; background: #fff; border-radius: 1px;
+  display: block;
+}
+.sig span:nth-child(1) { height: 4px; }
+.sig span:nth-child(2) { height: 7px; }
+.sig span:nth-child(3) { height: 10px; }
+/* map placeholder */
+.phone-map {
+  flex: 1;
+  background: #181818;
+  position: relative;
+  overflow: hidden;
+}
+.map-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.you-marker {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.12);
+}
+.nearby-dot {
+  position: absolute;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+}
+.nearby-dot.nd1 { top: 30%; left: 40%; }
+.nearby-dot.nd2 { top: 55%; left: 68%; }
+.nearby-dot.nd3 { top: 22%; left: 62%; }
+/* user cards */
+.phone-cards {
+  padding: 8px 10px 0; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.p-card {
+  background: #1E1E1E;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.p-card.in { opacity: 1; transform: translateY(0); }
+.p-card-emoji {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: #2A2A2A;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; flex-shrink: 0;
+}
+.p-card-info { flex: 1; min-width: 0; }
+.p-card-name { font-size: 12px; font-weight: 600; color: #fff; }
+.p-card-vibe { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+.p-card-dist {
+  font-size: 10px; font-weight: 600;
+  padding: 3px 8px; border-radius: 9999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6); flex-shrink: 0;
+}
+/* toggle button */
+.phone-btn-wrap { padding: 8px 10px 14px; flex-shrink: 0; }
+.phone-btn {
+  width: 100%; padding: 12px;
+  border-radius: 12px;
+  background: #fff; color: #111;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  letter-spacing: -0.01em;
+}
+.btn-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #111;
+  animation: dotBlink 1.5s ease-in-out infinite;
+}
+/* pulse dots */
+.pulse-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 8px 0 12px; flex-shrink: 0;
+}
+.pulse {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  animation: dotFade 1.5s ease-in-out infinite;
+}
+.pulse:nth-child(2) { animation-delay: 0.3s; }
+.pulse:nth-child(3) { animation-delay: 0.6s; }
+
+/* ── HOW IT WORKS ──────────────────────────────────────────── */
+#how { padding: 120px 40px; border-top: 1px solid #E8E8E8; }
+#how .container {}
+.how-head { margin-bottom: 72px; }
+.how-head h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 700; letter-spacing: -0.03em; margin-top: 12px;
+}
+.how-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.how-step {
+  padding: 0 40px 0 0;
+  border-right: 1px solid #E8E8E8;
+}
+.how-step:last-child { border-right: none; padding-right: 0; }
+.how-step:not(:first-child) { padding-left: 40px; }
+.step-num {
+  font-size: 3.5rem; font-weight: 700; color: #EBEBEB;
+  line-height: 1; margin-bottom: 20px;
+  letter-spacing: -0.04em;
+}
+.step-title {
+  font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.step-body { font-size: 0.925rem; color: #666; line-height: 1.65; }
+
+/* ── WHY OUT ───────────────────────────────────────────────── */
+#why {
+  padding: 120px 40px;
+  background: #111; color: #fff;
+}
+.why-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: start;
+}
+.why-left {}
+.why-label-dark {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px;
+}
+.why-headline {
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+}
+.why-sub {
+  margin-top: 16px; font-size: 0.95rem; color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+}
+.why-right { padding-top: 4px; }
+.why-list { list-style: none; display: flex; flex-direction: column; }
+.why-list li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-size: 1rem; font-weight: 400; line-height: 1.5;
+  color: rgba(255,255,255,0.8);
+}
+.why-list li:first-child { padding-top: 0; }
+.why-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.why-check {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+  font-size: 10px; color: rgba(255,255,255,0.5);
+}
+
+/* ── SAFETY ────────────────────────────────────────────────── */
+#safety { padding: 120px 40px; border-top: 1px solid #E8E8E8; }
+.safety-head { margin-bottom: 56px; }
+.safety-head h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 700; letter-spacing: -0.03em; margin-top: 12px;
+}
+.safety-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.s-card {
+  background: #fff;
+  border: 1px solid #E5E5E5;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.s-card-icon { font-size: 1.3rem; margin-bottom: 16px; }
+.s-card-title {
+  font-size: 0.975rem; font-weight: 600; letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.s-card-body { font-size: 0.875rem; color: #666; line-height: 1.65; }
+
+/* ── FINAL CTA ─────────────────────────────────────────────── */
+#cta {
+  padding: 140px 40px;
+  text-align: center;
+  border-top: 1px solid #E8E8E8;
+}
+#cta h2 {
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.02;
+  margin-bottom: 14px;
+}
+#cta p {
+  font-size: 1.05rem; color: #666; margin-bottom: 36px; font-weight: 400;
+}
+.cta-foot { margin-top: 16px; font-size: 0.82rem; color: #999; }
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid #E8E8E8;
+  padding: 28px 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.footer-links a { font-size: 0.8rem; color: #999; transition: color 0.15s; }
+.footer-links a:hover { color: #111; }
+.footer-copy { font-size: 0.75rem; color: #BBBBBB; }
+
+/* ── KEYFRAMES ─────────────────────────────────────────────── */
+@keyframes phoneFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes dotFade {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links, .nav-btn { display: none; }
+  .hamburger { display: flex; }
+  .mobile-nav { display: block; }
+
+  #hero { padding: 60px 20px 0; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 56px; padding: 60px 0 70px;
+    text-align: center;
+  }
+  .hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+  .phone-wrap { order: -1; }
+  .phone-frame { width: 280px; height: 560px; }
+
+  #how { padding: 80px 20px; }
+  .how-steps {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .how-step {
+    border-right: none;
+    border-bottom: 1px solid #E8E8E8;
+    padding: 32px 0;
+  }
+  .how-step:first-child { padding-top: 0; }
+  .how-step:last-child { border-bottom: none; padding-bottom: 0; }
+  .how-step:not(:first-child) { padding-left: 0; }
+
+  #why { padding: 80px 20px; }
+  .why-inner { grid-template-columns: 1fr; gap: 40px; }
+
+  #safety { padding: 80px 20px; }
+  .safety-cards { grid-template-columns: 1fr; }
+
+  #cta { padding: 100px 20px; }
+  footer { padding: 24px 20px; }
+}
+
+/* ── APP OVERLAY ───────────────────────────────────────────── */
+#app-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: #F8F8F7;
+  overflow-y: auto;
+}
+#app-overlay.show { display: flex; flex-direction: column; }
+
+/* step screens */
+.app-screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: 24px 24px 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+.app-screen.active { display: flex; }
+
+/* top bar inside overlay */
+.app-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 48px;
+}
+.app-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.03em; }
+.app-back {
+  font-size: 0.85rem; color: #999; cursor: pointer;
+  background: none; border: none; font-family: inherit;
+  padding: 4px 0;
+}
+.app-back:hover { color: #111; }
+
+/* step label */
+.app-step-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #999; margin-bottom: 12px;
+}
+.app-title {
+  font-size: clamp(26px, 6vw, 36px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 8px;
+}
+.app-sub { font-size: 0.95rem; color: #666; margin-bottom: 36px; line-height: 1.6; }
+
+/* progress bar */
+.progress-bar {
+  height: 2px; background: #E8E8E8; border-radius: 2px; margin-bottom: 48px;
+}
+.progress-fill {
+  height: 100%; background: #111; border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* name input */
+.app-input {
+  width: 100%; padding: 16px 18px;
+  border: 1.5px solid #E0E0E0; border-radius: 14px;
+  font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 500;
+  background: #fff; color: #111; outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 8px;
+}
+.app-input:focus { border-color: #111; }
+.app-input::placeholder { color: #CCC; }
+.char-count {
+  text-align: right; font-size: 0.78rem; color: #CCC;
+  margin-bottom: 28px;
+}
+
+/* vibe grid */
+.vibe-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; margin-bottom: 32px;
+}
+.vibe-btn {
+  padding: 18px 10px;
+  border: 1.5px solid #E8E8E8; border-radius: 14px;
+  background: #fff; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.vibe-btn:hover { border-color: #CCC; }
+.vibe-btn.selected { border-color: #111; background: #111; }
+.vibe-btn .vibe-emoji { font-size: 1.2rem; }
+.vibe-btn .vibe-label {
+  font-size: 0.78rem; font-weight: 600; color: #666;
+  transition: color 0.15s;
+}
+.vibe-btn.selected .vibe-label { color: #fff; }
+
+/* big action button */
+.app-btn {
+  width: 100%; height: 52px; border-radius: 14px;
+  background: #111; color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: background 0.15s, transform 0.1s;
+  margin-top: auto;
+}
+.app-btn:hover { background: #2A2A2A; }
+.app-btn:active { transform: scale(0.98); }
+.app-btn:disabled { background: #CCC; cursor: not-allowed; }
+
+/* ── LIVE SCREEN ── */
+.live-header {
+  text-align: center; margin-bottom: 32px;
+}
+.live-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px; border-radius: 9999px;
+  background: #F0FFF4; border: 1px solid #BBF7D0;
+  font-size: 0.82rem; font-weight: 600; color: #15803D;
+  margin-bottom: 20px;
+}
+.live-green-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #22C55E;
+  animation: dotFade 1.5s ease-in-out infinite;
+}
+.live-name { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.03em; }
+.live-vibe { font-size: 0.9rem; color: #888; margin-top: 4px; }
+
+/* nearby cards */
+.nearby-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #999; margin-bottom: 14px;
+}
+.nearby-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.nearby-card {
+  background: #fff; border: 1px solid #E5E5E5; border-radius: 14px;
+  padding: 16px 18px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.nearby-card.top-match { border-color: #BBF7D0; }
+.nc-avatar {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: #F3F3F3; display: flex; align-items: center;
+  justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+}
+.nc-info { flex: 1; min-width: 0; }
+.nc-name { font-size: 0.95rem; font-weight: 600; }
+.nc-vibe { font-size: 0.8rem; color: #999; margin-top: 2px; }
+.nc-dist {
+  font-size: 0.78rem; font-weight: 600; color: #555;
+  padding: 4px 10px; background: #F3F3F3; border-radius: 9999px;
+  flex-shrink: 0;
+}
+/* match score badge */
+.score-badge {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0;
+}
+.score-label {
+  font-size: 0.55rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #22C55E;
+}
+.score-num {
+  padding: 2px 8px; border-radius: 9999px;
+  font-size: 0.72rem; font-weight: 700; font-family: monospace;
+}
+.score-num.high  { background: rgba(34,197,94,0.1);  color: #15803D; border: 1px solid rgba(34,197,94,0.3); }
+.score-num.mid   { background: rgba(0,98,173,0.08);  color: #0062AD; border: 1px solid rgba(0,98,173,0.2); }
+.score-num.low   { background: #F3F3F3; color: #888; border: 1px solid #E0E0E0; }
+
+.go-offline-btn {
+  width: 100%; height: 48px; border-radius: 12px;
+  background: none; border: 1.5px solid #E0E0E0;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500;
+  color: #999; cursor: pointer; margin-top: auto;
+  transition: border-color 0.15s, color 0.15s;
+}
+.go-offline-btn:hover { border-color: #111; color: #111; }
+
+/* connect button on user cards */
+.connect-btn {
+  padding: 8px 14px; border-radius: 9999px;
+  border: 1.5px solid #111; background: none;
+  font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: all 0.15s; flex-shrink: 0; white-space: nowrap;
+}
+.connect-btn:hover { background: #111; color: #fff; }
+.connect-btn.sent { background: #111; color: #fff; border-color: #111; cursor: default; pointer-events: none; }
+
+/* match states */
+.match-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  flex: 1; padding: 32px 20px; gap: 10px;
+}
+.match-state-icon { font-size: 2rem; margin-bottom: 4px; }
+.match-state-title { font-size: 0.95rem; font-weight: 600; color: #333; }
+.match-state-sub { font-size: 0.82rem; color: #999; line-height: 1.6; }
+
+/* spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2.5px solid #E8E8E8; border-top-color: #111;
+  animation: spin 0.7s linear infinite; margin-bottom: 8px;
+}
+
+/* incoming connect banner */
+.incoming-banner {
+  display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 300; width: calc(100% - 40px); max-width: 440px;
+  background: #fff; border: 1px solid #E0E0E0; border-radius: 16px;
+  padding: 14px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  align-items: center; gap: 12px;
+}
+.incoming-banner.show { display: flex; }
+.incoming-avatar { font-size: 1.4rem; flex-shrink: 0; }
+.incoming-info { flex: 1; }
+.incoming-name { font-size: 0.95rem; font-weight: 700; }
+.incoming-sub  { font-size: 0.78rem; color: #999; margin-top: 2px; }
+.ib-accept {
+  padding: 8px 16px; border-radius: 9999px; background: #111; color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+  border: none; cursor: pointer; flex-shrink: 0;
+}
+.ib-pass {
+  padding: 8px 12px; border-radius: 9999px; background: none; color: #999;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+  border: 1px solid #E0E0E0; cursor: pointer; flex-shrink: 0;
+}
+
+/* matched toast */
+.matched-toast {
+  display: none; position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 300; padding: 12px 22px; border-radius: 12px;
+  background: #F0FFF4; border: 1px solid #BBF7D0;
+  font-size: 0.88rem; font-weight: 600; color: #15803D;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08); white-space: nowrap;
+}
+.matched-toast.show { display: block; }
+
+/* ── CHAT SCREEN ────────────────────────────────────────────── */
+.chat-header {
+  display: flex; align-items: center; gap: 12px;
+  padding-bottom: 16px; border-bottom: 1px solid #F0F0F0; flex-shrink: 0;
+}
+.chat-avatar-circle {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 700; color: #fff; position: relative;
+}
+.chat-online-dot {
+  position: absolute; bottom: 1px; right: 1px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #22C55E; border: 2px solid #F8F8F7;
+}
+.chat-header-info { flex: 1; }
+.chat-header-name { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; }
+.chat-header-status {
+  font-size: 0.72rem; color: #22C55E; font-weight: 500; margin-top: 1px;
+  display: flex; align-items: center; gap: 4px;
+}
+.chat-header-vibe { font-size: 0.72rem; color: #BBB; margin-top: 1px; }
+.chat-leave-btn {
+  background: none; border: none; color: #CCC; cursor: pointer;
+  font-family: inherit; font-size: 0.8rem; padding: 6px 0; flex-shrink: 0;
+  transition: color 0.15s;
+}
+.chat-leave-btn:hover { color: #111; }
+
+.chat-messages {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column;
+  gap: 2px; padding: 16px 0 8px; scroll-behavior: smooth;
+}
+.chat-hint {
+  text-align: center; color: #CCC; font-size: 0.8rem;
+  margin: auto; padding: 24px 20px; line-height: 1.8;
+}
+.chat-date-divider {
+  text-align: center; font-size: 0.65rem; font-weight: 600;
+  color: #CCC; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 8px 0; flex-shrink: 0;
+}
+.msg-row { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 2px; }
+.msg-row.mine { flex-direction: row-reverse; }
+.msg-row.seq  { margin-bottom: 1px; }
+
+.msg-avatar-sm {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 700; color: #fff; margin-bottom: 2px;
+}
+.msg-row.mine .msg-avatar-sm, .msg-row.seq .msg-avatar-sm { visibility: hidden; }
+
+.msg-col { display: flex; flex-direction: column; max-width: 75%; }
+.msg-row.mine .msg-col { align-items: flex-end; }
+
+.msg-bubble {
+  padding: 10px 14px; font-size: 0.9rem; line-height: 1.5;
+  word-break: break-word; position: relative;
+  transition: opacity 0.15s;
+}
+.msg-row.mine .msg-bubble {
+  background: #111; color: #fff;
+  border-radius: 18px 18px 4px 18px;
+}
+.msg-row.mine.seq .msg-bubble { border-radius: 18px 4px 4px 18px; }
+.msg-row.mine:last-of-type .msg-bubble { border-radius: 18px 4px 18px 18px; }
+
+.msg-row.theirs .msg-bubble {
+  background: #F3F3F3; color: #111;
+  border-radius: 18px 18px 18px 4px;
+}
+.msg-row.theirs.seq .msg-bubble { border-radius: 4px 18px 18px 4px; }
+
+.msg-time {
+  font-size: 0.6rem; color: #CCC; padding: 3px 4px 0;
+  align-self: flex-end;
+}
+.msg-row.mine .msg-time { align-self: flex-end; }
+
+/* Typing indicator */
+.typing-row {
+  display: none; align-items: flex-end; gap: 8px; padding: 4px 0;
+}
+.typing-row.show { display: flex; }
+.typing-bubble {
+  background: #F3F3F3; border-radius: 18px 18px 18px 4px;
+  padding: 12px 16px; display: flex; gap: 4px; align-items: center;
+}
+.typing-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #BBB;
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+.typing-name-sm { font-size: 0.65rem; color: #CCC; padding: 0 4px 4px; }
+
+/* Input bar */
+.chat-input-bar {
+  display: flex; align-items: flex-end; gap: 10px;
+  padding: 12px 0 0; border-top: 1px solid #F0F0F0; flex-shrink: 0;
+}
+.chat-input {
+  flex: 1; padding: 11px 16px; border: 1.5px solid #EBEBEB;
+  border-radius: 22px; font-family: 'Inter', sans-serif;
+  font-size: 0.9rem; outline: none; background: #F8F8F7; color: #111;
+  transition: border-color 0.15s, background 0.15s; resize: none;
+  max-height: 100px; line-height: 1.5;
+}
+.chat-input:focus { border-color: #DDD; background: #fff; }
+.chat-input::placeholder { color: #CCC; }
+.chat-send {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  background: #111; color: #fff; border: none;
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+}
+.chat-send:hover { background: #333; }
+.chat-send:active { transform: scale(0.92); }
+.chat-send:disabled { background: #E8E8E8; cursor: not-allowed; }
+
+/* ── LEGAL OVERLAY ───────────────────────────────────────────── */
+.legal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.legal-overlay.show { display: flex; }
+.legal-sheet {
+  background: #fff; border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 680px; max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.15);
+  animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+@keyframes slideUp { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.legal-drag { width: 40px; height: 4px; border-radius: 2px; background: #E0E0E0; margin: 14px auto 0; flex-shrink: 0; }
+.legal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px 14px; border-bottom: 1px solid #F0F0F0; flex-shrink: 0;
+}
+.legal-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
+.legal-close {
+  width: 30px; height: 30px; border-radius: 50%; background: #F3F3F3;
+  border: none; cursor: pointer; font-size: 0.9rem; display: flex;
+  align-items: center; justify-content: center; color: #555;
+  transition: background 0.15s;
+}
+.legal-close:hover { background: #E8E8E8; }
+.legal-body {
+  overflow-y: auto; padding: 24px 24px 40px; flex: 1;
+  font-size: 0.875rem; color: #444; line-height: 1.75;
+}
+.legal-body h2 {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #111; margin: 28px 0 10px;
+}
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body p { margin-bottom: 12px; }
+.legal-body ul { padding-left: 18px; margin-bottom: 12px; }
+.legal-body li { margin-bottom: 6px; }
+.legal-body a { color: #111; text-decoration: underline; text-underline-offset: 2px; }
+.legal-effective {
+  font-size: 0.72rem; color: #BBB; margin-bottom: 20px; display: block;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ── DARK CHAT THEME ─────────────────────────────────────────── */
+#screen-chat { background: #111827; }
+#screen-chat .chat-header {
+  border-bottom-color: #1F2937;
+}
+#screen-chat .chat-header-name  { color: #F9FAFB; }
+#screen-chat .chat-header-vibe  { color: #6B7280; }
+#screen-chat .chat-header-status { color: #34D399; }
+#screen-chat .chat-online-dot   { border-color: #111827; background: #34D399; }
+#screen-chat .chat-leave-btn    { color: #4B5563; }
+#screen-chat .chat-leave-btn:hover { color: #D1D5DB; }
+#screen-chat .chat-hint   { color: #374151; }
+#screen-chat .chat-date-divider { color: #374151; }
+#screen-chat .msg-row.mine .msg-bubble { background: #2563EB; color: #fff; border-radius: 18px 18px 4px 18px; }
+#screen-chat .msg-row.mine.seq  .msg-bubble { border-radius: 18px 4px 4px 18px; }
+#screen-chat .msg-row.theirs .msg-bubble { background: #1F2937; color: #F9FAFB; }
+#screen-chat .msg-time { color: #374151; }
+#screen-chat .typing-bubble { background: #1F2937; }
+#screen-chat .typing-dot   { background: #4B5563; }
+#screen-chat .chat-input-bar { border-top-color: #1F2937; }
+#screen-chat .chat-input    { background: #1F2937; border-color: #374151; color: #F9FAFB; }
+#screen-chat .chat-input:focus { border-color: #4B5563; background: #1F2937; }
+#screen-chat .chat-input::placeholder { color: #4B5563; }
+#screen-chat .chat-send     { background: #2563EB; }
+#screen-chat .chat-send:hover { background: #1D4ED8; }
+#screen-chat .chat-send:disabled { background: #1F2937; color: #374151; }
+
+/* ⋯ chat menu button */
+.chat-menu-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,0.07); border: none; cursor: pointer;
+  color: #6B7280; font-size: 1.2rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background 0.15s, color 0.15s;
+  letter-spacing: 1px;
+}
+.chat-menu-btn:hover { background: rgba(255,255,255,0.12); color: #D1D5DB; }
+
+/* Safety warning banner */
+.safety-warning {
+  display: none; background: rgba(127,29,29,0.85);
+  border: 1px solid #DC2626; border-radius: 10px;
+  padding: 9px 36px 9px 12px; margin: 6px 0;
+  font-size: 0.78rem; color: #FCA5A5; line-height: 1.5;
+  flex-shrink: 0; position: relative;
+}
+.safety-warning.show { display: block; }
+.safety-warning strong { color: #FEE2E2; }
+.safety-warning-close {
+  position: absolute; top: 7px; right: 10px;
+  background: none; border: none; color: #FCA5A5;
+  cursor: pointer; font-size: 0.82rem; padding: 2px; line-height: 1;
+}
+
+/* Block / Report bottom sheet */
+.report-sheet {
+  display: none; position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.report-sheet.show { display: flex; }
+.report-inner {
+  background: #1F2937; border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 480px; padding: 16px 0 40px;
+  animation: slideUp 0.25s cubic-bezier(0.34,1.3,0.64,1);
+}
+.report-drag { width: 40px; height: 4px; background: #374151; border-radius: 2px; margin: 0 auto 20px; }
+.report-section-title {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #6B7280;
+  padding: 0 24px; margin-bottom: 4px;
+}
+.report-option {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 24px; cursor: pointer;
+  font-size: 0.95rem; color: #F9FAFB; border: none;
+  background: none; font-family: 'Inter', sans-serif;
+  width: 100%; text-align: left; transition: background 0.12s;
+}
+.report-option:hover { background: #374151; }
+.report-option.danger { color: #F87171; }
+.report-option-icon { font-size: 1.05rem; width: 22px; text-align: center; flex-shrink: 0; }
+.report-divider { height: 1px; background: #374151; margin: 6px 0; }
+.report-cancel {
+  display: block; width: 100%; text-align: center;
+  padding: 15px 24px; font-size: 0.92rem; color: #6B7280;
+  cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500;
+  border: none; background: none; transition: color 0.15s;
+}
+.report-cancel:hover { color: #9CA3AF; }
+.report-reason-title {
+  font-size: 1rem; font-weight: 700; color: #F9FAFB;
+  padding: 0 24px; margin-bottom: 8px;
+}
+
+/* ── AUTH SCREENS ─────────────────────────────────────────────── */
+.otp-inputs {
+  display: flex; gap: 10px; justify-content: center; margin-bottom: 8px;
+}
+.otp-digit {
+  width: 46px; height: 56px; border-radius: 12px;
+  border: 1.5px solid #E0E0E0; text-align: center;
+  font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 700;
+  color: #111; outline: none; background: #fff;
+  transition: border-color 0.15s; -moz-appearance: textfield;
+}
+.otp-digit:focus { border-color: #111; }
+.otp-digit::-webkit-outer-spin-button,
+.otp-digit::-webkit-inner-spin-button { -webkit-appearance: none; }
+.resend-row {
+  text-align: center; font-size: 0.82rem; color: #999;
+  margin-bottom: 24px;
+}
+.resend-btn {
+  background: none; border: none; color: #111;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem;
+  font-weight: 600; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.resend-btn:disabled { color: #BBB; text-decoration: none; cursor: default; }
+.field-error {
+  font-size: 0.78rem; color: #EF4444; min-height: 20px; margin-bottom: 12px;
+}
+.auth-divider {
+  display: flex; align-items: center; gap: 12px; margin: 20px 0;
+  font-size: 0.75rem; color: #CCC;
+}
+.auth-divider::before, .auth-divider::after {
+  content:''; flex:1; height:1px; background:#E8E8E8;
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Out</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#safety">Safety</a>
+  </div>
+  <a href="#cta" class="nav-btn">I'm Out →</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#how" onclick="closeMobile()">How it works</a>
+  <a href="#safety" onclick="closeMobile()">Safety</a>
+  <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()">I'm Out →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-label">Available now in your city</div>
+      <h1 class="hero-headline">Find someone near you,&nbsp;right&nbsp;now.</h1>
+      <p class="hero-sub">No profiles. No swiping. No algorithm. Just real people within 3 miles who are free right now.</p>
+      <a href="#cta" class="pill-btn">I'm Out →</a>
+      <p class="hero-footnote">Free to join. No account needed.</p>
+    </div>
+
+    <!-- PHONE -->
+    <div class="phone-wrap">
+      <div class="phone-frame">
+        <div class="phone-screen">
+
+          <!-- status bar -->
+          <div class="phone-status">
+            <span class="phone-time" id="clock">9:41</span>
+            <div class="status-icons">
+              <div class="sig">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="bat"></div>
+            </div>
+          </div>
+
+          <!-- map -->
+          <div class="phone-map">
+            <div class="map-lines"></div>
+            <div class="you-marker"></div>
+            <div class="nearby-dot nd1"></div>
+            <div class="nearby-dot nd2"></div>
+            <div class="nearby-dot nd3"></div>
+          </div>
+
+          <!-- user cards -->
+          <div class="phone-cards">
+            <div class="p-card" id="pc1">
+              <div class="p-card-emoji">🧊</div>
+              <div class="p-card-info">
+                <div class="p-card-name">Jordan</div>
+                <div class="p-card-vibe">chill</div>
+              </div>
+              <div class="p-card-dist">0.4 mi</div>
+            </div>
+            <div class="p-card" id="pc2">
+              <div class="p-card-emoji">☕</div>
+              <div class="p-card-info">
+                <div class="p-card-name">Alex</div>
+                <div class="p-card-vibe">coffee</div>
+              </div>
+              <div class="p-card-dist">0.8 mi</div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="phone-btn-wrap">
+            <div class="phone-btn">
+              <span class="btn-dot"></span>
+              I'm Out
+            </div>
+          </div>
+
+          <!-- pulse dots -->
+          <div class="pulse-row">
+            <div class="pulse"></div>
+            <div class="pulse"></div>
+            <div class="pulse"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="how-head reveal">
+      <div class="section-label">How it works</div>
+      <h2>Three steps. That's it.</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Tap once</div>
+        <p class="step-body">Signal you're free right now. No status update, no post, no caption. Just a single tap.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-title">See who's nearby</div>
+        <p class="step-body">People within 3 miles who are also Out appear instantly. A name, a vibe, and a distance.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-title">Go do something</div>
+        <p class="step-body">Wave at someone. Pick a spot. Show up. That's the whole app. Nothing more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY OUT -->
+<section id="why">
+  <div class="why-inner">
+    <div class="why-left reveal">
+      <div class="why-label-dark">Why Out</div>
+      <h2 class="why-headline">Built to get out of your way.</h2>
+      <p class="why-sub">Every other app wants your time, your data, and your attention. Out just wants you to go outside.</p>
+    </div>
+    <div class="why-right reveal reveal-delay-1">
+      <ul class="why-list">
+        <li>
+          <span class="why-check">✓</span>
+          No profile to build — a first name and a vibe is all anyone sees.
+        </li>
+        <li>
+          <span class="why-check">✓</span>
+          No history saved — when you go offline, everything deletes.
+        </li>
+        <li>
+          <span class="why-check">✓</span>
+          No algorithm choosing for you — just distance, nothing else.
+        </li>
+        <li>
+          <span class="why-check">✓</span>
+          Just people near you, right now — the only thing that matters.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section id="safety">
+  <div class="container">
+    <div class="safety-head reveal">
+      <div class="section-label">Safety</div>
+      <h2>Private by default.</h2>
+    </div>
+    <div class="safety-cards">
+      <div class="s-card reveal">
+        <div class="s-card-icon">📍</div>
+        <div class="s-card-title">Location fuzzed</div>
+        <p class="s-card-body">We add a random offset before storing anything. Nobody sees exactly where you are — not even us.</p>
+      </div>
+      <div class="s-card reveal reveal-delay-1">
+        <div class="s-card-icon">⏱</div>
+        <div class="s-card-title">Auto-expires</div>
+        <p class="s-card-body">Your presence disappears automatically after 3 hours. Go offline and it deletes instantly.</p>
+      </div>
+      <div class="s-card reveal reveal-delay-2">
+        <div class="s-card-icon">🚫</div>
+        <div class="s-card-title">Block instantly</div>
+        <p class="s-card-body">One tap. Permanent. Silent. They disappear from your map, you disappear from theirs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="container reveal">
+    <h2>Stop waiting.</h2>
+    <p>Someone nearby is free too.</p>
+    <a href="#" class="pill-btn">I'm Out →</a>
+    <p class="cta-foot">Free to join. No account needed.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#" onclick="event.preventDefault();openLegal('privacy')">Privacy</a>
+    <a href="#" onclick="event.preventDefault();openLegal('terms')">Terms</a>
+    <a href="#" onclick="event.preventDefault();openLegal('safety')">Safety</a>
+    <a href="#" onclick="event.preventDefault();openLegal('contact')">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Out.</div>
+</footer>
+
+<!-- ── APP OVERLAY ─────────────────────────────────────────── -->
+<div id="app-overlay">
+
+  <!-- Step 0a: Email auth -->
+  <div class="app-screen active" id="screen-auth">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="closeApp()">✕ Close</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+    <div class="app-step-label">Verify your identity</div>
+    <div class="app-title">What's your email?</div>
+    <div class="app-sub">We'll send a one-time code to verify it's you. No passwords. No spam.</div>
+    <input class="app-input" id="emailInput" type="email" placeholder="you@example.com"
+      autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false"
+      oninput="validateEmail()"
+      onkeydown="if(event.key==='Enter')sendOTP()">
+    <div class="field-error" id="emailError"></div>
+    <button class="app-btn" id="emailNext" disabled onclick="sendOTP()">Send Code →</button>
+  </div>
+
+  <!-- Step 0b: OTP verification -->
+  <div class="app-screen" id="screen-otp">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="goToAuth()">← Back</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+    <div class="app-step-label">Enter your code</div>
+    <div class="app-title">Check your inbox.</div>
+    <div class="app-sub" id="otpSub">Enter the 6-digit code we sent you.</div>
+    <div class="otp-inputs" id="otpInputs">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*">
+      <input class="otp-digit" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]*">
+    </div>
+    <div class="field-error" id="otpError" style="text-align:center"></div>
+    <div class="resend-row">Didn't get it? <button class="resend-btn" id="resendBtn" onclick="resendOTP()" disabled>Resend in <span id="resendTimer">60</span>s</button></div>
+    <button class="app-btn" id="otpNext" disabled onclick="verifyOTP()">Verify →</button>
+  </div>
+
+  <!-- Step 1: Name -->
+  <div class="app-screen" id="screen-name">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="closeApp()">✕ Close</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+    <div class="app-step-label">Almost there</div>
+    <div class="app-title">What should we call you?</div>
+    <div class="app-sub">First name only. This is all anyone sees.</div>
+    <input class="app-input" id="nameInput" type="text" placeholder="Your first name" maxlength="12" autocomplete="off" autocorrect="off" spellcheck="false">
+    <div class="char-count"><span id="charCount">0</span>/12</div>
+    <button class="app-btn" id="nameNext" disabled onclick="goToVibe()">Continue →</button>
+  </div>
+
+  <!-- Step 2: Vibe -->
+  <div class="app-screen" id="screen-vibe">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="goToName()">← Back</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+    <div class="app-step-label">Last step</div>
+    <div class="app-title">What are you up for?</div>
+    <div class="app-sub">People see this next to your name.</div>
+    <div class="vibe-grid">
+      <button class="vibe-btn" onclick="selectVibe(this,'☕','coffee')">
+        <span class="vibe-emoji">☕</span>
+        <span class="vibe-label">Coffee</span>
+      </button>
+      <button class="vibe-btn" onclick="selectVibe(this,'🚶','walk')">
+        <span class="vibe-emoji">🚶</span>
+        <span class="vibe-label">Walk</span>
+      </button>
+      <button class="vibe-btn" onclick="selectVibe(this,'🧊','chill')">
+        <span class="vibe-emoji">🧊</span>
+        <span class="vibe-label">Chill</span>
+      </button>
+      <button class="vibe-btn" onclick="selectVibe(this,'🍕','food')">
+        <span class="vibe-emoji">🍕</span>
+        <span class="vibe-label">Food</span>
+      </button>
+      <button class="vibe-btn" onclick="selectVibe(this,'💬','talk')">
+        <span class="vibe-emoji">💬</span>
+        <span class="vibe-label">Talk</span>
+      </button>
+      <button class="vibe-btn" onclick="selectVibe(this,'📚','study')">
+        <span class="vibe-emoji">📚</span>
+        <span class="vibe-label">Study</span>
+      </button>
+    </div>
+    <button class="app-btn" id="vibeNext" disabled onclick="goLive()">I'm Out →</button>
+  </div>
+
+  <!-- Live screen -->
+  <div class="app-screen" id="screen-live">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="closeApp()">✕ Leave</button>
+    </div>
+    <div class="live-header">
+      <div class="live-status">
+        <span class="live-green-dot"></span>
+        You're Out
+      </div>
+      <div class="live-name" id="liveNameDisplay">Hey, —</div>
+      <div class="live-vibe" id="liveVibeDisplay"></div>
+    </div>
+
+    <!-- Matches label -->
+    <div class="nearby-label" id="matchesLabel" style="display:none"></div>
+
+    <!-- Loading state -->
+    <div class="match-state" id="stateLoading">
+      <div class="spinner"></div>
+      <div class="match-state-title">Finding your location…</div>
+      <div class="match-state-sub">Allow location access when prompted.</div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="match-state" id="stateEmpty" style="display:none">
+      <div class="match-state-icon">🔍</div>
+      <div class="match-state-title">You're live — no one nearby yet</div>
+      <div class="match-state-sub">Anyone who opens this page within 3 miles<br>and goes live will show up here automatically.</div>
+    </div>
+
+    <!-- Error state -->
+    <div class="match-state" id="stateError" style="display:none">
+      <div class="match-state-icon">⚠️</div>
+      <div class="match-state-title">Couldn't connect</div>
+      <div class="match-state-sub" id="stateErrorText">Location access denied.</div>
+    </div>
+
+    <!-- Real match list (populated dynamically) -->
+    <div class="nearby-list" id="matchList" style="display:none"></div>
+
+    <button class="go-offline-btn" onclick="closeApp()">Go offline</button>
+  </div>
+
+
+  <!-- Chat screen -->
+  <div class="app-screen" id="screen-chat">
+
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-avatar-circle" id="chatAvatarCircle">
+        <span id="chatAvatarInitial">?</span>
+        <div class="chat-online-dot"></div>
+      </div>
+      <div class="chat-header-info">
+        <div class="chat-header-name" id="chatHeaderName">—</div>
+        <div class="chat-header-status">● Active now</div>
+        <div class="chat-header-vibe" id="chatHeaderVibe"></div>
+      </div>
+      <button class="chat-menu-btn" id="chatMenuBtn" onclick="openChatMenu()" title="More options">···</button>
+      <button class="chat-leave-btn" onclick="leaveChat()">✕</button>
+    </div>
+
+    <!-- Safety warning -->
+    <div class="safety-warning" id="safetyWarning">
+      <button class="safety-warning-close" onclick="dismissSafetyWarning()">✕</button>
+      <strong>Safety alert:</strong> <span id="safetyWarningText"></span>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-hint">You matched 🎉<br>Say hey — figure out where to meet.</div>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="typing-row" id="typingRow">
+      <div class="msg-avatar-sm" id="typingAvatar"></div>
+      <div>
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input bar -->
+    <div class="chat-input-bar">
+      <input id="chatInput" class="chat-input" type="text"
+        placeholder="Message…" maxlength="500"
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        oninput="onChatInput()"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}">
+      <button class="chat-send" id="chatSend" onclick="sendMsg()" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Incoming connect banner (shown on top of everything) -->
+<div class="incoming-banner" id="incomingBanner">
+  <div class="incoming-avatar" id="incomingEmoji">👋</div>
+  <div class="incoming-info">
+    <div class="incoming-name" id="incomingName">Someone</div>
+    <div class="incoming-sub" id="incomingSub">wants to connect</div>
+  </div>
+  <button class="ib-accept" onclick="acceptConnect()">Accept</button>
+  <button class="ib-pass"   onclick="declineConnect()">Pass</button>
+</div>
+
+<!-- Matched toast -->
+<div class="matched-toast" id="matchedToast"></div>
+
+<!-- Block / Report sheet -->
+<div class="report-sheet" id="reportSheet" onclick="if(event.target===this)closeChatMenu()">
+  <div class="report-inner">
+    <div class="report-drag"></div>
+    <!-- Main menu -->
+    <div id="reportMenuMain">
+      <div class="report-section-title" id="reportMenuTitle">Options</div>
+      <button class="report-option" onclick="confirmBlock()">
+        <span class="report-option-icon">🚫</span>Block this person
+      </button>
+      <div class="report-divider"></div>
+      <button class="report-option danger" onclick="showReportReasons()">
+        <span class="report-option-icon">⚠️</span>Report a problem
+      </button>
+      <button class="report-cancel" onclick="closeChatMenu()">Cancel</button>
+    </div>
+    <!-- Reason picker -->
+    <div id="reportMenuReasons" style="display:none">
+      <div class="report-drag"></div>
+      <div class="report-reason-title">What's the issue?</div>
+      <button class="report-option danger" onclick="reportPartner('Scam or fraud')">
+        <span class="report-option-icon">💸</span>Scam or fraud
+      </button>
+      <button class="report-option danger" onclick="reportPartner('Harassment')">
+        <span class="report-option-icon">😠</span>Harassment
+      </button>
+      <button class="report-option danger" onclick="reportPartner('Inappropriate content')">
+        <span class="report-option-icon">🔞</span>Inappropriate content
+      </button>
+      <button class="report-option danger" onclick="reportPartner('Spam')">
+        <span class="report-option-icon">📩</span>Spam
+      </button>
+      <button class="report-option danger" onclick="reportPartner('Other')">
+        <span class="report-option-icon">❓</span>Other
+      </button>
+      <button class="report-cancel" onclick="closeChatMenu()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── LEGAL OVERLAYS ─────────────────────────────────────────── -->
+
+<!-- Privacy Policy -->
+<div class="legal-overlay" id="legal-privacy" onclick="if(event.target===this)closeLegal('privacy')">
+  <div class="legal-sheet">
+    <div class="legal-drag"></div>
+    <div class="legal-head">
+      <span class="legal-title">Privacy Policy</span>
+      <button class="legal-close" onclick="closeLegal('privacy')">✕</button>
+    </div>
+    <div class="legal-body">
+      <span class="legal-effective">Effective: May 25, 2026 · Applies globally, including GDPR (EU/EEA) and CCPA (California)</span>
+
+      <h2>1. Who We Are</h2>
+      <p>Out ("we", "us") is a real-time proximity-matching service. We are the data controller for personal data processed through this application. Contact: <a href="mailto:privacy@getout.app">privacy@getout.app</a></p>
+
+      <h2>2. What We Collect and Why</h2>
+      <ul>
+        <li><strong>First name</strong> — you provide this; used only to identify you to nearby users during a session.</li>
+        <li><strong>Activity vibe</strong> — your chosen activity (coffee, walk, etc.); used for matching and displayed to nearby users.</li>
+        <li><strong>Approximate location</strong> — your GPS coordinates, immediately fuzzed by a random ±500 m offset before any processing. We never store or transmit your precise coordinates.</li>
+      </ul>
+      <p>We do not collect email addresses, phone numbers, photos, government IDs, or any other identifying information.</p>
+
+      <h2>3. Legal Basis for Processing (GDPR)</h2>
+      <p>We rely on <strong>legitimate interests</strong> (Art. 6(1)(f) GDPR) to operate the proximity-matching feature, and on your <strong>explicit consent</strong> (Art. 6(1)(a) GDPR) for processing location data, which you grant when you allow browser geolocation access. You may withdraw consent at any time by revoking location permissions in your browser settings and going offline.</p>
+
+      <h2>4. Data Retention — Ephemeral by Design</h2>
+      <p>All presence data (name, vibe, fuzzed location) is held <strong>only in active memory</strong> via Supabase Realtime. It is automatically and permanently deleted the moment you close the app, disconnect, or your session times out. There is no database of users. We retain no logs containing personal data beyond 24 hours of anonymised error telemetry.</p>
+
+      <h2>5. Third-Party Infrastructure</h2>
+      <p>We use <strong>Supabase</strong> (supabase.com) to power real-time presence channels. Supabase processes data on your behalf under a Data Processing Agreement compliant with GDPR. Supabase infrastructure is hosted on AWS (US-East-1 by default; EU regions available). No personal data is sold, rented, or shared with advertisers.</p>
+
+      <h2>6. Your Rights</h2>
+      <ul>
+        <li><strong>Access &amp; portability</strong> — because we hold no persistent data, there is nothing to export. Sessions are anonymous and ephemeral.</li>
+        <li><strong>Erasure ("right to be forgotten")</strong> — going offline or closing the browser immediately erases all your data. You may also contact us to confirm no residual data exists.</li>
+        <li><strong>Objection / restriction</strong> — you may stop using the service at any time; no account closure is required.</li>
+        <li><strong>Lodge a complaint</strong> — EU/EEA residents may complain to their local supervisory authority. California residents may contact the California Privacy Protection Agency (CPPA).</li>
+      </ul>
+
+      <h2>7. Children's Privacy</h2>
+      <p>Out is not directed at children under 13 (or 16 in the EU where applicable). We do not knowingly collect data from minors. If you believe a minor has used the service, contact <a href="mailto:privacy@getout.app">privacy@getout.app</a> and we will take immediate action.</p>
+
+      <h2>8. Security</h2>
+      <p>All data is transmitted over TLS 1.2+. Location data is fuzzed client-side before transmission. We apply the principle of data minimisation — we collect only what is strictly necessary for the service to function. No passwords or sensitive credentials are stored.</p>
+
+      <h2>9. Changes to This Policy</h2>
+      <p>We will post updates here. For material changes we will display a notice in the app. Continued use after changes constitutes acceptance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Terms of Service -->
+<div class="legal-overlay" id="legal-terms" onclick="if(event.target===this)closeLegal('terms')">
+  <div class="legal-sheet">
+    <div class="legal-drag"></div>
+    <div class="legal-head">
+      <span class="legal-title">Terms of Service</span>
+      <button class="legal-close" onclick="closeLegal('terms')">✕</button>
+    </div>
+    <div class="legal-body">
+      <span class="legal-effective">Effective: May 25, 2026</span>
+
+      <h2>1. Acceptance</h2>
+      <p>By using Out you agree to these Terms. If you do not agree, do not use the service. These Terms constitute a binding agreement between you and Out.</p>
+
+      <h2>2. Eligibility</h2>
+      <p>You must be at least 13 years old (or 16 in the EU/EEA) to use Out. By using the service you represent that you meet this requirement. Parents and guardians are responsible for supervising minors.</p>
+
+      <h2>3. The Service</h2>
+      <p>Out is a real-time, ephemeral proximity-matching tool. We do not guarantee matches, uptime, or any specific outcome. The service is provided "as is" and may be modified or discontinued at any time without notice.</p>
+
+      <h2>4. Prohibited Conduct</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Harass, threaten, stalk, or intimidate any other user.</li>
+        <li>Impersonate another person or provide a false identity.</li>
+        <li>Transmit unsolicited commercial messages (spam).</li>
+        <li>Use the service to facilitate illegal activity of any kind.</li>
+        <li>Attempt to reverse-engineer, scrape, or overload the service.</li>
+        <li>Circumvent safety features, blocks, or suspensions.</li>
+        <li>Transmit content that is obscene, defamatory, or violates third-party rights.</li>
+      </ul>
+
+      <h2>5. Enforcement and Termination</h2>
+      <p>We may suspend or block access immediately and without notice for any violation of these Terms or for conduct we reasonably determine to be harmful to users or the service. Because sessions are ephemeral, "termination" means blocking your connection.</p>
+
+      <h2>6. Disclaimer of Warranties</h2>
+      <p>THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR ACCURACY. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED OR ERROR-FREE.</p>
+
+      <h2>7. Limitation of Liability</h2>
+      <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, OUT SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OR INABILITY TO USE THE SERVICE. OUR TOTAL LIABILITY SHALL NOT EXCEED $100 USD.</p>
+
+      <h2>8. Indemnification</h2>
+      <p>You agree to indemnify and hold Out and its operators harmless from any claims, damages, or expenses arising from your use of the service or violation of these Terms.</p>
+
+      <h2>9. Governing Law and Dispute Resolution</h2>
+      <p>These Terms are governed by the laws of the State of California, USA, without regard to conflict-of-law principles. Disputes shall be resolved by binding arbitration under JAMS rules, except that either party may seek injunctive relief in court.</p>
+
+      <h2>10. Changes</h2>
+      <p>We reserve the right to update these Terms at any time. Material changes will be communicated via an in-app notice. Continued use constitutes acceptance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Safety -->
+<div class="legal-overlay" id="legal-safety" onclick="if(event.target===this)closeLegal('safety')">
+  <div class="legal-sheet">
+    <div class="legal-drag"></div>
+    <div class="legal-head">
+      <span class="legal-title">Safety</span>
+      <button class="legal-close" onclick="closeLegal('safety')">✕</button>
+    </div>
+    <div class="legal-body">
+      <h2>Your safety is the product</h2>
+      <p>Out is designed to help you meet people spontaneously. That's exciting — and it requires a few common-sense habits to keep it positive for everyone.</p>
+
+      <h2>Before you meet</h2>
+      <ul>
+        <li><strong>Tell someone.</strong> Let a friend or family member know where you're going and who you're meeting.</li>
+        <li><strong>Public first.</strong> Always suggest a public place for a first meetup — a café, park, or busy street.</li>
+        <li><strong>Keep it on-app.</strong> There's no need to share your phone number, social media, or address before meeting.</li>
+        <li><strong>Trust your gut.</strong> If something feels off, it probably is. You don't owe anyone a meeting.</li>
+      </ul>
+
+      <h2>In the app</h2>
+      <ul>
+        <li><strong>Block instantly.</strong> Any user can be blocked with one tap. They disappear from your map and you disappear from theirs — no notification sent.</li>
+        <li><strong>Report abuse.</strong> Use the report button for harassment or dangerous behaviour. Three reports in 24 hours result in automatic removal from the network.</li>
+        <li><strong>Your location is fuzzed.</strong> We add a ±500 m random offset before sharing any location data. Nobody — including us — knows your precise coordinates.</li>
+        <li><strong>Auto-delete.</strong> Your presence data is permanently deleted the moment you go offline. Nothing persists.</li>
+      </ul>
+
+      <h2>If you feel unsafe</h2>
+      <ul>
+        <li><strong>Emergency:</strong> Call your local emergency number (911 in the US, 999 in the UK, 112 in the EU).</li>
+        <li><strong>Crisis support:</strong> Crisis Text Line — text HOME to 741741 (US).</li>
+        <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233.</li>
+        <li><strong>Report to us:</strong> <a href="mailto:safety@getout.app">safety@getout.app</a> — urgent reports are reviewed within 2 hours.</li>
+      </ul>
+
+      <h2>Community standards</h2>
+      <p>Out is for spontaneous, genuine human connection. Harassment, unwanted advances, threats, or any form of discrimination based on race, gender, sexuality, religion, or disability will result in immediate and permanent removal. We take this seriously.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Contact -->
+<div class="legal-overlay" id="legal-contact" onclick="if(event.target===this)closeLegal('contact')">
+  <div class="legal-sheet">
+    <div class="legal-drag"></div>
+    <div class="legal-head">
+      <span class="legal-title">Contact</span>
+      <button class="legal-close" onclick="closeLegal('contact')">✕</button>
+    </div>
+    <div class="legal-body">
+      <h2>General enquiries</h2>
+      <p>For questions about the app, partnerships, or anything else:<br>
+      <a href="mailto:hi@getout.app">hi@getout.app</a><br>
+      We aim to respond within 48 hours on business days.</p>
+
+      <h2>Privacy &amp; data requests</h2>
+      <p>To exercise your rights under GDPR, CCPA, or any other applicable law (access, erasure, portability, objection):<br>
+      <a href="mailto:privacy@getout.app">privacy@getout.app</a><br>
+      We will acknowledge your request within 72 hours and complete it within 30 days as required by law.</p>
+
+      <h2>Safety &amp; abuse</h2>
+      <p>To report a safety concern, abusive user, or an emergency situation involving the app:<br>
+      <a href="mailto:safety@getout.app">safety@getout.app</a><br>
+      Urgent reports are reviewed within 2 hours, 7 days a week.</p>
+
+      <h2>Bug reports &amp; security vulnerabilities</h2>
+      <p>Found a security issue? Please disclose responsibly:<br>
+      <a href="mailto:security@getout.app">security@getout.app</a><br>
+      We follow a 90-day coordinated disclosure policy. We do not pursue legal action against good-faith security researchers.</p>
+
+      <h2>Legal &amp; press</h2>
+      <p>Legal notices, subpoenas, or press enquiries:<br>
+      <a href="mailto:legal@getout.app">legal@getout.app</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CLOCK ────────────────────────────────────────────────────
+function tick() {
+  var d = new Date(), h = d.getHours(), m = d.getMinutes();
+  var el = document.getElementById('clock');
+  if (el) el.textContent = (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m;
+}
+tick();
+setInterval(tick, 1000);
+
+// ── PHONE CARDS ──────────────────────────────────────────────
+setTimeout(function() { var c = document.getElementById('pc1'); if (c) c.classList.add('in'); }, 500);
+setTimeout(function() { var c = document.getElementById('pc2'); if (c) c.classList.add('in'); }, 800);
+
+// ── SCROLL REVEAL ────────────────────────────────────────────
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+// ── MOBILE NAV ───────────────────────────────────────────────
+var ham = document.getElementById('hamburger');
+var mn  = document.getElementById('mobileNav');
+ham.addEventListener('click', function() { mn.classList.toggle('open'); });
+function closeMobile() { mn.classList.remove('open'); }
+
+// ── SMOOTH SCROLL (non-app links only) ───────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var href = a.getAttribute('href');
+    if (href === '#') return;
+    var t = document.querySelector(href);
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+// ── APP OVERLAY ──────────────────────────────────────────────
+var SUPABASE_URL = 'https://yejceoruchvbuwlzkbze.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_oYPfMce_8ioXPwum59wAYA_hZkxCThU';
+var VIBE_EMOJI   = { coffee:'☕', walk:'🚶', chill:'🧊', food:'🍕', talk:'💬', study:'📚' };
+
+var selectedVibe      = '';
+var selectedVibeEmoji = '';
+var channel           = null;
+var myKey             = '';
+var myLat             = 0;
+var myLng             = 0;
+var myVibe            = '';
+var pendingFrom       = '';
+var pendingFromName   = '';
+var pendingFromVibe   = '';
+var chatId            = '';
+var chatPartnerKey    = '';
+
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ── Matching math ─────────────────────────────────────────────
+var R_MI = 3958.8;
+var RADIUS_MI = 5;
+var VIBE_COMPAT = {
+  coffee:['coffee','talk','chill'], walk:['walk','chill'],
+  chill:['chill','walk','coffee'],  food:['food','talk'],
+  talk:['talk','coffee','food'],    study:['study'],
+};
+function haversine(la1,lo1,la2,lo2) {
+  var dLa=(la2-la1)*Math.PI/180, dLo=(lo2-lo1)*Math.PI/180;
+  var a=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)*Math.sin(dLo/2);
+  return R_MI*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function vibeScore(a,b){ return a===b?20:((VIBE_COMPAT[a]||[]).indexOf(b)!==-1?10:0); }
+function distScore(mi){ return Math.max(0,Math.round(80*(1-mi/3))); }
+function fuzz(c){ return c+(Math.random()*0.009-0.0045); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Live screen states ────────────────────────────────────────
+function showState(state, extra) {
+  ['stateLoading','stateEmpty','stateError','matchList','matchesLabel'].forEach(function(id) {
+    document.getElementById(id).style.display = 'none';
+  });
+  if (state==='loading')      document.getElementById('stateLoading').style.display='flex';
+  else if (state==='empty')   document.getElementById('stateEmpty').style.display='flex';
+  else if (state==='error') {
+    document.getElementById('stateError').style.display='flex';
+    if (extra) document.getElementById('stateErrorText').textContent=extra;
+  } else if (state==='list') {
+    document.getElementById('matchList').style.display='flex';
+    document.getElementById('matchesLabel').style.display='block';
+  }
+}
+
+// ── Render matches ────────────────────────────────────────────
+function renderMatches(matches) {
+  if (!matches || matches.length===0) { showState('empty'); return; }
+  var list = document.getElementById('matchList');
+  list.innerHTML = '';
+  matches.forEach(function(u,i) {
+    var isTop=i===0, score=u.matchScore;
+    var cls=score>=70?'high':score>=50?'mid':'low';
+    var card=document.createElement('div');
+    card.className='nearby-card'+(isTop?' top-match':'');
+    card.innerHTML=
+      '<div class="nc-avatar">'+(VIBE_EMOJI[u.vibe]||'👋')+'</div>'+
+      '<div class="nc-info">'+
+        '<div class="nc-name">'+esc(u.name)+'</div>'+
+        '<div class="nc-vibe">'+esc(u.vibe)+' &middot; '+u.distMiles+' mi</div>'+
+      '</div>'+
+      '<div class="score-badge">'+
+        (isTop?'<span class="score-label">Top</span>':'')+
+        '<span class="score-num '+cls+'">'+score+'</span>'+
+      '</div>'+
+      '<button class="connect-btn" onclick="sendConnect(\''+esc(u.key)+'\',\''+esc(u.name)+'\','+score+',this)">Connect</button>';
+    list.appendChild(card);
+  });
+  var n=matches.length;
+  document.getElementById('matchesLabel').textContent=n+' '+(n===1?'match':'matches')+' nearby';
+  showState('list');
+}
+
+// ── Compute matches from Supabase Presence state ──────────────
+function refreshMatches() {
+  if (!channel) return;
+  var state = channel.presenceState();
+  var matches = [];
+  Object.keys(state).forEach(function(k) {
+    if (k===myKey) return;
+    var u = state[k][0];
+    if (!u||u.lat==null) return;
+    var dist = haversine(myLat, myLng, u.lat, u.lng);
+    if (dist <= RADIUS_MI) {
+      matches.push({
+        key:       k,
+        name:      u.name,
+        vibe:      u.vibe,
+        distMiles: Math.round(dist*10)/10,
+        matchScore:distScore(dist)+vibeScore(myVibe,u.vibe),
+        since:     u.since,
+      });
+    }
+  });
+  matches.sort(function(a,b){ return b.matchScore-a.matchScore; });
+  renderMatches(matches);
+}
+
+// ── Supabase Realtime ─────────────────────────────────────────
+function connectRealtime(name, vibe, lat, lng) {
+  myKey  = name+'_'+Date.now();
+  myLat  = fuzz(lat);
+  myLng  = fuzz(lng);
+  myVibe = vibe;
+
+  if (channel) { sb.removeChannel(channel); }
+
+  channel = sb.channel('out-live-v1', {
+    config: { presence: { key: myKey }, broadcast: { self: false } }
+  });
+
+  channel
+    .on('presence', { event: 'sync' }, function() { refreshMatches(); })
+    .on('presence', { event: 'join' }, function() { refreshMatches(); })
+    .on('presence', { event: 'leave'}, function() { refreshMatches(); })
+    .on('broadcast', { event: 'connect_req' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.to === myKey) showBanner(p);
+    })
+    .on('broadcast', { event: 'connect_acc' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.to === myKey) {
+        hideBanner();
+        startChat(p.from, p.name, p.vibe, p.chatId);
+      }
+    })
+    .on('broadcast', { event: 'connect_dec' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.to === myKey) hideBanner();
+    })
+    .on('broadcast', { event: 'chat_msg' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.chatId === chatId && p.from !== myKey) {
+        document.getElementById('typingRow').classList.remove('show');
+        appendMsg(p.text, false, p.ts);
+      }
+    })
+    .on('broadcast', { event: 'chat_typing' }, function(msg) {
+      var p = msg.payload;
+      if (!p || p.chatId !== chatId || p.from === myKey) return;
+      var row = document.getElementById('typingRow');
+      row.classList.toggle('show', !!p.typing);
+      if (p.typing) {
+        var msgs = document.getElementById('chatMessages');
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+    })
+    .subscribe(function(status) {
+      if (status === 'SUBSCRIBED') {
+        channel.track({ name:name, vibe:vibe, lat:myLat, lng:myLng, since:Date.now() });
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+        showState('error', 'Could not connect to matching server. Check your internet connection.');
+      }
+    });
+}
+
+// ── Send / accept / decline connect ──────────────────────────
+function sendConnect(toKey, toName, score, btn) {
+  if (!channel) return;
+  btn.textContent='Sent ✓'; btn.classList.add('sent');
+  channel.send({ type:'broadcast', event:'connect_req',
+    payload:{ to:toKey, from:myKey, name:esc(document.getElementById('nameInput').value.trim()), vibe:myVibe, score:score }
+  });
+}
+
+function showBanner(p) {
+  pendingFrom=p.from; pendingFromName=p.name; pendingFromVibe=p.vibe||'';
+  document.getElementById('incomingEmoji').textContent = VIBE_EMOJI[p.vibe]||'👋';
+  document.getElementById('incomingName').textContent  = p.name;
+  document.getElementById('incomingSub').textContent   = 'wants to connect · '+p.score+' match score';
+  document.getElementById('incomingBanner').classList.add('show');
+}
+function hideBanner() {
+  document.getElementById('incomingBanner').classList.remove('show');
+  pendingFrom=''; pendingFromName=''; pendingFromVibe='';
+}
+function acceptConnect() {
+  if (!pendingFrom||!channel) return;
+  var myName = document.getElementById('nameInput').value.trim();
+  var cId = [myKey, pendingFrom].sort().join('::');
+  channel.send({ type:'broadcast', event:'connect_acc',
+    payload:{ to:pendingFrom, from:myKey, name:myName, vibe:myVibe, chatId:cId }
+  });
+  startChat(pendingFrom, pendingFromName, pendingFromVibe, cId);
+  hideBanner();
+}
+function declineConnect() {
+  if (!pendingFrom||!channel) return;
+  channel.send({ type:'broadcast', event:'connect_dec', payload:{ to:pendingFrom } });
+  hideBanner();
+}
+
+// ── Avatar helpers ────────────────────────────────────────────
+var AVATAR_PALETTE = ['#0062AD','#22C55E','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4'];
+function avatarColor(name) {
+  var h=0; for(var i=0;i<name.length;i++) h=name.charCodeAt(i)+((h<<5)-h);
+  return AVATAR_PALETTE[Math.abs(h)%AVATAR_PALETTE.length];
+}
+function fmtTime(ts) {
+  var d=ts?new Date(ts):new Date(), h=d.getHours(), m=d.getMinutes();
+  return (h%12||12)+':'+(m<10?'0':'')+m+' '+(h>=12?'PM':'AM');
+}
+
+// ── Chat ──────────────────────────────────────────────────────
+var typingTimer    = null;
+var isTyping       = false;
+var partnerColor   = '#0062AD';
+var partnerInitial = '?';
+var lastMsgWasMine = null;
+
+function startChat(partnerKey, partnerName, partnerVibe, cId) {
+  chatId = cId || [myKey, partnerKey].sort().join('::');
+  chatPartnerKey = partnerKey;
+  partnerColor   = avatarColor(partnerName);
+  partnerInitial = partnerName[0].toUpperCase();
+  lastMsgWasMine = null;
+
+  // header
+  var circ = document.getElementById('chatAvatarCircle');
+  circ.style.background = partnerColor;
+  document.getElementById('chatAvatarInitial').textContent = partnerInitial;
+  document.getElementById('chatHeaderName').textContent    = partnerName;
+  document.getElementById('chatHeaderVibe').textContent    = (VIBE_EMOJI[partnerVibe]||'') + ' ' + partnerVibe;
+
+  // typing avatar color
+  var ta = document.getElementById('typingAvatar');
+  ta.style.background = partnerColor;
+  ta.textContent = partnerInitial;
+
+  document.getElementById('chatMessages').innerHTML =
+    '<div class="chat-hint">You matched 🎉<br>Say hey — figure out where to meet.</div>';
+  document.getElementById('chatInput').value = '';
+  document.getElementById('chatSend').disabled = true;
+  document.getElementById('typingRow').classList.remove('show');
+  showScreen('screen-chat');
+  setTimeout(function(){ document.getElementById('chatInput').focus(); }, 150);
+}
+
+function onChatInput() {
+  var val = document.getElementById('chatInput').value.trim();
+  document.getElementById('chatSend').disabled = !val;
+
+  // broadcast typing
+  if (!channel || !chatId) return;
+  if (!isTyping) {
+    isTyping = true;
+    channel.send({ type:'broadcast', event:'chat_typing', payload:{ chatId:chatId, from:myKey, typing:true } });
+  }
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(function() {
+    isTyping = false;
+    channel.send({ type:'broadcast', event:'chat_typing', payload:{ chatId:chatId, from:myKey, typing:false } });
+  }, 2000);
+}
+
+function sendMsg() {
+  var input = document.getElementById('chatInput');
+  var text  = input.value.trim();
+  if (!text || !channel || !chatId) return;
+  input.value = '';
+  document.getElementById('chatSend').disabled = true;
+  // stop typing indicator on send
+  isTyping = false;
+  clearTimeout(typingTimer);
+  channel.send({ type:'broadcast', event:'chat_typing', payload:{ chatId:chatId, from:myKey, typing:false } });
+  appendMsg(text, true, Date.now());
+  channel.send({ type:'broadcast', event:'chat_msg', payload:{ chatId:chatId, from:myKey, text:text, ts:Date.now() } });
+}
+
+function appendMsg(text, isMe, ts) {
+  var msgs = document.getElementById('chatMessages');
+  var hint = msgs.querySelector('.chat-hint');
+  if (hint) hint.remove();
+
+  var isSeq = (lastMsgWasMine === isMe);
+  lastMsgWasMine = isMe;
+
+  var row = document.createElement('div');
+  row.className = 'msg-row ' + (isMe?'mine':'theirs') + (isSeq?' seq':'');
+
+  // avatar (theirs only, hidden if sequential)
+  var av = document.createElement('div');
+  av.className = 'msg-avatar-sm';
+  av.style.background = partnerColor;
+  av.textContent = partnerInitial;
+
+  var col = document.createElement('div');
+  col.className = 'msg-col';
+
+  var bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+
+  var time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = fmtTime(ts);
+
+  col.appendChild(bubble);
+  if (!isSeq) col.appendChild(time);
+
+  if (!isMe) row.appendChild(av);
+  row.appendChild(col);
+
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  if (!isMe) checkSafety(text);
+}
+
+function leaveChat() {
+  chatId=''; chatPartnerKey=''; lastMsgWasMine=null;
+  dismissSafetyWarning();
+  document.getElementById('typingRow').classList.remove('show');
+  closeApp();
+}
+
+// ── Block / Report ────────────────────────────────────────────
+function openChatMenu() {
+  var name = document.getElementById('chatHeaderName').textContent;
+  document.getElementById('reportMenuTitle').textContent = name;
+  document.getElementById('reportMenuMain').style.display = '';
+  document.getElementById('reportMenuReasons').style.display = 'none';
+  document.getElementById('reportSheet').classList.add('show');
+}
+function closeChatMenu() {
+  document.getElementById('reportSheet').classList.remove('show');
+}
+function showReportReasons() {
+  document.getElementById('reportMenuMain').style.display = 'none';
+  document.getElementById('reportMenuReasons').style.display = '';
+}
+function confirmBlock() {
+  var name = document.getElementById('chatHeaderName').textContent;
+  closeChatMenu();
+  if (!confirm('Block ' + name + '? They won\'t be able to connect with you.')) return;
+  doBlock();
+}
+function doBlock() {
+  chatId=''; chatPartnerKey=''; lastMsgWasMine=null;
+  dismissSafetyWarning();
+  document.getElementById('typingRow').classList.remove('show');
+  showScreen('screen-live');
+}
+function reportPartner(reason) {
+  closeChatMenu();
+  if (channel && chatPartnerKey) {
+    channel.send({ type:'broadcast', event:'user_reported',
+      payload:{ to:chatPartnerKey, from:myKey, reason:reason } });
+  }
+  doBlock();
+  var toast = document.getElementById('matchedToast');
+  toast.textContent = 'Reported & blocked.';
+  toast.style.cssText = 'background:#FEF2F2;border-color:#FECACA;color:#DC2626;';
+  toast.classList.add('show');
+  setTimeout(function(){ hideMatchedToast(); toast.style.cssText=''; }, 3000);
+}
+
+// ── Safety detection ──────────────────────────────────────────
+var SAFETY_PATTERNS = [
+  { re: /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/,
+    msg: 'Phone number detected. Be careful sharing personal contact info with strangers.' },
+  { re: /venmo|cashapp|cash app|zelle|paypal|crypto|bitcoin|send money/i,
+    msg: 'Payment app mentioned. Never send money to someone you just met online.' },
+  { re: /https?:\/\/|bit\.ly|tinyurl\.com|t\.co\//i,
+    msg: 'External link detected. Be cautious clicking links from people you just met.' },
+  { re: /instagram|snapchat|telegram|whatsapp|kik|discord/i,
+    msg: 'Request to move to another app. You\'re not obligated to share your accounts.' },
+];
+function checkSafety(text) {
+  for (var i = 0; i < SAFETY_PATTERNS.length; i++) {
+    if (SAFETY_PATTERNS[i].re.test(text)) {
+      showSafetyWarning(SAFETY_PATTERNS[i].msg);
+      return;
+    }
+  }
+}
+function showSafetyWarning(msg) {
+  document.getElementById('safetyWarningText').textContent = msg;
+  document.getElementById('safetyWarning').classList.add('show');
+}
+function dismissSafetyWarning() {
+  document.getElementById('safetyWarning').classList.remove('show');
+}
+
+// ── Email auth ────────────────────────────────────────────────
+var currentEmail = '';
+var resendInterval = null;
+
+function goToAuth() { showScreen('screen-auth'); }
+
+function validateEmail() {
+  var val = document.getElementById('emailInput').value.trim();
+  var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  document.getElementById('emailNext').disabled = !ok;
+  document.getElementById('emailError').textContent = '';
+}
+
+function sendOTP() {
+  var btn = document.getElementById('emailNext');
+  if (btn.disabled) return;
+  currentEmail = document.getElementById('emailInput').value.trim();
+  btn.disabled = true; btn.textContent = 'Sending…';
+  sb.auth.signInWithOtp({ email: currentEmail, options: { shouldCreateUser: true } })
+    .then(function(res) {
+      btn.textContent = 'Send Code →';
+      if (res.error) {
+        document.getElementById('emailError').textContent = res.error.message || 'Could not send code. Try again.';
+        btn.disabled = false;
+        return;
+      }
+      document.getElementById('otpSub').textContent = 'We sent a 6-digit code to ' + currentEmail;
+      document.getElementById('otpError').textContent = '';
+      document.querySelectorAll('.otp-digit').forEach(function(i){ i.value=''; });
+      document.getElementById('otpNext').disabled = true;
+      showScreen('screen-otp');
+      startResendTimer();
+      setTimeout(function(){ document.querySelectorAll('.otp-digit')[0].focus(); }, 100);
+    });
+}
+
+function startResendTimer() {
+  var secs = 60;
+  var timerEl = document.getElementById('resendTimer');
+  var btn = document.getElementById('resendBtn');
+  btn.disabled = true;
+  btn.innerHTML = 'Resend in <span id="resendTimer">' + secs + '</span>s';
+  if (resendInterval) clearInterval(resendInterval);
+  resendInterval = setInterval(function() {
+    secs--;
+    var t = document.getElementById('resendTimer');
+    if (t) t.textContent = secs;
+    if (secs <= 0) {
+      clearInterval(resendInterval); resendInterval = null;
+      btn.innerHTML = 'Resend code';
+      btn.disabled = false;
+    }
+  }, 1000);
+}
+
+function resendOTP() {
+  var btn = document.getElementById('resendBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  sb.auth.signInWithOtp({ email: currentEmail, options: { shouldCreateUser: true } })
+    .then(function(res) {
+      if (res.error) {
+        document.getElementById('otpError').textContent = 'Could not resend. Try again.';
+        btn.disabled = false; btn.textContent = 'Resend code';
+        return;
+      }
+      document.getElementById('otpError').textContent = '';
+      startResendTimer();
+    });
+}
+
+function verifyOTP() {
+  var digits = Array.from(document.querySelectorAll('.otp-digit')).map(function(i){ return i.value; }).join('');
+  if (digits.length !== 6) return;
+  var btn = document.getElementById('otpNext');
+  btn.disabled = true; btn.textContent = 'Verifying…';
+  sb.auth.verifyOtp({ email: currentEmail, token: digits, type: 'email' })
+    .then(function(res) {
+      btn.textContent = 'Verify →';
+      if (res.error) {
+        document.getElementById('otpError').textContent = res.error.message || 'Invalid code. Try again.';
+        btn.disabled = false;
+        return;
+      }
+      showScreen('screen-name');
+      setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
+    });
+}
+
+function wireOtpInputs() {
+  var inputs = Array.from(document.querySelectorAll('.otp-digit'));
+  inputs.forEach(function(inp, idx) {
+    inp.addEventListener('input', function() {
+      inp.value = inp.value.replace(/\D/g,'').slice(-1);
+      if (inp.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+      var all = inputs.every(function(i){ return i.value.length === 1; });
+      document.getElementById('otpNext').disabled = !all;
+      document.getElementById('otpError').textContent = '';
+    });
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Backspace' && !inp.value && idx > 0) inputs[idx - 1].focus();
+    });
+    inp.addEventListener('paste', function(e) {
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
+      inputs.forEach(function(i, j){ i.value = text[j] || ''; });
+      var firstEmpty = inputs.findIndex(function(i){ return !i.value; });
+      (firstEmpty !== -1 ? inputs[firstEmpty] : inputs[5]).focus();
+      document.getElementById('otpNext').disabled = !inputs.every(function(i){ return i.value; });
+    });
+  });
+}
+wireOtpInputs();
+
+function hideMatchedToast() { document.getElementById('matchedToast').classList.remove('show'); }
+
+// ── Legal overlays ────────────────────────────────────────────
+function openLegal(page) {
+  document.getElementById('legal-'+page).classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeLegal(page) {
+  document.getElementById('legal-'+page).classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ── UI helpers ────────────────────────────────────────────────
+function openApp() {
+  document.getElementById('app-overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+  sb.auth.getSession().then(function(res) {
+    if (res.data && res.data.session) {
+      showScreen('screen-name');
+      setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
+    } else {
+      showScreen('screen-auth');
+      setTimeout(function(){ var i=document.getElementById('emailInput'); if(i) i.focus(); }, 50);
+    }
+  });
+}
+
+function closeApp() {
+  if (channel) { channel.untrack(); sb.removeChannel(channel); channel=null; }
+  hideBanner(); hideMatchedToast(); closeChatMenu(); dismissSafetyWarning();
+  document.getElementById('app-overlay').classList.remove('show');
+  document.body.style.overflow='';
+  document.getElementById('nameInput').value='';
+  document.getElementById('charCount').textContent='0';
+  document.getElementById('nameNext').disabled=true;
+  document.getElementById('vibeNext').disabled=true;
+  document.getElementById('emailInput').value='';
+  document.getElementById('emailError').textContent='';
+  document.getElementById('emailNext').disabled=true;
+  document.getElementById('otpError').textContent='';
+  document.querySelectorAll('.otp-digit').forEach(function(i){ i.value=''; });
+  document.getElementById('otpNext').disabled=true;
+  if (resendInterval) { clearInterval(resendInterval); resendInterval=null; }
+  document.querySelectorAll('.vibe-btn').forEach(function(b){ b.classList.remove('selected'); });
+  selectedVibe=''; selectedVibeEmoji=''; myKey=''; chatId=''; chatPartnerKey='';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.app-screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+function goToName() { showScreen('screen-name'); }
+function goToVibe() { if(document.getElementById('nameInput').value.trim()) showScreen('screen-vibe'); }
+function selectVibe(btn,emoji,label) {
+  document.querySelectorAll('.vibe-btn').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  selectedVibe=label; selectedVibeEmoji=emoji;
+  document.getElementById('vibeNext').disabled=false;
+}
+
+// ── Go live ───────────────────────────────────────────────────
+function goLive() {
+  if (!selectedVibe) return;
+  var name=document.getElementById('nameInput').value.trim();
+  document.getElementById('liveNameDisplay').textContent='Hey, '+name+' 👋';
+  document.getElementById('liveVibeDisplay').textContent='You\'re Out · '+selectedVibeEmoji+' '+selectedVibe;
+  showScreen('screen-live');
+  showState('loading');
+
+  if (!navigator.geolocation) { showState('error','Geolocation not supported by your browser.'); return; }
+  navigator.geolocation.getCurrentPosition(
+    function(pos) { connectRealtime(name, selectedVibe, pos.coords.latitude, pos.coords.longitude); },
+    function(err) {
+      showState('error', err.code===1
+        ? 'Location access denied. Enable location in browser settings and try again.'
+        : 'Could not get your location. Please try again.');
+    },
+    { enableHighAccuracy:true, timeout:12000 }
+  );
+}
+
+// Name input validation
+var nameInput = document.getElementById('nameInput');
+nameInput.addEventListener('input', function() {
+  document.getElementById('charCount').textContent = nameInput.value.length;
+  document.getElementById('nameNext').disabled = nameInput.value.trim().length === 0;
+});
+nameInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') goToVibe();
+});
+
+// Wire ALL "I'm Out" buttons to open the app
+document.querySelectorAll('.pill-btn, .nav-btn, .mobile-nav-btn').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeMobile();
+    openApp();
+  });
+});
+</script>
+</body>
+</html>
