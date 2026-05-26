@@ -1216,8 +1216,8 @@ footer {
 <!-- ── APP OVERLAY ─────────────────────────────────────────── -->
 <div id="app-overlay">
 
-  <!-- Step 0a: Email auth -->
-  <div class="app-screen active" id="screen-auth">
+  <!-- Step 0a: Email auth (optional) -->
+  <div class="app-screen" id="screen-auth">
     <div class="app-topbar">
       <div class="app-logo">Out</div>
       <button class="app-back" onclick="closeApp()">✕ Close</button>
@@ -2210,15 +2210,8 @@ function closeLegal(page) {
 function openApp() {
   document.getElementById('app-overlay').classList.add('show');
   document.body.style.overflow='hidden';
-  sb.auth.getSession().then(function(res) {
-    if (res.data && res.data.session) {
-      showScreen('screen-name');
-      setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
-    } else {
-      showScreen('screen-auth');
-      setTimeout(function(){ var i=document.getElementById('emailInput'); if(i) i.focus(); }, 50);
-    }
-  });
+  showScreen('screen-name');
+  setTimeout(function(){ var i=document.getElementById('nameInput'); if(i) i.focus(); }, 50);
 }
 
 function closeApp() {
