@@ -1358,6 +1358,428 @@ footer {
   font-size: 0.85rem; color: #CCC; line-height: 1.8;
 }
 .board-empty strong { display: block; color: #999; font-size: 0.95rem; margin-bottom: 4px; }
+.board-empty-actions { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.board-empty-action {
+  padding: 8px 16px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; border: 1.5px solid #E0E0E0; background: #fff; color: #555;
+  font-family: inherit; transition: all 0.15s;
+}
+.board-empty-action:hover { border-color: #111; color: #111; }
+
+/* board compose expanded */
+.board-compose-wrap { background: #fff; border: 1.5px solid #E5E5E5; border-radius: 14px; padding: 14px; margin-bottom: 14px; flex-shrink: 0; }
+.board-title-input {
+  width: 100%; padding: 0 0 10px; border: none; border-bottom: 1px solid #F0F0F0;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; color: #111;
+  outline: none; background: transparent;
+}
+.board-title-input::placeholder { color: #CCC; font-weight: 400; }
+.board-body-input {
+  width: 100%; padding: 10px 0; border: none; resize: none;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #555;
+  outline: none; background: transparent; line-height: 1.5; min-height: 42px;
+}
+.board-body-input::placeholder { color: #DDD; }
+.board-compose-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid #F0F0F0; }
+.board-compose-hint { font-size: 0.7rem; color: #CCC; }
+.board-card-title { font-size: 0.9rem; font-weight: 700; color: #111; margin-bottom: 4px; line-height: 1.4; }
+.board-card-body  { font-size: 0.82rem; color: #666; line-height: 1.5; margin-bottom: 10px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.board-comment-count { font-size: 0.72rem; color: #BBB; cursor: pointer; }
+.board-comment-count:hover { color: #555; }
+
+/* ── POST DETAIL SHEET ──────────────────────────────────────────── */
+.post-detail-overlay {
+  display: none; position: fixed; inset: 0; z-index: 550;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.post-detail-overlay.show { display: flex; }
+.post-detail-sheet {
+  background: #F8F8F7; border-radius: 22px 22px 0 0;
+  width: 100%; max-width: 540px; max-height: 90vh;
+  display: flex; flex-direction: column;
+  animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+.post-detail-drag { width: 40px; height: 4px; background: #E0E0E0; border-radius: 2px; margin: 14px auto 0; flex-shrink: 0; }
+.post-detail-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 0; flex-shrink: 0;
+}
+.post-detail-author { font-size: 0.82rem; font-weight: 700; color: #111; }
+.post-detail-meta   { font-size: 0.7rem; color: #BBB; margin-top: 2px; }
+.post-detail-close  { background: #EBEBEB; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; color: #555; }
+.post-detail-body-wrap { padding: 16px 20px; flex-shrink: 0; }
+.post-detail-title  { font-size: 1.05rem; font-weight: 700; color: #111; line-height: 1.4; margin-bottom: 8px; letter-spacing: -0.02em; }
+.post-detail-text   { font-size: 0.88rem; color: #555; line-height: 1.65; }
+.post-detail-actions { padding: 0 20px 14px; display: flex; gap: 10px; flex-shrink: 0; }
+.post-detail-join {
+  padding: 10px 20px; border-radius: 10px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.post-detail-join:hover { background: #333; }
+.post-detail-join.sent { background: #555; cursor: default; pointer-events: none; }
+
+/* Comments */
+.post-comments-section { flex: 1; overflow-y: auto; border-top: 1px solid #EBEBEB; display: flex; flex-direction: column; min-height: 0; }
+.post-comments-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #BBB; padding: 14px 20px 8px; flex-shrink: 0; }
+.post-comments-list { flex: 1; overflow-y: auto; padding: 0 20px; }
+.post-comment { padding: 10px 0; border-bottom: 1px solid #F3F3F3; }
+.post-comment:last-child { border-bottom: none; }
+.post-comment-author { font-size: 0.78rem; font-weight: 700; color: #111; margin-bottom: 3px; }
+.post-comment-text   { font-size: 0.82rem; color: #444; line-height: 1.5; }
+.post-comment-time   { font-size: 0.66rem; color: #CCC; margin-top: 3px; }
+.post-comment-empty  { text-align: center; padding: 20px; font-size: 0.82rem; color: #CCC; }
+.post-comment-compose {
+  display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid #EBEBEB;
+  background: #fff; flex-shrink: 0;
+}
+.post-comment-input {
+  flex: 1; padding: 9px 13px; border-radius: 22px;
+  border: 1.5px solid #E5E5E5; background: #F8F8F7;
+  font-family: inherit; font-size: 0.85rem; color: #111; outline: none;
+  transition: border-color 0.15s;
+}
+.post-comment-input:focus { border-color: #111; background: #fff; }
+.post-comment-input::placeholder { color: #CCC; }
+.post-comment-send {
+  width: 36px; height: 36px; border-radius: 50%; background: #111; color: #fff;
+  border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; transition: background 0.15s;
+}
+.post-comment-send:hover { background: #333; }
+
+/* ── FEEDBACK OVERLAY ───────────────────────────────────────────── */
+.feedback-overlay {
+  display: none; position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.feedback-overlay.show { display: flex; }
+.feedback-sheet {
+  background: #fff; border-radius: 22px 22px 0 0;
+  padding: 0 24px 40px; width: 100%; max-width: 480px;
+  text-align: center; animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+.feedback-drag { width: 40px; height: 4px; background: #E5E5E5; border-radius: 2px; margin: 14px auto 22px; }
+.feedback-icon  { font-size: 2.2rem; margin-bottom: 10px; }
+.feedback-title { font-size: 1.1rem; font-weight: 700; color: #111; margin-bottom: 6px; letter-spacing: -0.02em; }
+.feedback-sub   { font-size: 0.85rem; color: #999; margin-bottom: 22px; }
+.feedback-btns  { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.feedback-yes {
+  width: 100%; height: 52px; border-radius: 14px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.feedback-yes:hover { background: #333; }
+.feedback-no {
+  width: 100%; height: 48px; border-radius: 14px;
+  background: none; border: 1.5px solid #E5E5E5;
+  font-family: inherit; font-size: 0.9rem; color: #999; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.feedback-no:hover { border-color: #BBB; }
+.feedback-stars-section { margin-bottom: 16px; }
+.feedback-stars-label { font-size: 0.82rem; color: #555; margin-bottom: 12px; }
+.feedback-star-row { display: flex; justify-content: center; gap: 8px; }
+.star-btn {
+  font-size: 1.8rem; background: none; border: none; cursor: pointer;
+  color: #E0E0E0; transition: color 0.1s; padding: 2px;
+}
+.star-btn.lit { color: #F59E0B; }
+.feedback-skip { background: none; border: none; color: #CCC; font-family: inherit; font-size: 0.82rem; cursor: pointer; padding: 4px; }
+
+/* ── LIVE COUNTER (hero) ─────────────────────────────────────────── */
+.live-counter-pill {
+  display: none; align-items: center; gap: 7px;
+  font-size: 0.78rem; font-weight: 600; color: #15803D;
+  background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25);
+  padding: 5px 13px; border-radius: 9999px; margin-bottom: 18px;
+  width: fit-content;
+}
+.live-counter-pill.show { display: inline-flex; }
+.live-counter-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #22C55E; flex-shrink: 0;
+  animation: dotFade 1.5s ease-in-out infinite;
+}
+
+/* ── LANDING BOARD SECTION ──────────────────────────────────────── */
+#community { padding: 96px 0; border-top: 1px solid #EFEFEF; }
+.community-head { text-align: center; margin-bottom: 48px; }
+.community-head h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 10px; color: #111; }
+.community-head p  { font-size: 0.95rem; color: #777; max-width: 480px; margin: 0 auto; line-height: 1.65; }
+.community-inner { max-width: 660px; margin: 0 auto; }
+.community-compose-card {
+  background: #fff; border: 1.5px solid #E5E5E5; border-radius: 16px;
+  padding: 18px 20px; margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.community-auth-row {
+  display: flex; align-items: center; gap: 12px;
+}
+.community-auth-placeholder { flex: 1; font-size: 0.9rem; color: #CCC; }
+.community-signin-btn {
+  padding: 8px 18px; border-radius: 9999px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s; white-space: nowrap;
+}
+.community-signin-btn:hover { background: #333; }
+.community-compose-form { display: none; }
+.community-compose-form.show { display: block; }
+.community-compose-user { font-size: 0.78rem; font-weight: 600; color: #22C55E; margin-bottom: 12px; }
+.community-title-input {
+  width: 100%; padding: 0 0 10px; border: none; border-bottom: 1px solid #F0F0F0;
+  font-family: 'Inter', sans-serif; font-size: 0.92rem; font-weight: 600; color: #111;
+  outline: none; background: transparent; margin-bottom: 4px;
+}
+.community-title-input::placeholder { color: #CCC; font-weight: 400; }
+.community-body-textarea {
+  width: 100%; padding: 10px 0; border: none; resize: none;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #555;
+  outline: none; background: transparent; line-height: 1.55; min-height: 52px;
+}
+.community-body-textarea::placeholder { color: #DDD; }
+.community-compose-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid #F0F0F0; margin-top: 4px; }
+.community-compose-hint { font-size: 0.7rem; color: #CCC; }
+.community-post-btn {
+  padding: 8px 20px; border-radius: 10px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.community-post-btn:hover { background: #333; }
+.community-post-btn:disabled { background: #CCC; cursor: not-allowed; }
+.community-post-list { display: flex; flex-direction: column; gap: 10px; }
+.community-post-card {
+  background: #fff; border: 1px solid #EFEFEF; border-radius: 14px;
+  padding: 16px 20px; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.community-post-card:hover { border-color: #DDD; box-shadow: 0 3px 16px rgba(0,0,0,0.08); }
+.community-post-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.community-post-author { font-size: 0.8rem; font-weight: 700; color: #111; }
+.community-post-time   { font-size: 0.7rem; color: #BBB; }
+.community-post-title  { font-size: 0.95rem; font-weight: 700; color: #111; line-height: 1.4; margin-bottom: 5px; letter-spacing: -0.01em; }
+.community-post-body   { font-size: 0.83rem; color: #666; line-height: 1.55; margin-bottom: 11px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.community-post-footer { display: flex; align-items: center; justify-content: space-between; }
+.community-post-cc  { font-size: 0.72rem; color: #BBB; }
+.community-post-chat {
+  padding: 6px 13px; border-radius: 9999px;
+  border: 1.5px solid #111; background: none;
+  font-family: inherit; font-size: 0.77rem; font-weight: 600; color: #111;
+  cursor: pointer; transition: all 0.15s;
+}
+.community-post-chat:hover { background: #111; color: #fff; }
+.community-empty { text-align: center; padding: 48px 20px; color: #CCC; font-size: 0.88rem; line-height: 1.9; }
+.community-empty strong { display: block; color: #AAA; font-size: 0.95rem; margin-bottom: 4px; }
+.community-card {
+  background: #fff; border: 1.5px solid #EBEBEB; border-radius: 14px;
+  padding: 16px 18px; margin-bottom: 14px; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: border-color 0.15s;
+}
+.community-card:hover { border-color: #D0D0D0; }
+.community-card-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.community-card-author { font-size: 0.8rem; font-weight: 700; color: #111; }
+.community-card-time   { font-size: 0.7rem; color: #BBB; }
+.community-card-title  { font-size: 0.97rem; font-weight: 600; color: #111; line-height: 1.4; margin-bottom: 6px; letter-spacing: -0.01em; }
+.community-card-body   { font-size: 0.83rem; color: #666; line-height: 1.55; margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.community-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.community-comment-count { font-size: 0.75rem; color: #AAA; }
+.community-view-btn {
+  padding: 6px 14px; border-radius: 9999px;
+  border: 1.5px solid #111; background: none;
+  font-family: inherit; font-size: 0.75rem; font-weight: 600; color: #111;
+  cursor: pointer; transition: all 0.15s;
+}
+.community-view-btn:hover { background: #111; color: #fff; }
+
+/* ── COMMUNITY POST DETAIL ──────────────────────────────────────── */
+.community-detail-overlay {
+  display: none; position: fixed; inset: 0; z-index: 550;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.community-detail-overlay.show { display: flex; }
+.community-detail-sheet {
+  background: #F8F8F7; border-radius: 22px 22px 0 0;
+  width: 100%; max-width: 580px; height: 88vh;
+  display: flex; flex-direction: column;
+  animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+.community-detail-drag { width: 40px; height: 4px; background: #E0E0E0; border-radius: 2px; margin: 14px auto 0; flex-shrink: 0; }
+.community-detail-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 0; flex-shrink: 0;
+}
+.community-detail-author { font-size: 0.82rem; font-weight: 700; color: #111; }
+.community-detail-meta   { font-size: 0.7rem; color: #BBB; margin-top: 2px; }
+.community-detail-close  {
+  width: 28px; height: 28px; border-radius: 50%; background: #EBEBEB;
+  border: none; cursor: pointer; font-size: 0.8rem;
+  display: flex; align-items: center; justify-content: center; color: #555;
+}
+.community-detail-body { padding: 14px 20px; flex-shrink: 0; }
+.community-detail-title { font-size: 1.1rem; font-weight: 700; color: #111; line-height: 1.4; margin-bottom: 8px; letter-spacing: -0.02em; }
+.community-detail-text  { font-size: 0.88rem; color: #555; line-height: 1.65; margin-bottom: 14px; }
+.community-detail-chat-btn {
+  padding: 9px 20px; border-radius: 10px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s; margin-bottom: 4px;
+}
+.community-detail-chat-btn:hover { background: #333; }
+.community-detail-comments { flex: 1; overflow-y: auto; border-top: 1px solid #EBEBEB; display: flex; flex-direction: column; min-height: 0; }
+.community-comments-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #BBB; padding: 14px 20px 8px; flex-shrink: 0; }
+.community-comments-list  { flex: 1; overflow-y: auto; padding: 0 20px; }
+.community-comment { padding: 11px 0; border-bottom: 1px solid #F3F3F3; }
+.community-comment:last-child { border-bottom: none; }
+.community-comment-author { display:block; font-size: 0.78rem; font-weight: 700; color: #111; margin-bottom: 3px; }
+.community-comment-text   { display:block; font-size: 0.83rem; color: #444; line-height: 1.55; }
+.community-comment-time   { display:block; font-size: 0.66rem; color: #CCC; margin-top: 3px; }
+.community-comment-empty  { text-align: center; padding: 24px; font-size: 0.82rem; color: #CCC; }
+.community-comment-compose {
+  display: flex; gap: 8px; padding: 12px 16px;
+  border-top: 1px solid #EBEBEB; background: #fff; flex-shrink: 0;
+}
+.community-comment-input {
+  flex: 1; padding: 9px 13px; border-radius: 22px;
+  border: 1.5px solid #E5E5E5; background: #F8F8F7;
+  font-family: inherit; font-size: 0.85rem; color: #111; outline: none;
+  transition: border-color 0.15s;
+}
+.community-comment-input:focus { border-color: #111; background: #fff; }
+.community-comment-input::placeholder { color: #CCC; }
+.community-comment-send {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #111; color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.community-comment-send:hover { background: #333; }
+
+/* ── BOARD CHAT OVERLAY ─────────────────────────────────────────── */
+.board-chat-overlay {
+  display: none; position: fixed; inset: 0; z-index: 700;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+  align-items: flex-end; justify-content: center;
+}
+.board-chat-overlay.show { display: flex; }
+.board-chat-sheet {
+  background: #111827; border-radius: 22px 22px 0 0;
+  width: 100%; max-width: 540px; height: 80vh;
+  display: flex; flex-direction: column;
+  animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+.board-chat-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px; border-bottom: 1px solid #1F2937; flex-shrink: 0;
+}
+.board-chat-avatar {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.88rem; font-weight: 700; color: #fff;
+}
+.board-chat-name { font-size: 0.92rem; font-weight: 700; color: #F9FAFB; flex: 1; }
+.board-chat-sub  { font-size: 0.7rem; color: #6B7280; margin-top: 1px; }
+.board-chat-close { background: none; border: none; color: #4B5563; cursor: pointer; font-size: 1rem; padding: 4px; }
+.board-chat-close:hover { color: #9CA3AF; }
+.board-chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.board-chat-hint { text-align: center; color: #374151; font-size: 0.8rem; padding: 24px; margin: auto; line-height: 1.8; }
+.board-msg-row { display: flex; align-items: flex-end; gap: 8px; }
+.board-msg-row.mine { flex-direction: row-reverse; }
+.board-msg-bubble {
+  max-width: 75%; padding: 9px 13px; font-size: 0.88rem; line-height: 1.5; word-break: break-word;
+}
+.board-msg-row.mine   .board-msg-bubble { background: #2563EB; color: #fff; border-radius: 18px 18px 4px 18px; }
+.board-msg-row.theirs .board-msg-bubble { background: #1F2937; color: #F9FAFB; border-radius: 18px 18px 18px 4px; }
+.board-msg-time { font-size: 0.6rem; color: #374151; padding: 2px 4px; flex-shrink: 0; }
+.board-chat-input-bar {
+  display: flex; gap: 8px; padding: 12px 16px;
+  border-top: 1px solid #1F2937; flex-shrink: 0;
+}
+.board-chat-input {
+  flex: 1; padding: 10px 14px; border-radius: 22px;
+  border: 1.5px solid #374151; background: #1F2937;
+  font-family: inherit; font-size: 0.88rem; color: #F9FAFB; outline: none;
+  transition: border-color 0.15s;
+}
+.board-chat-input:focus { border-color: #4B5563; }
+.board-chat-input::placeholder { color: #4B5563; }
+.board-chat-send {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #2563EB; color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.board-chat-send:hover { background: #1D4ED8; }
+.board-chat-send:disabled { background: #1F2937; color: #374151; cursor: not-allowed; }
+.board-chat-signin {
+  padding: 16px 20px; text-align: center;
+  border-top: 1px solid #1F2937; flex-shrink: 0;
+}
+.board-chat-signin-btn {
+  width: 100%; padding: 12px; border-radius: 12px;
+  background: #2563EB; color: #fff; border: none;
+  font-family: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+
+/* ── FEEDBACK OVERLAY ───────────────────────────────────────────── */
+.feedback-overlay {
+  display: none; position: fixed; inset: 0; z-index: 650;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.feedback-overlay.show { display: flex; }
+.feedback-sheet {
+  background: #fff; border-radius: 22px 22px 0 0;
+  padding: 0 24px 40px; width: 100%; max-width: 480px;
+  text-align: center; animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+.feedback-drag  { width: 40px; height: 4px; background: #E5E5E5; border-radius: 2px; margin: 14px auto 22px; }
+.feedback-icon  { font-size: 2.2rem; margin-bottom: 10px; }
+.feedback-title { font-size: 1.1rem; font-weight: 700; color: #111; margin-bottom: 6px; letter-spacing: -0.02em; }
+.feedback-sub   { font-size: 0.85rem; color: #999; margin-bottom: 22px; }
+.feedback-btns  { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.feedback-yes   { width: 100%; height: 52px; border-radius: 14px; background: #111; color: #fff; border: none; font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+.feedback-yes:hover { background: #333; }
+.feedback-no    { width: 100%; height: 48px; border-radius: 14px; background: none; border: 1.5px solid #E5E5E5; font-family: inherit; font-size: 0.9rem; color: #999; cursor: pointer; }
+.feedback-no:hover { border-color: #BBB; }
+.feedback-stars-section { margin-bottom: 16px; display: none; }
+.feedback-stars-label { font-size: 0.85rem; color: #555; margin-bottom: 12px; font-weight: 600; }
+.feedback-star-row { display: flex; justify-content: center; gap: 6px; }
+.star-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: #E0E0E0; transition: color 0.1s; padding: 2px; }
+.star-btn.lit { color: #F59E0B; }
+.feedback-skip { background: none; border: none; color: #CCC; font-family: inherit; font-size: 0.82rem; cursor: pointer; padding: 4px; }
+
+/* ── LIVE COUNTER (hero) ─────────────────────────────────────────── */
+.live-counter-pill {
+  display: none; align-items: center; gap: 7px;
+  font-size: 0.78rem; font-weight: 600; color: #15803D;
+  background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25);
+  padding: 5px 13px; border-radius: 9999px; margin-bottom: 18px; width: fit-content;
+}
+.live-counter-pill.show { display: inline-flex; }
+.live-counter-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; flex-shrink: 0; animation: dotFade 1.5s ease-in-out infinite; }
+
+/* ── LOCATION CARD (chat) ────────────────────────────────────────── */
+.location-card-msg {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 14px; text-decoration: none;
+  border: 1px solid #374151; background: #1a2433;
+  transition: background 0.15s; max-width: 220px;
+}
+.location-card-msg:hover { background: #1F2937; }
+.location-card-icon { font-size: 1.3rem; flex-shrink: 0; }
+.location-card-title { font-size: 0.8rem; font-weight: 700; color: #F9FAFB; line-height: 1.3; }
+.location-card-sub   { font-size: 0.68rem; color: #6B7280; margin-top: 2px; }
 
 /* ── CHAT SAFETY CARD ──────────────────────────────────────────── */
 .chat-safety-card {
@@ -1443,6 +1865,7 @@ footer {
   <div class="nav-logo">Out</div>
   <div class="nav-links">
     <a href="#how">How it works</a>
+    <a href="#community">Board</a>
     <a href="#safety">Safety</a>
   </div>
   <a href="#cta" class="nav-btn">I'm Out →</a>
@@ -1452,6 +1875,7 @@ footer {
 </nav>
 <div class="mobile-nav" id="mobileNav">
   <a href="#how" onclick="closeMobile()">How it works</a>
+  <a href="#community" onclick="closeMobile()">Board</a>
   <a href="#safety" onclick="closeMobile()">Safety</a>
   <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()">I'm Out →</a>
 </div>
@@ -1460,6 +1884,7 @@ footer {
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-text">
+      <div class="live-counter-pill" id="liveCounter"><div class="live-counter-dot"></div><span id="liveCountNum">0</span> people Out right now</div>
       <div class="hero-label">Available now in your city</div>
       <h1 class="hero-headline">Find someone near you,&nbsp;right&nbsp;now.</h1>
       <p class="hero-sub">No profiles. No swiping. No algorithm. Just real people within 3 miles who are free right now.</p>
@@ -1694,6 +2119,48 @@ footer {
   </div>
 </section>
 
+<!-- COMMUNITY BOARD -->
+<section id="community">
+  <div class="container">
+    <div class="community-head reveal">
+      <div class="section-label">Community Board</div>
+      <h2>Going somewhere? Post it.</h2>
+      <p>No need to go live. Post where you're heading, let people comment, and chat directly — even when no one's live nearby.</p>
+    </div>
+    <div class="community-inner">
+
+      <!-- Compose card -->
+      <div class="community-compose-card">
+        <!-- Auth prompt (shown when not signed in) -->
+        <div class="community-auth-row" id="communityAuthRow">
+          <span class="community-auth-placeholder">What are you up to today?</span>
+          <button class="community-signin-btn" onclick="communitySignIn()">Sign in to post</button>
+        </div>
+        <div id="communityGoogleBtnWrap" style="display:none;justify-content:center;margin-top:10px"></div>
+        <!-- Compose form (shown when signed in) -->
+        <div class="community-compose-form" id="communityComposeForm" style="display:none">
+          <div class="community-compose-user" id="communityUserLabel"></div>
+          <input class="community-title-input" id="cpTitle" type="text"
+            placeholder="Where are you going? (e.g. Prospect Park Saturday 3pm)"
+            maxlength="100" autocomplete="off">
+          <textarea class="community-body-textarea" id="cpBody"
+            placeholder="Tell people more... (optional)" maxlength="400" rows="2"></textarea>
+          <div class="community-compose-footer">
+            <span class="community-compose-hint">Anyone can see and comment</span>
+            <button class="community-post-btn" id="cpPostBtn" onclick="submitCommunityPost()">Post</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Posts list -->
+      <div class="community-post-list" id="communityPostList">
+        <div class="community-empty"><strong>No posts yet</strong>Be the first to post something.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="container reveal">
@@ -1715,6 +2182,95 @@ footer {
   </div>
   <div class="footer-copy">© 2026 Out.</div>
 </footer>
+
+<!-- Community post detail overlay -->
+<div class="community-detail-overlay" id="communityPostDetail" onclick="if(event.target===this)closeCommunityPost()">
+  <div class="community-detail-sheet">
+    <div class="community-detail-drag"></div>
+    <div class="community-detail-head">
+      <div>
+        <div class="community-detail-author" id="cdAuthor"></div>
+        <div class="community-detail-meta"   id="cdMeta"></div>
+      </div>
+      <button class="community-detail-close" onclick="closeCommunityPost()">✕</button>
+    </div>
+    <div class="community-detail-body">
+      <div class="community-detail-title" id="cdTitle"></div>
+      <div class="community-detail-text"  id="cdBody"></div>
+      <button class="community-detail-chat-btn" id="cdChatBtn" onclick="chatWithPostAuthor()">💬 Chat with author</button>
+    </div>
+    <div class="community-detail-comments">
+      <div class="community-comments-label">Comments</div>
+      <div class="community-comments-list" id="cdCommentsList">
+        <div class="community-comment-empty">Loading...</div>
+      </div>
+      <div class="community-comment-compose">
+        <input class="community-comment-input" id="cdCommentInput"
+          placeholder="Add a comment…" maxlength="300"
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();submitCommunityComment();}">
+        <button class="community-comment-send" onclick="submitCommunityComment()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Board chat overlay (persistent chat with post author) -->
+<div class="board-chat-overlay" id="boardChatOverlay" onclick="if(event.target===this)closeBoardChat()">
+  <div class="board-chat-sheet">
+    <div class="board-chat-header">
+      <div class="board-chat-avatar" id="boardChatAvatar"></div>
+      <div>
+        <div class="board-chat-name" id="boardChatName">—</div>
+        <div class="board-chat-sub">Community Board chat</div>
+      </div>
+      <button class="board-chat-close" onclick="closeBoardChat()">✕</button>
+    </div>
+    <div class="board-chat-messages" id="boardChatMessages">
+      <div class="board-chat-hint">Messages are saved so you can pick up the conversation anytime.</div>
+    </div>
+    <!-- Sign-in prompt (shown if not auth'd) -->
+    <div class="board-chat-signin" id="boardChatSigninPrompt" style="display:none">
+      <button class="board-chat-signin-btn" onclick="communitySignIn()">Sign in with Google to chat</button>
+    </div>
+    <!-- Input bar (shown when auth'd) -->
+    <div class="board-chat-input-bar" id="boardChatInputBar">
+      <input class="board-chat-input" id="boardChatInput"
+        placeholder="Message…" maxlength="500" autocomplete="off"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();sendBoardMessage();}">
+      <button class="board-chat-send" id="boardChatSend" onclick="sendBoardMessage()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Feedback overlay (after chat ends) -->
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-sheet">
+    <div class="feedback-drag"></div>
+    <div class="feedback-icon">👋</div>
+    <div class="feedback-title">How'd it go?</div>
+    <div class="feedback-sub">Did you end up meeting up?</div>
+    <div class="feedback-btns">
+      <button class="feedback-yes" onclick="submitFeedback(true)">Yes, we met up!</button>
+      <button class="feedback-no"  onclick="submitFeedback(false)">Not this time</button>
+    </div>
+    <div class="feedback-stars-section" id="feedbackStarsSection">
+      <div class="feedback-stars-label">How was the experience?</div>
+      <div class="feedback-star-row">
+        <button class="star-btn" onclick="rateMeetup(1)">★</button>
+        <button class="star-btn" onclick="rateMeetup(2)">★</button>
+        <button class="star-btn" onclick="rateMeetup(3)">★</button>
+        <button class="star-btn" onclick="rateMeetup(4)">★</button>
+        <button class="star-btn" onclick="rateMeetup(5)">★</button>
+      </div>
+    </div>
+    <button class="feedback-skip" onclick="closeFeedback()">Skip</button>
+  </div>
+</div>
 
 <!-- ── APP OVERLAY ─────────────────────────────────────────── -->
 <div id="app-overlay">
@@ -1877,7 +2433,11 @@ footer {
       <div class="match-state" id="stateEmpty" style="display:none">
         <div class="match-state-icon">🔍</div>
         <div class="match-state-title">You're live — no one nearby yet</div>
-        <div class="match-state-sub">Anyone within 3 miles who goes live<br>will appear here automatically.</div>
+        <div class="match-state-sub">Anyone within 3 miles who goes live will appear here automatically.</div>
+        <div class="board-empty-actions">
+          <button class="board-empty-action" onclick="switchLiveTab('board')">📋 Post on Board</button>
+          <button class="board-empty-action" onclick="shareInvite()">↗ Invite a friend</button>
+        </div>
       </div>
       <!-- Error state -->
       <div class="match-state" id="stateError" style="display:none">
@@ -1891,14 +2451,19 @@ footer {
 
     <!-- Board tab content -->
     <div class="tab-content" id="tab-board-content">
-      <div class="board-compose">
-        <input class="board-input" id="boardInput" type="text"
-          placeholder="I'm going to the park — anyone want to join?"
-          maxlength="100" autocomplete="off" autocorrect="off" spellcheck="false">
-        <button class="board-post-btn" id="boardPostBtn" onclick="createPost()">Post</button>
+      <div class="board-compose-wrap">
+        <input class="board-title-input" id="boardTitleInput" type="text"
+          placeholder="Where are you going? (e.g. Prospect Park at 3pm)"
+          maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false">
+        <textarea class="board-body-input" id="boardBodyInput"
+          placeholder="More details… (optional)" maxlength="300" rows="2"></textarea>
+        <div class="board-compose-footer">
+          <span class="board-compose-hint">Visible to people within 3 miles · expires in 3h</span>
+          <button class="board-post-btn" id="boardPostBtn" onclick="createPost()">Post</button>
+        </div>
       </div>
       <div class="board-list" id="boardList">
-        <div class="board-empty"><strong>Nothing posted nearby yet</strong>Be the first to post something.</div>
+        <div class="board-empty"><strong>Nothing posted nearby yet</strong>Be the first to post where you're heading.</div>
       </div>
     </div>
 
@@ -1960,7 +2525,8 @@ footer {
 
     <!-- Quick replies -->
     <div class="chat-quickreplies" id="chatQuickReplies">
-      <button class="chat-qr-btn" onclick="sendQuickReply('spot')">📍 Suggest a spot</button>
+      <button class="chat-qr-btn" onclick="shareLocation()">📍 Share my spot</button>
+      <button class="chat-qr-btn" onclick="sendQuickReply('spot')">💡 Suggest a spot</button>
       <button class="chat-qr-btn" onclick="sendQuickReply('otw')">🚶 On my way</button>
       <button class="chat-qr-btn" onclick="sendQuickReply('here')">✓ I'm here</button>
       <button class="chat-qr-btn" onclick="sendQuickReply('late')">⏱ 5 min away</button>
@@ -2495,6 +3061,12 @@ function connectRealtime(name, vibe, lat, lng) {
         msgs.scrollTop = msgs.scrollHeight;
       }
     })
+    .on('broadcast', { event: 'chat_location' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.to === myKey && p.from === chatPartnerKey) {
+        appendLocationCard(p.lat, p.lng, false, new Date().toISOString());
+      }
+    })
     .on('broadcast', { event: 'user_kicked' }, function(msg) {
       var p = msg.payload;
       if (p && p.uid === myUid) {
@@ -2672,10 +3244,16 @@ function appendMsg(text, isMe, ts) {
 }
 
 function leaveChat() {
+  var wasChatting = !!chatId;
   chatId=''; chatPartnerKey=''; lastMsgWasMine=null;
   dismissSafetyWarning();
   document.getElementById('typingRow').classList.remove('show');
-  closeApp();
+  if (wasChatting) {
+    showScreen('screen-live');
+    setTimeout(showFeedback, 400);
+  } else {
+    closeApp();
+  }
 }
 
 // ── Block / Report ────────────────────────────────────────────
@@ -2810,29 +3388,28 @@ function switchLiveTab(tab) {
 var boardRefreshTimer = null;
 
 function createPost() {
-  var text = document.getElementById('boardInput').value.trim();
-  if (!text || !myKey || !myLat) return;
+  var title = document.getElementById('boardTitleInput').value.trim();
+  var body  = document.getElementById('boardBodyInput').value.trim();
+  if (!title || !myKey || !myLat) return;
   var btn = document.getElementById('boardPostBtn');
-  btn.disabled = true;
-  btn.textContent = 'Posting…';
+  btn.disabled = true; btn.textContent = 'Posting…';
   var name = document.getElementById('nameInput').value.trim();
   var expires = new Date(Date.now() + 3*60*60*1000).toISOString();
   sb.from('posts').insert({
     name:       name,
     vibe:       myVibe,
-    text:       text,
+    text:       title + (body ? '\n\n' + body : ''),
     lat:        myLat,
     lng:        myLng,
     uid:        myUid || null,
     author_key: myKey,
     expires_at: expires,
   }).then(function(res) {
-    btn.disabled = false;
-    btn.textContent = 'Post';
+    btn.disabled = false; btn.textContent = 'Post';
     if (res.error) { alert('Could not post. Try again.'); return; }
-    document.getElementById('boardInput').value = '';
+    document.getElementById('boardTitleInput').value = '';
+    document.getElementById('boardBodyInput').value  = '';
     loadBoardPosts();
-    // Update badge
     var badge = document.getElementById('boardBadge');
     badge.textContent = '✓'; badge.style.display = 'inline-flex';
     setTimeout(function(){ badge.style.display='none'; }, 3000);
@@ -2956,6 +3533,404 @@ function shareInvite() {
 
 function closeInviteBanner() {
   document.getElementById('inviteBanner').classList.remove('show');
+}
+
+// ── Community Board state ─────────────────────────────────────
+var boardUser = null;          // { name, uid, email }
+var currentCommunityPost = null;
+var boardChatChannel = null;
+var boardChatRoomId = null;
+
+function initBoardUser() {
+  try {
+    var stored = JSON.parse(localStorage.getItem('out_board_user') || 'null');
+    if (stored && stored.uid) {
+      boardUser = stored;
+      showCommunityComposeForm();
+    }
+  } catch(e) {}
+}
+
+function saveBoardUser(u) {
+  boardUser = u;
+  try { localStorage.setItem('out_board_user', JSON.stringify(u)); } catch(e) {}
+}
+
+function communitySignIn() {
+  if (!gsiReady) { initGSI(); }
+  if (!gsiReady) {
+    alert('Google Sign-In not ready. Refresh and try again.');
+    return;
+  }
+  google.accounts.id.prompt(function(notification) {
+    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+      var wrap = document.getElementById('communityGoogleBtnWrap');
+      if (wrap) {
+        wrap.style.display = 'flex';
+        google.accounts.id.renderButton(wrap, {
+          type:'standard', theme:'outline',
+          size:'large', text:'continue_with',
+          shape:'rectangular', width:280,
+        });
+      }
+    }
+  });
+}
+
+function showCommunityComposeForm() {
+  var authRow     = document.getElementById('communityAuthRow');
+  var composeForm = document.getElementById('communityComposeForm');
+  if (authRow)     authRow.style.display = 'none';
+  if (composeForm) composeForm.classList.add('show');
+  if (boardUser) {
+    var nameEl = document.getElementById('communityUserLabel');
+    if (nameEl) nameEl.textContent = boardUser.name;
+  }
+}
+
+// ── Community Board CRUD ──────────────────────────────────────
+function submitCommunityPost() {
+  if (!boardUser) { communitySignIn(); return; }
+  var title = (document.getElementById('cpTitle').value || '').trim();
+  var body  = (document.getElementById('cpBody').value || '').trim();
+  if (!title) return;
+  var btn = document.getElementById('cpPostBtn');
+  btn.disabled = true; btn.textContent = 'Posting…';
+  sb.from('community_posts').insert({
+    author_uid:  boardUser.uid,
+    author_name: boardUser.name,
+    title:       title,
+    body:        body || null,
+  }).then(function(res) {
+    btn.disabled = false; btn.textContent = 'Post';
+    if (res.error) { alert('Could not post. Try again.'); return; }
+    document.getElementById('cpTitle').value = '';
+    document.getElementById('cpBody').value  = '';
+    loadCommunityPosts();
+  });
+}
+
+function loadCommunityPosts() {
+  sb.from('community_posts')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(20)
+    .then(function(res) {
+      if (res.error || !res.data) return;
+      renderCommunityPosts(res.data);
+      if (res.data.length) loadCommentCounts(res.data.map(function(p){ return p.id; }));
+    });
+}
+
+function renderCommunityPosts(posts) {
+  var container = document.getElementById('communityPostList');
+  if (!container) return;
+  if (!posts || posts.length === 0) {
+    container.innerHTML = '<div class="community-empty"><strong>No posts yet</strong><br>Be the first to post something.</div>';
+    return;
+  }
+  container.innerHTML = '';
+  posts.forEach(function(p) {
+    var card = document.createElement('div');
+    card.className = 'community-card';
+    card.setAttribute('data-post-id', p.id);
+    card.innerHTML =
+      '<div class="community-card-header">' +
+        '<span class="community-card-author">' + esc(p.author_name) + '</span>' +
+        '<span class="community-card-time">' + timeAgo(p.created_at) + '</span>' +
+      '</div>' +
+      '<div class="community-card-title">' + esc(p.title) + '</div>' +
+      (p.body ? '<div class="community-card-body">' + esc(p.body) + '</div>' : '') +
+      '<div class="community-card-footer">' +
+        '<span class="community-comment-count" id="cc-'+p.id+'">💬 0 comments</span>' +
+        '<button class="community-view-btn" onclick="openCommunityPost(\'' + p.id + '\')">View →</button>' +
+      '</div>';
+    container.appendChild(card);
+  });
+}
+
+function loadCommentCounts(postIds) {
+  if (!postIds || !postIds.length) return;
+  postIds.forEach(function(id) {
+    sb.from('post_comments')
+      .select('id', { count: 'exact', head: true })
+      .eq('post_id', id)
+      .then(function(res) {
+        var el = document.getElementById('cc-' + id);
+        if (el) el.textContent = '💬 ' + (res.count || 0) + ' comment' + (res.count === 1 ? '' : 's');
+      });
+  });
+}
+
+// ── Community Post Detail ─────────────────────────────────────
+function openCommunityPost(postId) {
+  sb.from('community_posts')
+    .select('*')
+    .eq('id', postId)
+    .single()
+    .then(function(res) {
+      if (res.error || !res.data) return;
+      currentCommunityPost = res.data;
+      var p = res.data;
+      document.getElementById('cdAuthor').textContent = p.author_name;
+      document.getElementById('cdMeta').textContent   = timeAgo(p.created_at);
+      document.getElementById('cdTitle').textContent  = p.title;
+      var bodyEl = document.getElementById('cdBody');
+      bodyEl.textContent    = p.body || '';
+      bodyEl.style.display  = p.body ? '' : 'none';
+
+      // Show/hide chat button based on whether this is own post
+      var chatBtn = document.getElementById('cdChatBtn');
+      var isOwn = boardUser && boardUser.uid === p.author_uid;
+      if (chatBtn) chatBtn.style.display = isOwn ? 'none' : '';
+
+      document.getElementById('communityPostDetail').classList.add('show');
+      loadCommunityComments(postId);
+    });
+}
+
+function closeCommunityPost() {
+  document.getElementById('communityPostDetail').classList.remove('show');
+  currentCommunityPost = null;
+}
+
+function loadCommunityComments(postId) {
+  var list = document.getElementById('cdCommentsList');
+  if (list) list.innerHTML = '<div class="community-comment-empty">Loading…</div>';
+  sb.from('post_comments')
+    .select('*')
+    .eq('post_id', postId)
+    .order('created_at', { ascending: true })
+    .then(function(res) {
+      if (res.error || !res.data) return;
+      renderCommunityComments(res.data);
+    });
+}
+
+function renderCommunityComments(comments) {
+  var list = document.getElementById('cdCommentsList');
+  if (!list) return;
+  if (!comments || !comments.length) {
+    list.innerHTML = '<div class="community-empty" style="font-size:0.8rem;padding:12px 0">No comments yet. Be first!</div>';
+    return;
+  }
+  list.innerHTML = '';
+  comments.forEach(function(c) {
+    var isMe = boardUser && boardUser.uid === c.author_uid;
+    var item = document.createElement('div');
+    item.className = 'community-comment' + (isMe ? ' mine' : '');
+    item.innerHTML =
+      '<div class="community-comment-author">' + esc(c.author_name) + '</div>' +
+      '<div class="community-comment-text">'   + esc(c.text)        + '</div>' +
+      '<div class="community-comment-time">'   + timeAgo(c.created_at) + '</div>';
+    list.appendChild(item);
+  });
+}
+
+function submitCommunityComment() {
+  if (!boardUser) { communitySignIn(); return; }
+  if (!currentCommunityPost) return;
+  var input = document.getElementById('cdCommentInput');
+  var text = (input ? input.value : '').trim();
+  if (!text) return;
+  sb.from('post_comments').insert({
+    post_id:     currentCommunityPost.id,
+    author_uid:  boardUser.uid,
+    author_name: boardUser.name,
+    text:        text,
+  }).then(function(res) {
+    if (res.error) { alert('Could not post comment.'); return; }
+    input.value = '';
+    loadCommunityComments(currentCommunityPost.id);
+  });
+}
+
+function chatWithPostAuthor() {
+  if (!boardUser) { communitySignIn(); return; }
+  if (!currentCommunityPost) return;
+  var post = currentCommunityPost;
+  if (boardUser.uid === post.author_uid) return;
+  closeCommunityPost();
+  openBoardChat(post.author_uid, post.author_name, post.id);
+}
+
+// ── Board Chat (persistent) ───────────────────────────────────
+function openBoardChat(recipientUid, recipientName, postId) {
+  if (!boardUser) { communitySignIn(); return; }
+  boardChatRoomId = [boardUser.uid, recipientUid].sort().join('::') + '::' + postId;
+  document.getElementById('boardChatName').textContent = recipientName;
+  document.getElementById('boardChatOverlay').classList.add('show');
+  document.getElementById('boardChatMessages').innerHTML = '';
+  loadBoardChatMessages(boardChatRoomId);
+
+  // Subscribe to realtime inserts for this room
+  if (boardChatChannel) { sb.removeChannel(boardChatChannel); boardChatChannel = null; }
+  boardChatChannel = sb.channel('board-chat-' + boardChatRoomId)
+    .on('postgres_changes', {
+      event: 'INSERT', schema: 'public', table: 'board_messages',
+      filter: 'room_id=eq.' + boardChatRoomId,
+    }, function(payload) {
+      var m = payload.new;
+      if (m.sender_uid !== boardUser.uid) {
+        appendBoardMessage(m.sender_name, m.text, false, m.created_at);
+      }
+    })
+    .subscribe();
+}
+
+function closeBoardChat() {
+  document.getElementById('boardChatOverlay').classList.remove('show');
+  if (boardChatChannel) { sb.removeChannel(boardChatChannel); boardChatChannel = null; }
+  boardChatRoomId = null;
+}
+
+function loadBoardChatMessages(roomId) {
+  sb.from('board_messages')
+    .select('*')
+    .eq('room_id', roomId)
+    .order('created_at', { ascending: true })
+    .limit(50)
+    .then(function(res) {
+      if (res.error || !res.data) return;
+      var msgs = document.getElementById('boardChatMessages');
+      if (msgs) msgs.innerHTML = '';
+      res.data.forEach(function(m) {
+        appendBoardMessage(m.sender_name, m.text, m.sender_uid === boardUser.uid, m.created_at);
+      });
+    });
+}
+
+function sendBoardMessage() {
+  if (!boardUser || !boardChatRoomId) return;
+  var input = document.getElementById('boardChatInput');
+  var text = (input ? input.value : '').trim();
+  if (!text) return;
+  input.value = '';
+  sb.from('board_messages').insert({
+    room_id:     boardChatRoomId,
+    sender_uid:  boardUser.uid,
+    sender_name: boardUser.name,
+    text:        text,
+  }).then(function(res) {
+    if (res.error) { input.value = text; return; }
+    appendBoardMessage(boardUser.name, text, true, new Date().toISOString());
+  });
+}
+
+function appendBoardMessage(name, text, isMe, ts) {
+  var msgs = document.getElementById('boardChatMessages');
+  if (!msgs) return;
+  var row = document.createElement('div');
+  row.className = 'board-msg-row' + (isMe ? ' me' : '');
+  row.innerHTML =
+    '<div class="board-msg-bubble">' + esc(text) + '</div>' +
+    '<div class="board-msg-time">' + fmtTime(ts) + '</div>';
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── Feedback overlay ──────────────────────────────────────────
+function showFeedback() {
+  document.querySelectorAll('.star-btn').forEach(function(b){ b.classList.remove('lit'); });
+  document.getElementById('feedbackOverlay').classList.add('show');
+}
+
+function closeFeedback() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+  closeApp();
+}
+
+function submitFeedback(metUp) {
+  var uid = (typeof myUid !== 'undefined' && myUid) ? myUid : (boardUser ? boardUser.uid : null);
+  sb.from('meetup_feedback').insert({
+    user_uid: uid || null,
+    met_up:   metUp,
+    rating:   null,
+  }).then(function(){});
+  closeFeedback();
+}
+
+function rateMeetup(stars) {
+  document.querySelectorAll('.star-btn').forEach(function(s, i) {
+    s.classList.toggle('lit', i < stars);
+  });
+  var uid = (typeof myUid !== 'undefined' && myUid) ? myUid : (boardUser ? boardUser.uid : null);
+  sb.from('meetup_feedback').insert({
+    user_uid: uid || null,
+    met_up:   true,
+    rating:   stars,
+  }).then(function(){});
+  setTimeout(closeFeedback, 800);
+}
+
+// ── In-chat location share ────────────────────────────────────
+function shareLocation() {
+  if (!navigator.geolocation) { alert('Geolocation not supported.'); return; }
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    var fuzz = function(c) { return c + (Math.random()*0.009 - 0.0045); };
+    var lat = fuzz(pos.coords.latitude);
+    var lng = fuzz(pos.coords.longitude);
+    if (channel && chatId) {
+      channel.send({ type:'broadcast', event:'chat_location',
+        payload:{ to: chatPartnerKey, from: myKey, lat: lat, lng: lng } });
+    }
+    appendLocationCard(lat, lng, true, new Date().toISOString());
+  }, function() { alert('Could not get location.'); });
+}
+
+function appendLocationCard(lat, lng, isMe, ts) {
+  var msgs = document.getElementById('chatMessages');
+  if (!msgs) return;
+  var row = document.createElement('div');
+  row.className = 'msg-row' + (isMe ? ' me' : '');
+
+  if (!isMe) {
+    var av = document.createElement('div');
+    av.className = 'msg-avatar';
+    av.textContent = (document.getElementById('chatHeaderName').textContent || '?').charAt(0).toUpperCase();
+    row.appendChild(av);
+  }
+
+  var col = document.createElement('div');
+  col.className = 'msg-col';
+
+  var card = document.createElement('div');
+  card.className = 'location-card-msg';
+  var gmaps = 'https://maps.google.com/?q=' + lat + ',' + lng;
+  var amaps = 'maps://maps.apple.com/?q=' + lat + ',' + lng;
+  card.innerHTML =
+    '<div class="location-card-icon">📍</div>' +
+    '<div>' +
+      '<div class="location-card-title">Approximate location</div>' +
+      '<div class="location-card-sub">' +
+        '<a href="' + gmaps + '" target="_blank" rel="noopener" style="color:#60A5FA">Google Maps</a>' +
+        ' · ' +
+        '<a href="' + amaps + '" style="color:#60A5FA">Apple Maps</a>' +
+      '</div>' +
+    '</div>';
+
+  var time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = fmtTime(ts);
+
+  col.appendChild(card);
+  col.appendChild(time);
+  row.appendChild(col);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── Live counter on landing page ──────────────────────────────
+function initLiveCounter() {
+  var pill  = document.getElementById('liveCounter');
+  var numEl = document.getElementById('liveCountNum');
+  if (!pill || !numEl) return;
+  var counterChannel = sb.channel('out-live-counter');
+  counterChannel.on('presence', { event: 'sync' }, function() {
+    var count = Object.keys(counterChannel.presenceState()).length;
+    numEl.textContent = count;
+    pill.classList.toggle('show', count > 0);
+  }).subscribe();
 }
 
 // ── UID management ────────────────────────────────────────────
@@ -3091,6 +4066,12 @@ function handleGoogleSignIn(response) {
   }
 
   try { localStorage.setItem('out_user', JSON.stringify({ name: firstName })); } catch(e) {}
+
+  // Also set boardUser for Community Board
+  var bUser = { name: firstName, uid: payload.sub || getOrCreateUid(), email: payload.email || null };
+  saveBoardUser(bUser);
+  showCommunityComposeForm();
+
   var nameInput = document.getElementById('nameInput');
   if (nameInput && !nameInput.value.trim()) {
     nameInput.value = firstName;
@@ -3138,7 +4119,12 @@ function signInWithGoogle() {
 }
 
 // Initialize GSI once the script loads
-document.addEventListener('DOMContentLoaded', initGSI);
+document.addEventListener('DOMContentLoaded', function() {
+  initGSI();
+  initBoardUser();
+  loadCommunityPosts();
+  initLiveCounter();
+});
 // Also try immediately in case script already loaded
 initGSI();
 
@@ -3210,7 +4196,10 @@ function closeApp() {
   document.getElementById('ageQuestion').style.display='';
   document.getElementById('ageBlocked').classList.remove('show');
   // Reset board
-  document.getElementById('boardInput').value='';
+  var btIn = document.getElementById('boardTitleInput');
+  var bbIn = document.getElementById('boardBodyInput');
+  if (btIn) btIn.value='';
+  if (bbIn) bbIn.value='';
   document.getElementById('boardList').innerHTML='<div class="board-empty"><strong>Nothing posted nearby yet</strong>Be the first — post where you\'re heading.</div>';
 }
 
