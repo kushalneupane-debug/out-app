@@ -284,6 +284,150 @@ nav {
 .pulse:nth-child(2) { animation-delay: 0.3s; }
 .pulse:nth-child(3) { animation-delay: 0.6s; }
 
+/* ── PHONE DEMO SCENES ─────────────────────────────────────── */
+.demo-scenes {
+  flex: 1; position: relative; overflow: hidden;
+}
+.ds {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 14px 14px 12px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+.ds.ds-dark { background: #111827; }
+.ds.active  { opacity: 1; transform: translateY(0); pointer-events: all; }
+.ds.exit    { opacity: 0; transform: translateY(-14px); }
+
+/* shared ds elements */
+.ds-logo { font-size: 12px; font-weight: 700; letter-spacing: -0.03em; color: #111; }
+.ds-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ds-back { font-size: 9px; color: #999; }
+.ds-prog { height: 2px; background: #E8E8E8; border-radius: 2px; margin-bottom: 12px; }
+.ds-prog-fill { height: 100%; background: #111; border-radius: 2px; transition: width 0.4s; }
+.ds-step { font-size: 7px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+.ds-title { font-size: 15px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 4px; color: #111; }
+.ds-sub { font-size: 9.5px; color: #888; margin-bottom: 12px; line-height: 1.5; }
+.ds-input-box {
+  width: 100%; padding: 9px 11px; border: 1.5px solid #E0E0E0;
+  border-radius: 9px; font-size: 11px; font-weight: 500; color: #111;
+  background: #fff; margin-bottom: 6px; min-height: 36px;
+  display: flex; align-items: center;
+}
+.ds-cursor { display: inline-block; width: 1.5px; height: 12px; background: #111; margin-left: 1px; animation: cursorBlink 1s step-end infinite; vertical-align: middle; }
+@keyframes cursorBlink { 50% { opacity: 0; } }
+.ds-btn {
+  width: 100%; padding: 10px; border-radius: 9px;
+  background: #111; color: #fff;
+  font-size: 11px; font-weight: 600; text-align: center;
+  margin-top: auto;
+}
+.ds-btn.outline { background: none; border: 1.5px solid #E0E0E0; color: #999; }
+
+/* vibe grid */
+.ds-vibe-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+.ds-vibe-item {
+  padding: 8px 4px; border: 1.5px solid #E8E8E8; border-radius: 9px;
+  background: #fff; display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.ds-vibe-item.sel { border-color: #111; background: #111; }
+.ds-vibe-item .ve { font-size: 14px; }
+.ds-vibe-item .vl { font-size: 7.5px; font-weight: 600; color: #888; }
+.ds-vibe-item.sel .vl { color: #fff; }
+
+/* live screen */
+.ds-live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 999px;
+  background: #F0FFF4; border: 1px solid #BBF7D0;
+  font-size: 8px; font-weight: 600; color: #15803D;
+  margin-bottom: 8px; align-self: center;
+}
+.ds-green-dot { width: 5px; height: 5px; border-radius: 50%; background: #22C55E; animation: dotFade 1.5s ease-in-out infinite; }
+.ds-live-name { font-size: 13px; font-weight: 700; text-align: center; color: #111; letter-spacing: -0.02em; }
+.ds-live-vibe { font-size: 9px; color: #999; text-align: center; margin-top: 2px; margin-bottom: 16px; }
+.ds-spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #E8E8E8; border-top-color: #111; animation: spin 0.7s linear infinite; margin: 0 auto 6px; }
+.ds-scan-txt { font-size: 9px; color: #BBB; text-align: center; }
+
+/* match cards */
+.ds-matches-lbl { font-size: 7.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+.ds-card {
+  background: #fff; border: 1px solid #E5E5E5; border-radius: 10px;
+  padding: 9px 10px; display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.ds-card.top { border-color: #BBF7D0; }
+.ds-av {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.ds-card-info { flex: 1; min-width: 0; }
+.ds-card-name { font-size: 10px; font-weight: 600; color: #111; }
+.ds-card-sub  { font-size: 8px; color: #999; margin-top: 1px; }
+.ds-score {
+  font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 999px;
+  background: rgba(34,197,94,0.1); color: #15803D;
+  border: 1px solid rgba(34,197,94,0.3); flex-shrink: 0;
+}
+.ds-score.mid { background: rgba(0,98,173,0.08); color: #0062AD; border-color: rgba(0,98,173,0.2); }
+.ds-conn-btn {
+  font-size: 8.5px; font-weight: 600; padding: 4px 8px; border-radius: 999px;
+  border: 1.5px solid #111; color: #111; flex-shrink: 0;
+  transition: all 0.25s;
+}
+.ds-conn-btn.sent { background: #111; color: #fff; }
+
+/* chat scene */
+.ds-chat-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding-bottom: 10px; border-bottom: 1px solid #1F2937; flex-shrink: 0; margin-bottom: 10px;
+}
+.ds-chat-av { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; position: relative; flex-shrink: 0; }
+.ds-chat-odot { position: absolute; bottom: 0; right: 0; width: 7px; height: 7px; border-radius: 50%; background: #34D399; border: 1.5px solid #111827; }
+.ds-chat-nm  { font-size: 11px; font-weight: 700; color: #F9FAFB; }
+.ds-chat-st  { font-size: 7.5px; color: #34D399; margin-top: 1px; }
+.ds-msgs { flex: 1; display: flex; flex-direction: column; gap: 5px; overflow: hidden; }
+.ds-msg-row { display: flex; align-items: flex-end; gap: 5px; }
+.ds-msg-row.mine { flex-direction: row-reverse; }
+.ds-msg-sm-av { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.ds-bubble {
+  padding: 6px 9px; font-size: 9.5px; line-height: 1.4;
+  max-width: 75%; word-break: break-word;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.ds-bubble.show { opacity: 1; transform: translateY(0); }
+.ds-bubble.theirs { background: #1F2937; color: #F9FAFB; border-radius: 10px 10px 10px 2px; }
+.ds-bubble.mine   { background: #2563EB; color: #fff;    border-radius: 10px 10px 2px 10px; }
+.ds-chat-ibar {
+  display: flex; align-items: center; gap: 6px;
+  padding-top: 8px; border-top: 1px solid #1F2937; flex-shrink: 0; margin-top: 8px;
+}
+.ds-ibar-input { flex: 1; background: #1F2937; border-radius: 14px; padding: 6px 10px; font-size: 9px; color: #4B5563; }
+.ds-ibar-send { width: 26px; height: 26px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #fff; flex-shrink: 0; }
+
+/* meet scene */
+.ds-meet-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.ds-meet-icon { font-size: 36px; animation: meetPop 0.5s cubic-bezier(0.34,1.5,0.64,1); }
+@keyframes meetPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.ds-meet-title { font-size: 13px; font-weight: 700; color: #111; letter-spacing: -0.02em; text-align: center; }
+.ds-meet-sub { font-size: 9px; color: #999; text-align: center; }
+.ds-meet-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 999px;
+  background: #F0FFF4; border: 1px solid #BBF7D0;
+  font-size: 8px; font-weight: 600; color: #15803D;
+}
+.ds-avatars-row { display: flex; align-items: center; gap: 0; margin-top: 8px; }
+.ds-av-sm { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+.ds-av-line { flex: 1; width: 40px; height: 2px; background: linear-gradient(90deg,#111,#22C55E); margin: 0 6px; border-radius: 2px; position: relative; overflow: hidden; }
+.ds-av-line::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent); animation: lineShimmer 1.5s ease-in-out infinite; }
+@keyframes lineShimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+.ds-walk-label { font-size: 8px; color: #22C55E; font-weight: 600; margin-top: 4px; text-align: center; }
+
 /* ── HOW IT WORKS ──────────────────────────────────────────── */
 #how { padding: 120px 40px; border-top: 1px solid #E8E8E8; }
 #how .container {}
@@ -1057,48 +1201,124 @@ footer {
             </div>
           </div>
 
-          <!-- map -->
-          <div class="phone-map">
-            <div class="map-lines"></div>
-            <div class="you-marker"></div>
-            <div class="nearby-dot nd1"></div>
-            <div class="nearby-dot nd2"></div>
-            <div class="nearby-dot nd3"></div>
-          </div>
+          <!-- animated demo scenes -->
+          <div class="demo-scenes">
 
-          <!-- user cards -->
-          <div class="phone-cards">
-            <div class="p-card" id="pc1">
-              <div class="p-card-emoji">🧊</div>
-              <div class="p-card-info">
-                <div class="p-card-name">Jordan</div>
-                <div class="p-card-vibe">chill</div>
+            <!-- Scene 1: Name -->
+            <div class="ds active" id="ds0">
+              <div class="ds-topbar"><span class="ds-logo">Out</span><span class="ds-back">✕ Close</span></div>
+              <div class="ds-prog"><div class="ds-prog-fill" style="width:33%"></div></div>
+              <div class="ds-step">Step 1 of 2</div>
+              <div class="ds-title">What should<br>we call you?</div>
+              <div class="ds-sub">First name only.</div>
+              <div class="ds-input-box"><span id="demo-typing"></span><span class="ds-cursor"></span></div>
+              <div style="flex:1"></div>
+              <div class="ds-btn" id="demo-continue-btn">Continue →</div>
+            </div>
+
+            <!-- Scene 2: Vibe -->
+            <div class="ds" id="ds1">
+              <div class="ds-topbar"><span class="ds-logo">Out</span><span class="ds-back">← Back</span></div>
+              <div class="ds-prog"><div class="ds-prog-fill" style="width:66%"></div></div>
+              <div class="ds-step">Step 2 of 2</div>
+              <div class="ds-title">What are you<br>up for?</div>
+              <div class="ds-vibe-grid">
+                <div class="ds-vibe-item" id="dv-coffee"><span class="ve">☕</span><span class="vl">Coffee</span></div>
+                <div class="ds-vibe-item" id="dv-walk"><span class="ve">🚶</span><span class="vl">Walk</span></div>
+                <div class="ds-vibe-item" id="dv-chill"><span class="ve">🧊</span><span class="vl">Chill</span></div>
+                <div class="ds-vibe-item" id="dv-food"><span class="ve">🍕</span><span class="vl">Food</span></div>
+                <div class="ds-vibe-item" id="dv-talk"><span class="ve">💬</span><span class="vl">Talk</span></div>
+                <div class="ds-vibe-item" id="dv-study"><span class="ve">📚</span><span class="vl">Study</span></div>
               </div>
-              <div class="p-card-dist">0.4 mi</div>
+              <div class="ds-btn">I'm Out →</div>
             </div>
-            <div class="p-card" id="pc2">
-              <div class="p-card-emoji">☕</div>
-              <div class="p-card-info">
-                <div class="p-card-name">Alex</div>
-                <div class="p-card-vibe">coffee</div>
+
+            <!-- Scene 3: Searching -->
+            <div class="ds" id="ds2">
+              <div class="ds-topbar"><span class="ds-logo">Out</span><span class="ds-back">✕ Leave</span></div>
+              <div style="text-align:center; padding-top:8px;">
+                <div class="ds-live-badge"><span class="ds-green-dot"></span>You're Out</div>
+                <div class="ds-live-name">Hey, Alex 👋</div>
+                <div class="ds-live-vibe">You're Out · ☕ Coffee</div>
               </div>
-              <div class="p-card-dist">0.8 mi</div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                <div class="ds-spinner"></div>
+                <div class="ds-scan-txt">Finding nearby people…</div>
+              </div>
             </div>
-          </div>
 
-          <!-- button -->
-          <div class="phone-btn-wrap">
-            <div class="phone-btn">
-              <span class="btn-dot"></span>
-              I'm Out
+            <!-- Scene 4: Match found -->
+            <div class="ds" id="ds3">
+              <div class="ds-topbar"><span class="ds-logo">Out</span><span class="ds-back">✕ Leave</span></div>
+              <div style="text-align:center; padding-top:4px;">
+                <div class="ds-live-badge"><span class="ds-green-dot"></span>You're Out</div>
+                <div class="ds-live-name">Hey, Alex 👋</div>
+              </div>
+              <div class="ds-matches-lbl" style="margin-top:12px">2 matches nearby</div>
+              <div class="ds-card top">
+                <div class="ds-av" style="background:#22C55E">M</div>
+                <div class="ds-card-info">
+                  <div class="ds-card-name">Maya</div>
+                  <div class="ds-card-sub">coffee · 0.3 mi</div>
+                </div>
+                <div class="ds-score">96</div>
+                <div class="ds-conn-btn" id="demo-conn">Connect</div>
+              </div>
+              <div class="ds-card">
+                <div class="ds-av" style="background:#F59E0B">J</div>
+                <div class="ds-card-info">
+                  <div class="ds-card-name">Jordan</div>
+                  <div class="ds-card-sub">chill · 0.8 mi</div>
+                </div>
+                <div class="ds-score mid">71</div>
+                <div class="ds-conn-btn">Connect</div>
+              </div>
             </div>
-          </div>
 
-          <!-- pulse dots -->
-          <div class="pulse-row">
-            <div class="pulse"></div>
-            <div class="pulse"></div>
-            <div class="pulse"></div>
+            <!-- Scene 5: Chat -->
+            <div class="ds ds-dark" id="ds4">
+              <div class="ds-chat-hdr">
+                <div class="ds-chat-av" style="background:#22C55E">M<div class="ds-chat-odot"></div></div>
+                <div>
+                  <div class="ds-chat-nm">Maya</div>
+                  <div class="ds-chat-st">● Active now · ☕ coffee</div>
+                </div>
+              </div>
+              <div class="ds-msgs" id="demo-msgs">
+                <div class="ds-msg-row">
+                  <div class="ds-msg-sm-av" style="background:#22C55E">M</div>
+                  <div class="ds-bubble theirs" id="dm0">coffee at Blue Bottle? ☕</div>
+                </div>
+                <div class="ds-msg-row mine">
+                  <div class="ds-bubble mine" id="dm1">omw, 5 min! 🏃</div>
+                </div>
+                <div class="ds-msg-row">
+                  <div class="ds-msg-sm-av" style="background:#22C55E">M</div>
+                  <div class="ds-bubble theirs" id="dm2">see you there 👋</div>
+                </div>
+              </div>
+              <div class="ds-chat-ibar">
+                <div class="ds-ibar-input">Message…</div>
+                <div class="ds-ibar-send">→</div>
+              </div>
+            </div>
+
+            <!-- Scene 6: Meeting -->
+            <div class="ds" id="ds5" style="background:#F8F8F7;">
+              <div class="ds-meet-wrap">
+                <div class="ds-meet-icon" id="demo-meet-icon">☕</div>
+                <div class="ds-meet-title">Meeting Maya!</div>
+                <div class="ds-meet-sub">Blue Bottle Coffee · 0.3 mi</div>
+                <div class="ds-meet-badge"><span class="ds-green-dot"></span>On your way</div>
+                <div class="ds-avatars-row">
+                  <div class="ds-av-sm" style="background:#111">A</div>
+                  <div class="ds-av-line"></div>
+                  <div class="ds-av-sm" style="background:#22C55E">M</div>
+                </div>
+                <div class="ds-walk-label">Going for coffee ☕</div>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -2305,6 +2525,110 @@ nameInput.addEventListener('input', function() {
 nameInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') goToVibe();
 });
+
+// ── Phone demo animation ──────────────────────────────────────
+(function() {
+  var scenes   = [0,1,2,3,4,5];
+  var current  = 0;
+  var timer    = null;
+  var subTimer = null;
+
+  var DURATIONS = [3800, 2800, 2200, 3800, 4800, 3200]; // ms per scene
+
+  function getEl(id) { return document.getElementById(id); }
+
+  function showScene(idx) {
+    scenes.forEach(function(i) {
+      var el = getEl('ds'+i);
+      el.classList.remove('active','exit');
+    });
+    getEl('ds'+idx).classList.add('active');
+    current = idx;
+    runSceneEffects(idx);
+    timer = setTimeout(function() {
+      getEl('ds'+idx).classList.add('exit');
+      setTimeout(function() {
+        showScene((idx + 1) % scenes.length);
+      }, 450);
+    }, DURATIONS[idx]);
+  }
+
+  function runSceneEffects(idx) {
+    if (subTimer) clearTimeout(subTimer);
+    if (idx === 0) runTyping();
+    if (idx === 1) runVibeSelect();
+    if (idx === 3) runConnect();
+    if (idx === 4) runMessages();
+    if (idx === 5) runMeet();
+  }
+
+  // Scene 0: type "Alex"
+  function runTyping() {
+    var el = getEl('demo-typing');
+    var text = 'Alex';
+    var i = 0;
+    el.textContent = '';
+    function type() {
+      if (i < text.length) {
+        el.textContent = text.slice(0, ++i);
+        subTimer = setTimeout(type, 160 + Math.random()*80);
+      }
+    }
+    subTimer = setTimeout(type, 600);
+  }
+
+  // Scene 1: highlight Coffee then switch to Walk
+  function runVibeSelect() {
+    ['dv-coffee','dv-walk','dv-chill','dv-food','dv-talk','dv-study'].forEach(function(id) {
+      var el = getEl(id); if(el) el.classList.remove('sel');
+    });
+    subTimer = setTimeout(function() {
+      var c = getEl('dv-coffee'); if(c) c.classList.add('sel');
+    }, 400);
+  }
+
+  // Scene 3: Connect → Sent ✓
+  function runConnect() {
+    var btn = getEl('demo-conn');
+    if (btn) { btn.textContent = 'Connect'; btn.classList.remove('sent'); }
+    subTimer = setTimeout(function() {
+      if (btn) { btn.textContent = 'Sent ✓'; btn.classList.add('sent'); }
+    }, 2000);
+  }
+
+  // Scene 4: messages appear one by one
+  function runMessages() {
+    ['dm0','dm1','dm2'].forEach(function(id) {
+      var el = getEl(id); if(el) el.classList.remove('show');
+    });
+    var delays = [400, 1500, 2700];
+    ['dm0','dm1','dm2'].forEach(function(id, i) {
+      setTimeout(function() {
+        var el = getEl(id); if(el) el.classList.add('show');
+      }, delays[i]);
+    });
+  }
+
+  // Scene 5: cycle walk emoji
+  var WALK_EMOJIS = ['☕','🚶','😊','☀️'];
+  var walkIdx = 0;
+  function runMeet() {
+    walkIdx = 0;
+    var el = getEl('demo-meet-icon');
+    if (el) el.textContent = WALK_EMOJIS[0];
+    function cycle() {
+      walkIdx = (walkIdx + 1) % WALK_EMOJIS.length;
+      if (el) el.textContent = WALK_EMOJIS[walkIdx];
+      subTimer = setTimeout(cycle, 800);
+    }
+    subTimer = setTimeout(cycle, 800);
+  }
+
+  // Start
+  document.addEventListener('DOMContentLoaded', function() {
+    showScene(0);
+  });
+})();
 
 // Wire ALL "I'm Out" buttons to open the app
 document.querySelectorAll('.pill-btn, .nav-btn, .mobile-nav-btn').forEach(function(btn) {
