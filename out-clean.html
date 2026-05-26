@@ -10,6 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Out">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <style>
 
 /* ── RESET ─────────────────────────────────────────────────── */
@@ -1173,6 +1179,113 @@ footer {
   line-height: 1.6; margin-top: 20px;
 }
 
+/* ── AGE GATE ─────────────────────────────────────────────────── */
+.age-gate-icon { font-size: 2.4rem; margin-bottom: 14px; }
+.age-btn-row { display: flex; gap: 12px; width: 100%; margin-top: 20px; }
+.age-btn-yes {
+  flex: 1; height: 52px; border-radius: 14px;
+  background: #111; color: #fff; font-family: inherit;
+  font-size: 1rem; font-weight: 600; cursor: pointer; border: none;
+  transition: background 0.15s;
+}
+.age-btn-yes:hover { background: #333; }
+.age-btn-no {
+  flex: 1; height: 52px; border-radius: 14px;
+  background: none; border: 1.5px solid #E0E0E0;
+  color: #999; font-family: inherit; font-size: 1rem; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.age-btn-no:hover { border-color: #BBB; }
+.age-blocked { text-align: center; padding: 32px 16px; display: none; }
+.age-blocked.show { display: block; }
+.age-blocked-icon { font-size: 2.2rem; margin-bottom: 14px; }
+.age-blocked-msg { font-size: 0.9rem; color: #555; line-height: 1.7; }
+
+/* ── CHECK-IN MODAL ───────────────────────────────────────────── */
+.checkin-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.checkin-overlay.show { display: flex; }
+.checkin-sheet {
+  background: #fff; border-radius: 20px 20px 0 0;
+  padding: 0 24px 36px; width: 100%; max-width: 500px;
+  animation: slideUp 0.28s cubic-bezier(0.34,1.3,0.64,1);
+}
+.checkin-drag { width: 40px; height: 4px; background: #E5E5E5; border-radius: 2px; margin: 14px auto 22px; }
+.checkin-icon { font-size: 1.9rem; margin-bottom: 10px; }
+.checkin-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em; }
+.checkin-sub   { font-size: 0.83rem; color: #777; line-height: 1.65; margin-bottom: 22px; }
+.checkin-share-btn {
+  width: 100%; height: 50px; border-radius: 12px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; margin-bottom: 10px;
+  transition: background 0.15s;
+}
+.checkin-share-btn:hover { background: #333; }
+.checkin-skip-btn {
+  width: 100%; height: 44px; border-radius: 12px;
+  background: none; border: 1.5px solid #E8E8E8;
+  font-family: inherit; font-size: 0.88rem; color: #999; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.checkin-skip-btn:hover { border-color: #BBB; }
+
+/* ── LIVE TIMER BADGE ─────────────────────────────────────────── */
+.live-timer-badge {
+  display: none; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 600; color: #777;
+  padding: 5px 14px; background: #F3F3F3; border-radius: 9999px;
+  margin: -12px auto 16px; width: fit-content;
+  transition: background 0.3s, color 0.3s;
+}
+.live-timer-badge.show { display: inline-flex; }
+.live-timer-badge.warn { background: #FEF2F2; color: #DC2626; animation: timerPulse 1s ease-in-out infinite; }
+@keyframes timerPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+/* ── NOTIFICATION PROMPT ──────────────────────────────────────── */
+.notif-prompt {
+  display: none; align-items: center; gap: 10px;
+  background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px;
+  padding: 11px 14px; margin-bottom: 16px; flex-shrink: 0;
+}
+.notif-prompt.show { display: flex; }
+.notif-prompt-text { flex: 1; font-size: 0.79rem; color: #1D4ED8; line-height: 1.4; font-weight: 500; }
+.notif-prompt-btn {
+  padding: 6px 14px; border-radius: 9999px;
+  background: #1D4ED8; color: #fff; border: none;
+  font-family: inherit; font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; flex-shrink: 0; white-space: nowrap;
+  transition: background 0.15s;
+}
+.notif-prompt-btn:hover { background: #1E40AF; }
+.notif-dismiss-btn {
+  background: none; border: none; color: #93C5FD;
+  font-size: 1rem; cursor: pointer; flex-shrink: 0; padding: 2px;
+}
+
+/* ── GROUP NOTE ───────────────────────────────────────────────── */
+.group-note-wrap { margin-top: 16px; }
+.group-note-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #999; margin-bottom: 7px;
+  display: block;
+}
+.group-note-input {
+  width: 100%; padding: 12px 14px; border-radius: 12px;
+  border: 1.5px solid #E5E5E5; background: #fff;
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; color: #111;
+  outline: none; transition: border-color 0.15s;
+}
+.group-note-input:focus { border-color: #111; }
+.group-note-input::placeholder { color: #CCC; }
+.nc-note {
+  font-size: 0.75rem; color: #6B7280; margin-top: 4px;
+  font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -1458,7 +1571,32 @@ footer {
 <!-- ── APP OVERLAY ─────────────────────────────────────────── -->
 <div id="app-overlay">
 
-  <!-- Step 0: Google sign-in -->
+  <!-- Step 0: Age gate -->
+  <div class="app-screen" id="screen-age">
+    <div class="app-topbar">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="closeApp()">✕ Close</button>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 8px;">
+      <!-- age question -->
+      <div id="ageQuestion">
+        <div class="age-gate-icon">🎂</div>
+        <div class="app-title" style="margin-bottom:8px">Are you 18 or older?</div>
+        <div class="app-sub" style="margin-bottom:4px">Out is for adults only. No exceptions.</div>
+        <div class="age-btn-row">
+          <button class="age-btn-yes" onclick="confirmAge(true)">Yes, I'm 18+</button>
+          <button class="age-btn-no"  onclick="confirmAge(false)">No</button>
+        </div>
+      </div>
+      <!-- blocked state -->
+      <div class="age-blocked" id="ageBlocked">
+        <div class="age-blocked-icon">🚫</div>
+        <div class="age-blocked-msg">Out is only available to users 18 and over.<br><br>Come back when you're old enough.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1: Google sign-in -->
   <div class="app-screen" id="screen-auth">
     <div class="app-topbar">
       <div class="app-logo">Out</div>
@@ -1530,6 +1668,12 @@ footer {
         <span class="vibe-label">Study</span>
       </button>
     </div>
+    <div class="group-note-wrap">
+      <label class="group-note-label" for="groupNoteInput">Add a note <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input class="group-note-input" id="groupNoteInput" type="text"
+        placeholder='e.g. "Heading to Blue Bottle, join me!"'
+        maxlength="60" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
     <button class="app-btn" id="vibeNext" disabled onclick="goLive()">I'm Out →</button>
   </div>
 
@@ -1546,6 +1690,16 @@ footer {
       </div>
       <div class="live-name" id="liveNameDisplay">Hey, —</div>
       <div class="live-vibe" id="liveVibeDisplay"></div>
+    </div>
+
+    <!-- Session timer badge -->
+    <div class="live-timer-badge" id="liveTimerBadge">⏱ <span id="liveTimerText">3:00:00 left</span></div>
+
+    <!-- Notification permission prompt -->
+    <div class="notif-prompt" id="notifPrompt">
+      <div class="notif-prompt-text">Get notified when someone goes live nearby</div>
+      <button class="notif-prompt-btn" onclick="requestNotifyPermission()">Allow</button>
+      <button class="notif-dismiss-btn" onclick="dismissNotifPrompt()" title="Dismiss">✕</button>
     </div>
 
     <!-- Matches label -->
@@ -1649,6 +1803,18 @@ footer {
 
 <!-- Matched toast -->
 <div class="matched-toast" id="matchedToast"></div>
+
+<!-- Safety check-in modal -->
+<div class="checkin-overlay" id="checkinOverlay">
+  <div class="checkin-sheet">
+    <div class="checkin-drag"></div>
+    <div class="checkin-icon">🔒</div>
+    <div class="checkin-title">Tell someone you're going out</div>
+    <div class="checkin-sub">For your safety, let a friend or family member know you matched with someone and where you're meeting. This takes 10 seconds and could matter.</div>
+    <button class="checkin-share-btn" onclick="shareCheckin()">📱 Send a safety check-in</button>
+    <button class="checkin-skip-btn" onclick="closeCheckIn()">Skip for now</button>
+  </div>
+</div>
 
 <!-- Block / Report sheet -->
 <div class="report-sheet" id="reportSheet" onclick="if(event.target===this)closeChatMenu()">
@@ -1969,11 +2135,18 @@ var myKey             = '';
 var myLat             = 0;
 var myLng             = 0;
 var myVibe            = '';
+var myGroupNote       = '';
+var myUid             = '';
 var pendingFrom       = '';
 var pendingFromName   = '';
 var pendingFromVibe   = '';
 var chatId            = '';
 var chatPartnerKey    = '';
+var liveTimerTimeout  = null;
+var liveTimerWarnTimeout = null;
+var liveTimerInterval = null;
+var liveStartTime     = 0;
+var SESSION_LIMIT_MS  = 3 * 60 * 60 * 1000; // 3 hours
 
 var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -2019,19 +2192,22 @@ function renderMatches(matches) {
   matches.forEach(function(u,i) {
     var isTop=i===0, score=u.matchScore;
     var cls=score>=70?'high':score>=50?'mid':'low';
+    var distLabel = u.distMiles < 0.5 ? 'very close' : '~'+u.distMiles+' mi';
     var card=document.createElement('div');
     card.className='nearby-card'+(isTop?' top-match':'');
+    var noteHtml = u.note ? '<div class="nc-note">&#x1F4AC; '+esc(u.note)+'</div>' : '';
     card.innerHTML=
       '<div class="nc-avatar">'+(VIBE_EMOJI[u.vibe]||'👋')+'</div>'+
       '<div class="nc-info">'+
         '<div class="nc-name">'+esc(u.name)+'</div>'+
-        '<div class="nc-vibe">'+esc(u.vibe)+' &middot; '+u.distMiles+' mi</div>'+
+        '<div class="nc-vibe">'+esc(u.vibe)+' &middot; '+distLabel+'</div>'+
+        noteHtml+
       '</div>'+
       '<div class="score-badge">'+
         (isTop?'<span class="score-label">Top</span>':'')+
         '<span class="score-num '+cls+'">'+score+'</span>'+
       '</div>'+
-      '<button class="connect-btn" onclick="sendConnect(\''+esc(u.key)+'\',\''+esc(u.name)+'\','+score+',this)">Connect</button>';
+      '<button class="connect-btn" onclick="sendConnect(\''+esc(u.key)+'\',\''+esc(u.name)+'\','+score+',this)">Wave 👋</button>';
     list.appendChild(card);
   });
   var n=matches.length;
@@ -2054,6 +2230,7 @@ function refreshMatches() {
         key:       k,
         name:      u.name,
         vibe:      u.vibe,
+        note:      u.note || '',
         distMiles: Math.round(dist*10)/10,
         matchScore:distScore(dist)+vibeScore(myVibe,u.vibe),
         since:     u.since,
@@ -2079,7 +2256,19 @@ function connectRealtime(name, vibe, lat, lng) {
 
   channel
     .on('presence', { event: 'sync' }, function() { refreshMatches(); })
-    .on('presence', { event: 'join' }, function() { refreshMatches(); })
+    .on('presence', { event: 'join' }, function(payload) {
+      refreshMatches();
+      // Notify when a new user joins nearby
+      if (payload && payload.newPresences) {
+        payload.newPresences.forEach(function(p) {
+          if (!p || !p.lat) return;
+          var dist = haversine(myLat, myLng, p.lat, p.lng);
+          if (dist <= RADIUS_MI) {
+            showNearbyNotif(p.name, p.vibe, Math.round(dist*10)/10);
+          }
+        });
+      }
+    })
     .on('presence', { event: 'leave'}, function() { refreshMatches(); })
     .on('broadcast', { event: 'connect_req' }, function(msg) {
       var p = msg.payload;
@@ -2113,9 +2302,17 @@ function connectRealtime(name, vibe, lat, lng) {
         msgs.scrollTop = msgs.scrollHeight;
       }
     })
+    .on('broadcast', { event: 'user_kicked' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.uid === myUid) {
+        closeApp();
+        alert('Your account has been removed due to multiple reports.');
+      }
+    })
     .subscribe(function(status) {
       if (status === 'SUBSCRIBED') {
-        channel.track({ name:name, vibe:vibe, lat:myLat, lng:myLng, since:Date.now() });
+        channel.track({ name:name, vibe:vibe, lat:myLat, lng:myLng, since:Date.now(), note:myGroupNote, uid:myUid });
+        showNotifPromptIfNeeded();
       } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
         showState('error', 'Could not connect to matching server. Check your internet connection.');
       }
@@ -2202,6 +2399,8 @@ function startChat(partnerKey, partnerName, partnerVibe, cId) {
   document.getElementById('typingRow').classList.remove('show');
   showScreen('screen-chat');
   setTimeout(function(){ document.getElementById('chatInput').focus(); }, 150);
+  // Show safety check-in prompt (after a short delay so chat loads first)
+  setTimeout(showCheckIn, 800);
 }
 
 function onChatInput() {
@@ -2311,10 +2510,41 @@ function doBlock() {
 }
 function reportPartner(reason) {
   closeChatMenu();
+
+  // Get reported user's uid from presence
+  var reportedUid = '';
   if (channel && chatPartnerKey) {
+    var state = channel.presenceState();
+    var pEntry = state[chatPartnerKey];
+    if (pEntry && pEntry[0]) reportedUid = pEntry[0].uid || '';
+
+    // Broadcast report event
     channel.send({ type:'broadcast', event:'user_reported',
       payload:{ to:chatPartnerKey, from:myKey, reason:reason } });
   }
+
+  // Save report to Supabase and check threshold
+  if (reportedUid) {
+    sb.from('reports').insert({
+      reported_uid: reportedUid,
+      reporter_uid: myUid || null,
+      reason: reason,
+    }).then(function() {
+      // Count recent reports against this user
+      var since = new Date(Date.now() - 24*60*60*1000).toISOString();
+      sb.from('reports')
+        .select('id', { count: 'exact', head: true })
+        .eq('reported_uid', reportedUid)
+        .gte('created_at', since)
+        .then(function(res) {
+          if (res.count >= 3 && channel) {
+            channel.send({ type:'broadcast', event:'user_kicked',
+              payload:{ uid: reportedUid } });
+          }
+        });
+    });
+  }
+
   doBlock();
   var toast = document.getElementById('matchedToast');
   toast.textContent = 'Reported & blocked.';
@@ -2327,12 +2557,26 @@ function reportPartner(reason) {
 var SAFETY_PATTERNS = [
   { re: /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/,
     msg: 'Phone number detected. Be careful sharing personal contact info with strangers.' },
-  { re: /venmo|cashapp|cash app|zelle|paypal|crypto|bitcoin|send money/i,
-    msg: 'Payment app mentioned. Never send money to someone you just met online.' },
-  { re: /https?:\/\/|bit\.ly|tinyurl\.com|t\.co\//i,
+  { re: /venmo|cashapp|cash app|zelle|paypal|crypto|bitcoin|ethereum|send money|wire transfer/i,
+    msg: 'Payment app or financial request detected. Never send money to someone you just met.' },
+  { re: /https?:\/\/|bit\.ly|tinyurl\.com|t\.co\/|goo\.gl\//i,
     msg: 'External link detected. Be cautious clicking links from people you just met.' },
-  { re: /instagram|snapchat|telegram|whatsapp|kik|discord/i,
+  { re: /instagram|snapchat|telegram|whatsapp|kik|discord|wechat|line app/i,
     msg: 'Request to move to another app. You\'re not obligated to share your accounts.' },
+  { re: /\b\d+\s+[a-z][\w\s]{2,20}(street|st|avenue|ave|road|rd|blvd|drive|dr|lane|ln|court|ct|way)\b/i,
+    msg: 'Street address shared. Consider meeting in a public place before sharing your home address.' },
+  { re: /\bhow old are you\b|\bage\b|\byou look young\b|\bhow young\b/i,
+    msg: 'Age-related question detected. You don\'t need to share personal details.' },
+  { re: /gun|knife|weapon|armed|shoot|stab/i,
+    msg: 'Safety alert: Concerning language detected. If you feel threatened, leave immediately.' },
+  { re: /drug|weed|molly|mdma|cocaine|pills|xanax|adderall|fentanyl/i,
+    msg: 'Possible drug reference detected. Stay safe and trust your instincts.' },
+  { re: /send (me )?(a )?(pic|photo|picture|selfie|nude|nudes)/i,
+    msg: 'Request for photos detected. You\'re never obligated to share images with strangers.' },
+  { re: /my (apartment|house|place|room|hotel|airbnb)|come (over|to mine|to my)/i,
+    msg: 'Private location invite detected. Always meet in a public place first.' },
+  { re: /\bssn\b|social security|credit card|bank account|routing number/i,
+    msg: 'Financial or identity info requested. Never share this with anyone you just met.' },
 ];
 function checkSafety(text) {
   for (var i = 0; i < SAFETY_PATTERNS.length; i++) {
@@ -2353,6 +2597,93 @@ function dismissSafetyWarning() {
 function goToAuth() { showScreen('screen-auth'); }
 
 function hideMatchedToast() { document.getElementById('matchedToast').classList.remove('show'); }
+
+// ── UID management ────────────────────────────────────────────
+function getOrCreateUid() {
+  try {
+    var uid = localStorage.getItem('out_uid');
+    if (!uid) {
+      uid = 'uid_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+      localStorage.setItem('out_uid', uid);
+    }
+    return uid;
+  } catch(e) { return 'uid_' + Math.random().toString(36).slice(2); }
+}
+
+// ── Ban check ─────────────────────────────────────────────────
+function checkBanned(uid, cb) {
+  if (!uid) { cb(false); return; }
+  var since = new Date(Date.now() - 24*60*60*1000).toISOString();
+  sb.from('reports')
+    .select('id', { count: 'exact', head: true })
+    .eq('reported_uid', uid)
+    .gte('created_at', since)
+    .then(function(res) {
+      cb((res.count || 0) >= 3);
+    }).catch(function() { cb(false); });
+}
+
+// ── Push notifications ────────────────────────────────────────
+function showNotifPromptIfNeeded() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted' || Notification.permission === 'denied') return;
+  document.getElementById('notifPrompt').classList.add('show');
+}
+
+function requestNotifyPermission() {
+  if (!('Notification' in window)) return;
+  Notification.requestPermission().then(function(perm) {
+    document.getElementById('notifPrompt').classList.remove('show');
+    if (perm === 'granted') {
+      var toast = document.getElementById('matchedToast');
+      toast.textContent = '🔔 You\'ll be notified when someone nearby goes live.';
+      toast.classList.add('show');
+      setTimeout(hideMatchedToast, 3000);
+    }
+  });
+}
+
+function dismissNotifPrompt() {
+  document.getElementById('notifPrompt').classList.remove('show');
+}
+
+function showNearbyNotif(name, vibe, distMi) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  var emoji = VIBE_EMOJI[vibe] || '👋';
+  new Notification('Someone\'s nearby on Out!', {
+    body: (name || 'Someone') + ' is Out ' + emoji + ' · ~' + distMi + ' mi away',
+    icon: '/icon-192.png',
+    tag: 'nearby-' + Date.now(),
+    silent: false,
+  });
+}
+
+// ── Check-in modal ────────────────────────────────────────────
+function showCheckIn() {
+  try {
+    // Only show once per session
+    if (sessionStorage.getItem('checkin_shown')) return;
+    sessionStorage.setItem('checkin_shown', '1');
+  } catch(e) {}
+  document.getElementById('checkinOverlay').classList.add('show');
+}
+
+function closeCheckIn() {
+  document.getElementById('checkinOverlay').classList.remove('show');
+}
+
+function shareCheckin() {
+  var name = document.getElementById('nameInput').value.trim() || 'Me';
+  var msg = 'Hey, I just matched with someone on Out and might be meeting them. Just letting you know. Stay tuned! 📍';
+  var smsUrl = 'sms:?body=' + encodeURIComponent(msg);
+  // Try SMS first, fall back to Web Share API
+  if (navigator.share) {
+    navigator.share({ text: msg }).catch(function(){});
+  } else {
+    window.open(smsUrl, '_blank');
+  }
+  closeCheckIn();
+}
 
 // ── Legal overlays ────────────────────────────────────────────
 function openLegal(page) {
@@ -2455,6 +2786,19 @@ initGSI();
 function openApp() {
   document.getElementById('app-overlay').classList.add('show');
   document.body.style.overflow='hidden';
+
+  // Age gate — check localStorage first
+  try {
+    if (localStorage.getItem('out_age') !== 'ok') {
+      showScreen('screen-age');
+      return;
+    }
+  } catch(e) {}
+
+  proceedAfterAge();
+}
+
+function proceedAfterAge() {
   try {
     var stored = JSON.parse(localStorage.getItem('out_user') || 'null');
     if (stored && stored.name) {
@@ -2472,9 +2816,21 @@ function openApp() {
   showScreen('screen-auth');
 }
 
+function confirmAge(isAdult) {
+  if (isAdult) {
+    try { localStorage.setItem('out_age','ok'); } catch(e) {}
+    proceedAfterAge();
+  } else {
+    document.getElementById('ageQuestion').style.display='none';
+    document.getElementById('ageBlocked').classList.add('show');
+  }
+}
+
 function closeApp() {
   if (channel) { channel.untrack(); sb.removeChannel(channel); channel=null; }
+  clearLiveTimer();
   hideBanner(); hideMatchedToast(); closeChatMenu(); dismissSafetyWarning();
+  closeCheckIn();
   document.getElementById('app-overlay').classList.remove('show');
   document.body.style.overflow='';
   document.getElementById('nameInput').value='';
@@ -2482,8 +2838,12 @@ function closeApp() {
   document.getElementById('nameNext').disabled=true;
   document.getElementById('vibeNext').disabled=true;
   document.getElementById('authError').textContent='';
+  document.getElementById('groupNoteInput').value='';
   document.querySelectorAll('.vibe-btn').forEach(function(b){ b.classList.remove('selected'); });
-  selectedVibe=''; selectedVibeEmoji=''; myKey=''; chatId=''; chatPartnerKey='';
+  selectedVibe=''; selectedVibeEmoji=''; myKey=''; chatId=''; chatPartnerKey=''; myGroupNote='';
+  // Reset age blocked state
+  document.getElementById('ageQuestion').style.display='';
+  document.getElementById('ageBlocked').classList.remove('show');
 }
 
 function showScreen(id) {
@@ -2502,22 +2862,82 @@ function selectVibe(btn,emoji,label) {
 // ── Go live ───────────────────────────────────────────────────
 function goLive() {
   if (!selectedVibe) return;
-  var name=document.getElementById('nameInput').value.trim();
+  var name = document.getElementById('nameInput').value.trim();
+  myGroupNote = (document.getElementById('groupNoteInput').value || '').trim().slice(0,60);
+  myUid = getOrCreateUid();
+
   document.getElementById('liveNameDisplay').textContent='Hey, '+name+' 👋';
   document.getElementById('liveVibeDisplay').textContent='You\'re Out · '+selectedVibeEmoji+' '+selectedVibe;
   showScreen('screen-live');
   showState('loading');
 
-  if (!navigator.geolocation) { showState('error','Geolocation not supported by your browser.'); return; }
-  navigator.geolocation.getCurrentPosition(
-    function(pos) { connectRealtime(name, selectedVibe, pos.coords.latitude, pos.coords.longitude); },
-    function(err) {
-      showState('error', err.code===1
-        ? 'Location access denied. Enable location in browser settings and try again.'
-        : 'Could not get your location. Please try again.');
-    },
-    { enableHighAccuracy:true, timeout:12000 }
-  );
+  // Check if user is banned before going live
+  checkBanned(myUid, function(isBanned) {
+    if (isBanned) {
+      showState('error', 'Your account has been suspended due to multiple reports. Contact safety@getout.app if you believe this is an error.');
+      return;
+    }
+    if (!navigator.geolocation) { showState('error','Geolocation not supported by your browser.'); return; }
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        connectRealtime(name, selectedVibe, pos.coords.latitude, pos.coords.longitude);
+        startLiveTimer();
+      },
+      function(err) {
+        showState('error', err.code===1
+          ? 'Location access denied. Enable location in browser settings and try again.'
+          : 'Could not get your location. Please try again.');
+      },
+      { enableHighAccuracy:true, timeout:12000 }
+    );
+  });
+}
+
+function startLiveTimer() {
+  clearLiveTimer();
+  liveStartTime = Date.now();
+  document.getElementById('liveTimerBadge').classList.add('show');
+
+  liveTimerInterval = setInterval(function() {
+    var elapsed = Date.now() - liveStartTime;
+    var remaining = SESSION_LIMIT_MS - elapsed;
+    if (remaining <= 0) { clearLiveTimer(); return; }
+    var h = Math.floor(remaining/3600000);
+    var m = Math.floor((remaining%3600000)/60000);
+    var s = Math.floor((remaining%60000)/1000);
+    var label = h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s+' left';
+    var badge = document.getElementById('liveTimerBadge');
+    document.getElementById('liveTimerText').textContent = label;
+    if (remaining <= 10*60*1000) badge.classList.add('warn');
+  }, 1000);
+
+  // 10-min warning
+  liveTimerWarnTimeout = setTimeout(function() {
+    var toast = document.getElementById('matchedToast');
+    toast.textContent = '⏱ 10 minutes left in your session.';
+    toast.style.cssText = 'background:#FEF3C7;border-color:#FDE68A;color:#92400E;';
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); toast.style.cssText=''; }, 5000);
+  }, SESSION_LIMIT_MS - 10*60*1000);
+
+  // Auto-close at 3 hours
+  liveTimerTimeout = setTimeout(function() {
+    clearLiveTimer();
+    var toast = document.getElementById('matchedToast');
+    toast.textContent = '⏱ Your 3-hour session has ended.';
+    toast.style.cssText = 'background:#FEF2F2;border-color:#FECACA;color:#DC2626;';
+    toast.classList.add('show');
+    setTimeout(function(){ closeApp(); toast.style.cssText=''; }, 3000);
+  }, SESSION_LIMIT_MS);
+}
+
+function clearLiveTimer() {
+  clearTimeout(liveTimerTimeout);
+  clearTimeout(liveTimerWarnTimeout);
+  clearInterval(liveTimerInterval);
+  liveTimerTimeout=null; liveTimerWarnTimeout=null; liveTimerInterval=null;
+  var badge = document.getElementById('liveTimerBadge');
+  if (badge) badge.classList.remove('show','warn');
 }
 
 // Name input validation
@@ -2642,6 +3062,15 @@ document.querySelectorAll('.pill-btn, .nav-btn, .mobile-nav-btn').forEach(functi
     openApp();
   });
 });
+
+// Register service worker for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(e) {
+      console.warn('SW registration failed:', e);
+    });
+  });
+}
 </script>
 </body>
 </html>

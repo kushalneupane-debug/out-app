@@ -1,0 +1,26 @@
+{
+  "name": "Out — Find someone free right now",
+  "short_name": "Out",
+  "description": "Real people within 3 miles who are free right now. No profiles. No swiping.",
+  "start_url": "/out-clean.html",
+  "display": "standalone",
+  "background_color": "#F8F8F7",
+  "theme_color": "#111111",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "lifestyle"],
+  "screenshots": []
+}
