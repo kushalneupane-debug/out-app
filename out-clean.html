@@ -547,9 +547,9 @@ footer {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
 }
 .footer-links { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
-.footer-links a { font-size: 0.8rem; color: #999; transition: color 0.15s; }
-.footer-links a:hover { color: #111; }
-.footer-copy { font-size: 0.75rem; color: #BBBBBB; }
+.footer-links a { font-size: 0.8rem; color: #111; font-weight: 500; transition: color 0.15s; }
+.footer-links a:hover { color: #555; }
+.footer-copy { font-size: 0.75rem; color: #111; }
 
 /* ── KEYFRAMES ─────────────────────────────────────────────── */
 @keyframes phoneFloat {
@@ -1450,6 +1450,7 @@ footer {
     <a href="#" onclick="event.preventDefault();openLegal('privacy')">Privacy</a>
     <a href="#" onclick="event.preventDefault();openLegal('terms')">Terms</a>
     <a href="#" onclick="event.preventDefault();openLegal('safety')">Safety</a>
+    <a href="#" onclick="event.preventDefault();openLegal('cookies')">Cookies</a>
     <a href="#" onclick="event.preventDefault();openLegal('contact')">Contact</a>
   </div>
   <div class="footer-copy">© 2026 Out.</div>
@@ -1868,6 +1869,53 @@ footer {
       <h2>Legal &amp; press</h2>
       <p>Legal notices, subpoenas, or press enquiries:<br>
       <a href="mailto:legal@getout.app">legal@getout.app</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Cookies Policy -->
+<div class="legal-overlay" id="legal-cookies" onclick="if(event.target===this)closeLegal('cookies')">
+  <div class="legal-sheet">
+    <div class="legal-drag"></div>
+    <div class="legal-head">
+      <span class="legal-title">Cookie Policy</span>
+      <button class="legal-close" onclick="closeLegal('cookies')">✕</button>
+    </div>
+    <div class="legal-body">
+      <span class="legal-effective">Effective: May 26, 2026 · Applies globally, including EU ePrivacy Directive and GDPR</span>
+
+      <h2>1. What Are Cookies</h2>
+      <p>Cookies are small text files stored on your device by your browser. They help websites remember information about your visit. We use a minimal set of cookies strictly required to operate the service.</p>
+
+      <h2>2. Cookies We Use</h2>
+      <ul>
+        <li><strong>Authentication cookie</strong> — set by Firebase when you sign in with Google. Stores your session token so you don't have to sign in again on every visit. Expires after 1 hour of inactivity or when you close the app. <em>Strictly necessary.</em></li>
+        <li><strong>Supabase session</strong> — a short-lived token stored in <code>localStorage</code> (not a cookie) used to maintain your real-time presence channel while you are live. Deleted automatically when you go offline or close the browser tab. <em>Strictly necessary.</em></li>
+      </ul>
+      <p>We do <strong>not</strong> use advertising cookies, tracking pixels, analytics cookies, or any third-party marketing cookies.</p>
+
+      <h2>3. No Cookie Consent Banner Required</h2>
+      <p>Under the EU ePrivacy Directive and GDPR, cookies that are strictly necessary for a service you have requested do not require prior consent. Because we use only strictly necessary cookies, no cookie banner is shown. If we ever introduce optional cookies we will update this policy and ask for your consent before setting them.</p>
+
+      <h2>4. Third-Party Services</h2>
+      <ul>
+        <li><strong>Firebase (Google)</strong> — handles authentication. Google may set its own cookies for sign-in. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li><strong>Supabase</strong> — handles real-time matching. Uses <code>localStorage</code>, not cookies. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase's Privacy Policy</a>.</li>
+      </ul>
+
+      <h2>5. Managing Cookies</h2>
+      <p>You can control and delete cookies through your browser settings. Deleting the authentication cookie will sign you out. Common browser guides:</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Chrome</a></li>
+        <li><a href="https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox" target="_blank" rel="noopener">Firefox</a></li>
+        <li><a href="https://support.apple.com/en-gb/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+      </ul>
+
+      <h2>6. Changes to This Policy</h2>
+      <p>If we introduce new cookies or change how we use existing ones, we will update this page and, where required by law, ask for your consent. The effective date at the top of this page always reflects the most recent version.</p>
+
+      <h2>7. Contact</h2>
+      <p>Questions about cookies or this policy: <a href="mailto:privacy@getout.app">privacy@getout.app</a></p>
     </div>
   </div>
 </div>
