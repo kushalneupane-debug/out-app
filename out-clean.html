@@ -4382,10 +4382,18 @@ function submitAppPost() {
     body:        body || null,
   }).then(function(res) {
     btn.disabled = false; btn.textContent = 'Post';
-    if (res.error) { alert('Could not post. Try again.'); return; }
+    if (res.error) {
+      console.error('Post error:', res.error);
+      alert('Could not post: ' + (res.error.message || res.error.code || 'Unknown error') + '\n\nMake sure the community_posts table exists in Supabase.');
+      return;
+    }
     document.getElementById('appBoardTitleInput').value = '';
     document.getElementById('appBoardBodyInput').value  = '';
     loadAppBoardPosts();
+  }).catch(function(err) {
+    btn.disabled = false; btn.textContent = 'Post';
+    console.error('Post exception:', err);
+    alert('Post failed: ' + (err.message || err));
   });
 }
 
@@ -4398,12 +4406,16 @@ function loadAppBoardPosts() {
     .order('created_at', { ascending: false })
     .limit(30)
     .then(function(res) {
-      if (res.error || !res.data) {
-        if (feed) feed.innerHTML = '<div class="app-board-empty">Could not load posts.</div>';
+      if (res.error) {
+        console.error('Load posts error:', res.error);
+        if (feed) feed.innerHTML = '<div class="app-board-empty">Could not load posts.<br><small style="color:#EEE;font-size:0.7rem">' + (res.error.message || res.error.code) + '</small></div>';
         return;
       }
-      renderAppBoardPosts(res.data);
-      res.data.forEach(function(p) { loadAppCommentCount(p.id); });
+      renderAppBoardPosts(res.data || []);
+      if (res.data) res.data.forEach(function(p) { loadAppCommentCount(p.id); });
+    }).catch(function(err) {
+      console.error('Load posts exception:', err);
+      if (feed) feed.innerHTML = '<div class="app-board-empty">Could not load posts.</div>';
     });
 }
 
