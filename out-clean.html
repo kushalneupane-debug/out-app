@@ -2386,6 +2386,19 @@ function initGSI() {
 function handleGoogleSignIn(response) {
   var payload = decodeJwt(response.credential);
   var firstName = (payload.given_name || payload.name || 'Someone').split(' ')[0].slice(0, 12);
+
+  // Save / update user record in Supabase
+  if (payload.sub) {
+    sb.from('users').upsert({
+      id:         payload.sub,
+      email:      payload.email  || null,
+      name:       firstName,
+      last_seen:  new Date().toISOString(),
+    }, { onConflict: 'id' }).then(function(res) {
+      if (res.error) console.warn('Could not save user record:', res.error.message);
+    });
+  }
+
   try { localStorage.setItem('out_user', JSON.stringify({ name: firstName })); } catch(e) {}
   var nameInput = document.getElementById('nameInput');
   if (nameInput && !nameInput.value.trim()) {
