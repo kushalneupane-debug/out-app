@@ -529,6 +529,66 @@ nav {
 }
 .s-card-body { font-size: 0.875rem; color: #666; line-height: 1.65; }
 
+/* ── CAREERS ────────────────────────────────────────────────── */
+#careers {
+  padding: 100px 40px;
+  background: #F8F8F7;
+  border-top: 1px solid #E8E8E8;
+}
+.careers-head {
+  max-width: 560px; margin-bottom: 48px;
+}
+.careers-headline {
+  font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px;
+}
+.careers-sub {
+  font-size: 1rem; color: #666; line-height: 1.65;
+}
+.careers-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+}
+.career-card {
+  background: #fff; border: 1px solid #E5E5E5;
+  border-radius: 16px; padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.career-tag {
+  display: inline-flex; align-items: center;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #111; background: #F0F0F0;
+  border-radius: 9999px; padding: 4px 10px; width: fit-content;
+}
+.career-title {
+  font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.career-body {
+  font-size: 0.84rem; color: #666; line-height: 1.65; flex: 1;
+}
+.career-apply {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-top: 8px; height: 40px; padding: 0 20px;
+  border-radius: 9999px; background: #111; color: #fff;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: -0.01em;
+  transition: background 0.15s; cursor: pointer; border: none;
+  text-decoration: none; width: 100%;
+}
+.career-apply:hover { background: #2A2A2A; }
+.careers-note {
+  margin-top: 36px; font-size: 0.8rem; color: #AAA; text-align: center;
+}
+@media (max-width: 768px) {
+  #careers { padding: 80px 20px; }
+  .careers-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+body.dark #careers { background: #0A0A0A; }
+body.dark .career-card { background: #111; border-color: #1E1E1E; }
+body.dark .career-tag { background: #1A1A1A; color: #EDEDED; }
+body.dark .career-title { color: #EDEDED; }
+body.dark .career-body { color: #666; }
+
 /* ── FINAL CTA ─────────────────────────────────────────────── */
 #cta {
   padding: 140px 40px;
@@ -2355,6 +2415,7 @@ body.dark .dark-toggle:hover { border-color: #555; background: #1A1A1A; }
 body.dark .lang-toggle { border-color: #333; color: #EDEDED; }
 body.dark .lang-toggle:hover { border-color: #555; background: #1A1A1A; }
 body.dark .msg-system { color: #555; }
+body.dark .nav-careers-link { color: #EDEDED; }
 body.dark .mobile-nav { background: #0A0A0A; border-bottom-color: #1E1E1E; }
 body.dark .mobile-nav a { color: #EDEDED; border-bottom-color: #1E1E1E; }
 body.dark .mobile-nav-btn { background: #EDEDED; color: #111; }
@@ -2487,6 +2548,7 @@ body.dark .why-sub { color: #555; }
     <a href="#safety" data-i18n="nav.safety">Safety</a>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
+    <a href="#careers" style="font-size:0.8rem;font-weight:700;color:#111;letter-spacing:-0.01em;transition:color 0.15s;white-space:nowrap" class="nav-careers-link">Careers</a>
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()" aria-label="Toggle language">ES</button>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Toggle dark mode">☀️</button>
     <a href="#cta" class="nav-btn" data-i18n="nav.cta">I'm Out →</a>
@@ -2500,6 +2562,7 @@ body.dark .why-sub { color: #555; }
   <a href="#how" onclick="closeMobile()" data-i18n="nav.how">How it works</a>
   <a href="#city" onclick="closeMobile()" data-i18n="nav.city">Texarkana</a>
   <a href="#safety" onclick="closeMobile()" data-i18n="nav.safety">Safety</a>
+  <a href="#careers" onclick="closeMobile()">Careers</a>
   <button class="lang-toggle" style="margin:10px 20px 4px;width:calc(100% - 40px);justify-content:center" onclick="toggleLang();closeMobile()" id="langToggleMobile">ES</button>
   <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()" data-i18n="nav.cta">I'm Out →</a>
 </div>
@@ -2841,6 +2904,42 @@ body.dark .why-sub { color: #555; }
   </div>
 </section>
 
+<!-- CAREERS -->
+<section id="careers">
+  <div class="careers-head reveal">
+    <div class="section-label">Join the team</div>
+    <h2 class="careers-headline">We're just getting started.<br>Come build with us.</h2>
+    <p class="careers-sub">Out is a lean, early-stage product run by a small team. Every role here has real ownership. If you want to do something that matters in Texarkana, this is it.</p>
+  </div>
+
+  <div class="careers-grid">
+
+    <div class="career-card reveal">
+      <div class="career-tag">📱 Marketing</div>
+      <div class="career-title">Social Media Manager</div>
+      <p class="career-body">Own our presence on TikTok, Instagram, and X. You're not posting into a void — you're telling the story of a real product that real people use. Short-form content, campus moments, growth from zero. This is a ground-floor role.</p>
+      <a class="career-apply" href="mailto:careers@getout.app?subject=Social Media Manager">Apply →</a>
+    </div>
+
+    <div class="career-card reveal reveal-delay-1">
+      <div class="career-tag">🛡️ Safety</div>
+      <div class="career-title">Community Moderator</div>
+      <p class="career-body">You are the first line of defense. Review reports, handle bad actors, keep the platform safe and worth using. This role has real impact — a single good call can protect someone. Remote-friendly, part-time to start.</p>
+      <a class="career-apply" href="mailto:careers@getout.app?subject=Community Moderator">Apply →</a>
+    </div>
+
+    <div class="career-card reveal reveal-delay-2">
+      <div class="career-tag">🎓 Growth</div>
+      <div class="career-title">Campus Ambassador — TAMUT</div>
+      <p class="career-body">Be the face of Out at TAMUT. Talk to people, spread the word, make Out a thing on campus. Word-of-mouth is how we grow and you're the engine. Flexible hours, performance-based perks, and you get to say you helped launch it.</p>
+      <a class="career-apply" href="mailto:careers@getout.app?subject=Campus Ambassador">Apply →</a>
+    </div>
+
+  </div>
+
+  <p class="careers-note">All roles are remote-friendly. Send a short email — no resume required, just tell us why you're interested.</p>
+</section>
+
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="container reveal">
@@ -2859,6 +2958,7 @@ body.dark .why-sub { color: #555; }
     <a href="#" onclick="event.preventDefault();openLegal('safety')">Safety</a>
     <a href="#" onclick="event.preventDefault();openLegal('cookies')">Cookies</a>
     <a href="#" onclick="event.preventDefault();openLegal('contact')">Contact</a>
+    <a href="#careers">Careers</a>
   </div>
   <div class="footer-copy">© 2026 Out. All rights reserved.</div>
 </footer>
