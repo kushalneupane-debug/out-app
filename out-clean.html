@@ -2241,6 +2241,22 @@ footer {
 .app-board-empty-title { font-size: 0.95rem; font-weight: 600; color: #CCC; }
 .app-board-empty-sub   { font-size: 0.8rem; color: #DDD; text-align: center; line-height: 1.6; }
 
+/* ── FOUNDER QUOTE ─────────────────────────────────────────── */
+.founder-quote {
+  margin-top: 32px; padding: 24px 0 0;
+  border-top: 1px solid #E8E8E8;
+}
+.founder-quote-text {
+  font-size: 0.95rem; color: #333; line-height: 1.7;
+  font-style: italic; margin-bottom: 10px;
+}
+.founder-quote-name {
+  font-size: 0.78rem; font-weight: 700; color: #999;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+body.dark .founder-quote { border-top-color: #1E1E1E; }
+body.dark .founder-quote-text { color: #AAA; }
+
 /* ── DARK MODE ─────────────────────────────────────────────── */
 .dark-toggle {
   background: none; border: 1.5px solid #E0E0E0; border-radius: 9999px;
@@ -2390,9 +2406,9 @@ body.dark .why-sub { color: #555; }
       <div class="live-counter-pill" id="liveCounter"><div class="live-counter-dot"></div><span id="liveCountNum">0</span> people Out right now</div>
       <div class="hero-label">Now live in Texarkana &amp; TAMUT</div>
       <h1 class="hero-headline">Find someone near you,&nbsp;right&nbsp;now.</h1>
-      <p class="hero-sub">No profiles. No swiping. No algorithm. Just real people in Texarkana — students, locals, anyone — within 3 miles who are free right now.</p>
+      <p class="hero-sub">No profiles. No swiping. Real people within 3 miles who are free right now.</p>
       <a href="#cta" class="pill-btn">I'm Out →</a>
-      <p class="hero-footnote">Free to join. No account needed. No download.</p>
+      <p class="hero-footnote">Free. No account. No download.</p>
     </div>
 
     <!-- PHONE -->
@@ -2541,30 +2557,34 @@ body.dark .why-sub { color: #555; }
 <section id="about">
   <div class="about-inner">
     <div class="about-left reveal">
-      <div class="section-label">About us</div>
-      <h2 class="about-headline">We built Out<br>to fix something broken.</h2>
+      <div class="section-label">Why I built this</div>
+      <h2 class="about-headline">I was bored.<br>Nobody was around.<br>So I built Out.</h2>
     </div>
     <div class="about-body reveal reveal-delay-1">
-      <p>Social media made it easier than ever to stay in touch — and somehow harder than ever to actually hang out. You can have 1,000 followers and still have nobody to grab coffee with on a Tuesday afternoon.</p>
-      <p>We built Out because we believe the best connections happen in real life, in real time. Not through a carefully curated profile. Not by swiping on photos. Just two people, nearby, free at the same moment — and the courage to say hi.</p>
-      <p>Out is not an app. It's a shortcut to the real world.</p>
+      <p>I kept having the same feeling. Free for an hour, nothing to do, phone in hand, scrolling. There were people literally around me and I had no way to know if any of them wanted to do something too.</p>
+      <p>I tried texting people. Half of them were busy. The other half needed a week's notice. I'd end up just sitting there, bored, wasting time I actually had.</p>
+      <p>So I built Out. Not to be an entrepreneur. Just to fix the thing that was annoying me. If you're free right now and someone nearby is free right now, that should be enough to make something happen.</p>
+      <div class="founder-quote reveal">
+        <div class="founder-quote-text">"I built this because I was tired of being bored alone when I didn't have to be. Out is that problem solved."</div>
+        <div class="founder-quote-name">Kushal, founder</div>
+      </div>
     </div>
   </div>
   <div class="solve-grid">
     <div class="solve-card reveal">
       <div class="solve-num">01</div>
-      <div class="solve-title">Loneliness is an epidemic.</div>
-      <p class="solve-body">Studies rank loneliness as one of the biggest public health crises of our time — and it hits hardest in cities, where millions of people live within feet of each other and never speak. We think proximity should mean something.</p>
+      <div class="solve-title">Boredom is the problem.</div>
+      <p class="solve-body">You're free. You're bored. Someone 5 minutes away is in the exact same spot. You just don't know it. Out fixes that.</p>
     </div>
     <div class="solve-card reveal reveal-delay-1">
       <div class="solve-num">02</div>
-      <div class="solve-title">Planning kills spontaneity.</div>
-      <p class="solve-body">"We should hang out sometime" is a sentence that never leads anywhere. Coordinating calendars, picking a place, committing weeks in advance — it's exhausting. Out removes all of that. You're free now. So is someone nearby. Done.</p>
+      <div class="solve-title">Planning kills it every time.</div>
+      <p class="solve-body">"We should hang out" never happens. By the time you coordinate, the moment is gone. Out is for right now, not next week.</p>
     </div>
     <div class="solve-card reveal reveal-delay-2">
       <div class="solve-num">03</div>
-      <div class="solve-title">Social apps aren't social.</div>
-      <p class="solve-body">Every major platform is optimized to keep you on your phone — not to get you off it. Their incentive is your screen time, not your happiness. Out is the opposite: the moment you match, the goal is to put your phone in your pocket.</p>
+      <div class="solve-title">Your phone should get you off your phone.</div>
+      <p class="solve-body">Every other app keeps you scrolling. Out's only job is to get you out the door. Once you match, put it away.</p>
     </div>
   </div>
 </section>
@@ -2601,26 +2621,26 @@ body.dark .why-sub { color: #555; }
   <div class="why-inner">
     <div class="why-left reveal">
       <div class="why-label-dark">Why Out</div>
-      <h2 class="why-headline">Built to get out of your way.</h2>
-      <p class="why-sub">Every other app wants your time, your data, and your attention. Out just wants you to go outside.</p>
+      <h2 class="why-headline">Nothing you don't need.</h2>
+      <p class="why-sub">Other apps want your attention. Out just wants you to go outside.</p>
     </div>
     <div class="why-right reveal reveal-delay-1">
       <ul class="why-list">
         <li>
           <span class="why-check">✓</span>
-          No profile to build — a first name and a vibe is all anyone sees.
+          First name and a vibe. That's your whole profile.
         </li>
         <li>
           <span class="why-check">✓</span>
-          No history saved — when you go offline, everything deletes.
+          Go offline and everything disappears. Nothing is stored.
         </li>
         <li>
           <span class="why-check">✓</span>
-          No algorithm choosing for you — just distance, nothing else.
+          No algorithm. Just distance. Closest person wins.
         </li>
         <li>
           <span class="why-check">✓</span>
-          Just people near you, right now — the only thing that matters.
+          Free to use. No account. No app store.
         </li>
       </ul>
     </div>
@@ -2638,62 +2658,48 @@ body.dark .why-sub { color: #555; }
       <div class="s-card reveal">
         <div class="s-card-icon">📍</div>
         <div class="s-card-title">Location fuzzed</div>
-        <p class="s-card-body">We add a random offset before storing anything. Nobody sees exactly where you are — not even us.</p>
+        <p class="s-card-body">We add a random offset before storing anything. Nobody sees exactly where you are. Not even us.</p>
       </div>
       <div class="s-card reveal reveal-delay-1">
         <div class="s-card-icon">⏱</div>
         <div class="s-card-title">Auto-expires</div>
-        <p class="s-card-body">Your presence disappears automatically after 3 hours. Go offline and it deletes instantly.</p>
+        <p class="s-card-body">Your presence disappears after 3 hours. Go offline and it deletes instantly.</p>
       </div>
       <div class="s-card reveal reveal-delay-2">
         <div class="s-card-icon">🚫</div>
         <div class="s-card-title">Block instantly</div>
-        <p class="s-card-body">One tap. Permanent. Silent. They disappear from your map, you disappear from theirs.</p>
+        <p class="s-card-body">One tap. Permanent. Silent. They disappear from your list, you disappear from theirs.</p>
       </div>
     </div>
 
-    <div class="safety-tips-head reveal">Tips for staying safe when you use Out</div>
+    <div class="safety-tips-head reveal">Before you go out</div>
     <div class="safety-tips-grid">
       <div class="safety-tip reveal">
         <div class="safety-tip-icon">🏙️</div>
         <div>
-          <div class="safety-tip-title">Meet in public first</div>
-          <p class="safety-tip-body">Always meet for the first time somewhere busy — a coffee shop, a park, anywhere other people are around. Never agree to meet somewhere private with someone you just matched with.</p>
+          <div class="safety-tip-title">Meet somewhere public</div>
+          <p class="safety-tip-body">First meetup should always be a coffee shop, a park, somewhere with other people around. No exceptions.</p>
         </div>
       </div>
       <div class="safety-tip reveal reveal-delay-1">
         <div class="safety-tip-icon">📱</div>
         <div>
-          <div class="safety-tip-title">Tell someone where you're going</div>
-          <p class="safety-tip-body">Use the built-in safety check-in — it lets you send your plans to a friend or family member before you head out. It takes 10 seconds and it matters. Don't skip it.</p>
+          <div class="safety-tip-title">Tell a friend</div>
+          <p class="safety-tip-body">Use the safety check-in in the app. Send your plans to someone before you leave. Takes 10 seconds.</p>
         </div>
       </div>
       <div class="safety-tip reveal">
         <div class="safety-tip-icon">🧠</div>
         <div>
           <div class="safety-tip-title">Trust your gut</div>
-          <p class="safety-tip-body">If something feels off in chat — pressure, urgency, strange requests — leave immediately. You don't owe anyone a meetup. Block and move on, no explanation needed.</p>
+          <p class="safety-tip-body">Something feels off in chat? Leave. You don't owe anyone a meetup. Block and move on.</p>
         </div>
       </div>
       <div class="safety-tip reveal reveal-delay-1">
-        <div class="safety-tip-icon">🚗</div>
-        <div>
-          <div class="safety-tip-title">Arrange your own transport</div>
-          <p class="safety-tip-body">Get yourself there and back independently. Don't accept rides from someone you've just met. Know how you're getting home before you go out — especially at night.</p>
-        </div>
-      </div>
-      <div class="safety-tip reveal">
         <div class="safety-tip-icon">🔒</div>
         <div>
-          <div class="safety-tip-title">Keep personal info private</div>
-          <p class="safety-tip-body">Your first name and vibe is all anyone needs on Out. Don't share your last name, address, workplace, or social media handles in the first chat. Take it slow.</p>
-        </div>
-      </div>
-      <div class="safety-tip reveal reveal-delay-1">
-        <div class="safety-tip-icon">🚨</div>
-        <div>
-          <div class="safety-tip-title">Report anything that feels wrong</div>
-          <p class="safety-tip-body">See something that breaks our rules? Tap the menu in any chat and report it. We take every report seriously. Repeat offenders are permanently removed from the platform.</p>
+          <div class="safety-tip-title">Keep it to your first name</div>
+          <p class="safety-tip-body">That's all anyone needs. No last name, no address, no socials until you actually know the person.</p>
         </div>
       </div>
     </div>
@@ -2711,7 +2717,7 @@ body.dark .why-sub { color: #555; }
       <div class="city-card reveal">
         <div class="city-card-tag">TAMUT</div>
         <div class="city-card-title">30 minutes free between class.</div>
-        <p class="city-card-body">Someone 50 feet from you has the same gap right now. Out finds them. Coffee, walk, food — whatever. Just not another 30 minutes on your phone.</p>
+        <p class="city-card-body">Someone 50 feet from you has the same gap right now. Out finds them. Coffee, a walk, food. Just not another 30 minutes on your phone alone.</p>
       </div>
       <div class="city-card reveal reveal-delay-1">
         <div class="city-card-tag">Texarkana</div>
