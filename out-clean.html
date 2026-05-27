@@ -1758,6 +1758,71 @@ footer {
 .star-btn.lit { color: #F59E0B; }
 .feedback-skip { background: none; border: none; color: #CCC; font-family: inherit; font-size: 0.82rem; cursor: pointer; padding: 4px; }
 
+/* ── MSG SEEN ────────────────────────────────────────────────── */
+.msg-seen {
+  font-size: 0.6rem; color: #4B5563; text-align: right;
+  padding: 1px 12px 5px; letter-spacing: 0.02em;
+}
+
+/* ── END SCREEN ──────────────────────────────────────────────── */
+#screen-end { background: #F8F8F7; }
+.end-inner {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px 28px 24px; text-align: center;
+}
+.end-icon { font-size: 2.6rem; margin-bottom: 16px; line-height: 1; }
+.end-headline {
+  font-size: 1.55rem; font-weight: 800; letter-spacing: -0.04em;
+  color: #111; margin-bottom: 8px; line-height: 1.2;
+}
+.end-sub { font-size: 0.88rem; color: #999; line-height: 1.65; margin-bottom: 32px; max-width: 260px; }
+.end-step { width: 100%; max-width: 320px; }
+.end-met-btn {
+  width: 100%; padding: 16px; border-radius: 14px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; margin-bottom: 10px; letter-spacing: -0.01em;
+  transition: background 0.15s;
+}
+.end-met-btn:hover { background: #2a2a2a; }
+.end-notmet-btn {
+  width: 100%; padding: 14px; border-radius: 14px;
+  background: none; border: 1.5px solid #E5E5E5;
+  font-family: inherit; font-size: 0.88rem; color: #888;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.end-notmet-btn:hover { border-color: #BBB; color: #555; }
+.end-stars-label {
+  font-size: 0.7rem; font-weight: 700; color: #BBB;
+  margin-bottom: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.end-star-row { display: flex; justify-content: center; gap: 4px; margin-bottom: 20px; }
+.end-star-btn {
+  font-size: 2.2rem; background: none; border: none;
+  cursor: pointer; color: #E5E5E5; transition: color 0.15s, transform 0.1s; padding: 2px 4px;
+}
+.end-star-btn:hover { color: #F59E0B; transform: scale(1.1); }
+.end-star-btn.lit   { color: #F59E0B; }
+.end-thankyou { display: none; width: 100%; max-width: 320px; }
+.end-thankyou.show { display: block; }
+.end-divider { width: 40px; height: 2px; background: #EBEBEB; border-radius: 2px; margin: 28px auto 20px; }
+.end-share-label { font-size: 0.8rem; color: #AAA; margin-bottom: 14px; line-height: 1.65; }
+.end-share-btn {
+  width: 100%; padding: 14px; border-radius: 14px;
+  background: #111; color: #fff; border: none;
+  font-family: inherit; font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; transition: background 0.15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.end-share-btn:hover { background: #2a2a2a; }
+.end-close-btn {
+  margin-top: 14px; background: none; border: none;
+  color: #CCC; font-family: inherit; font-size: 0.82rem;
+  cursor: pointer; padding: 8px; width: 100%;
+}
+.end-close-btn:hover { color: #999; }
+
 /* ── LIVE COUNTER (hero) ─────────────────────────────────────────── */
 .live-counter-pill {
   display: none; align-items: center; gap: 7px;
@@ -2734,6 +2799,9 @@ footer {
       <div class="chat-hint">You matched 🎉<br>Say hey — figure out where to meet.</div>
     </div>
 
+    <!-- Seen indicator (under last sent message) -->
+    <div class="msg-seen" id="msgSeen" style="display:none">Seen</div>
+
     <!-- Typing indicator -->
     <div class="typing-row" id="typingRow">
       <div class="msg-avatar-sm" id="typingAvatar"></div>
@@ -2835,6 +2903,54 @@ footer {
       </button>
       <button class="report-cancel" onclick="closeChatMenu()">Cancel</button>
     </div>
+  </div>
+</div>
+
+<!-- End / thank-you screen -->
+<div class="app-screen" id="screen-end" style="overflow-y:auto">
+  <div class="app-topbar" style="background:transparent;border:none">
+    <div class="app-logo">Out</div>
+    <button class="app-back" onclick="closeApp()" style="font-size:0.8rem;color:#AAA">Close ✕</button>
+  </div>
+  <div class="end-inner">
+
+    <!-- Step 1: question -->
+    <div id="endStep1">
+      <div class="end-icon">👋</div>
+      <div class="end-headline">Chat ended.</div>
+      <div class="end-sub">How did it go with <span id="endPartnerName">them</span>?</div>
+      <div class="end-step">
+        <button class="end-met-btn" onclick="endMetUp(true)">We met up 🎉</button>
+        <button class="end-notmet-btn" onclick="endMetUp(false)">Not this time</button>
+      </div>
+    </div>
+
+    <!-- Step 2: stars (shown after "We met up") -->
+    <div id="endStep2" style="display:none;width:100%;max-width:320px;text-align:center">
+      <div class="end-icon">🌟</div>
+      <div class="end-headline">How was it?</div>
+      <div class="end-sub">Rate the experience — it helps us improve.</div>
+      <div class="end-stars-label">Your rating</div>
+      <div class="end-star-row">
+        <button class="end-star-btn" onclick="endRate(1)">★</button>
+        <button class="end-star-btn" onclick="endRate(2)">★</button>
+        <button class="end-star-btn" onclick="endRate(3)">★</button>
+        <button class="end-star-btn" onclick="endRate(4)">★</button>
+        <button class="end-star-btn" onclick="endRate(5)">★</button>
+      </div>
+    </div>
+
+    <!-- Step 3: thank you + share -->
+    <div id="endStep3" style="display:none;width:100%;max-width:320px;text-align:center">
+      <div class="end-icon" id="endThanksIcon">🙏</div>
+      <div class="end-headline" id="endThanksHeadline">Thanks!</div>
+      <div class="end-sub" id="endThanksSub">Your feedback helps make Out better for everyone.</div>
+      <div class="end-divider"></div>
+      <div class="end-share-label">Know someone who'd enjoy this? Send them the link — it takes 5 seconds.</div>
+      <button class="end-share-btn" onclick="shareOutApp()">↗ Share Out with a friend</button>
+      <button class="end-close-btn" onclick="closeApp()">No thanks, close</button>
+    </div>
+
   </div>
 </div>
 
@@ -3272,6 +3388,8 @@ function connectRealtime(name, vibe, lat, lng) {
       if (p && p.chatId === chatId && p.from !== myKey) {
         document.getElementById('typingRow').classList.remove('show');
         appendMsg(p.text, false, p.ts);
+        // Tell the sender I've seen it
+        broadcastSeen();
       }
     })
     .on('broadcast', { event: 'chat_typing' }, function(msg) {
@@ -3284,10 +3402,17 @@ function connectRealtime(name, vibe, lat, lng) {
         msgs.scrollTop = msgs.scrollHeight;
       }
     })
+    .on('broadcast', { event: 'chat_seen' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.chatId === chatId && p.from === chatPartnerKey) {
+        showSeenIndicator();
+      }
+    })
     .on('broadcast', { event: 'chat_location' }, function(msg) {
       var p = msg.payload;
       if (p && p.to === myKey && p.from === chatPartnerKey) {
         appendLocationCard(p.lat, p.lng, false, new Date().toISOString());
+        broadcastSeen();
       }
     })
     .on('broadcast', { event: 'user_kicked' }, function(msg) {
@@ -3418,12 +3543,24 @@ function sendMsg() {
   if (!text || !channel || !chatId) return;
   input.value = '';
   document.getElementById('chatSend').disabled = true;
-  // stop typing indicator on send
   isTyping = false;
   clearTimeout(typingTimer);
   channel.send({ type:'broadcast', event:'chat_typing', payload:{ chatId:chatId, from:myKey, typing:false } });
+  // Hide seen on new message (it'll re-appear when they see the new one)
+  document.getElementById('msgSeen').style.display = 'none';
   appendMsg(text, true, Date.now());
   channel.send({ type:'broadcast', event:'chat_msg', payload:{ chatId:chatId, from:myKey, text:text, ts:Date.now() } });
+}
+
+function broadcastSeen() {
+  if (!channel || !chatId) return;
+  channel.send({ type:'broadcast', event:'chat_seen',
+    payload:{ chatId:chatId, from:myKey, to:chatPartnerKey } });
+}
+
+function showSeenIndicator() {
+  var el = document.getElementById('msgSeen');
+  if (el) { el.style.display = ''; el.textContent = 'Seen'; }
 }
 
 function appendMsg(text, isMe, ts) {
@@ -3468,12 +3605,13 @@ function appendMsg(text, isMe, ts) {
 
 function leaveChat() {
   var wasChatting = !!chatId;
+  var partnerName = document.getElementById('chatHeaderName') ? document.getElementById('chatHeaderName').textContent : '';
   chatId=''; chatPartnerKey=''; lastMsgWasMine=null;
   dismissSafetyWarning();
   document.getElementById('typingRow').classList.remove('show');
+  document.getElementById('msgSeen').style.display = 'none';
   if (wasChatting) {
-    showScreen('screen-live');
-    setTimeout(showFeedback, 400);
+    showEndScreen(partnerName);
   } else {
     closeApp();
   }
@@ -4073,37 +4211,87 @@ function appendBoardMessage(name, text, isMe, ts) {
 }
 
 // ── Feedback overlay ──────────────────────────────────────────
+// ── End screen ────────────────────────────────────────────────
+var endMetUpChoice = null;
+
+function showEndScreen(partnerName) {
+  endMetUpChoice = null;
+  document.getElementById('endStep1').style.display = '';
+  document.getElementById('endStep2').style.display = 'none';
+  document.getElementById('endStep3').style.display = 'none';
+  document.querySelectorAll('.end-star-btn').forEach(function(b){ b.classList.remove('lit'); });
+  var nameEl = document.getElementById('endPartnerName');
+  if (nameEl) nameEl.textContent = partnerName || 'them';
+  showScreen('screen-end');
+}
+
+function endMetUp(metUp) {
+  endMetUpChoice = metUp;
+  var uid = myUid || (boardUser ? boardUser.uid : null);
+  sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: metUp, rating: null }).then(function(){});
+  if (metUp) {
+    document.getElementById('endStep1').style.display = 'none';
+    document.getElementById('endStep2').style.display = '';
+  } else {
+    showEndThanks(false);
+  }
+}
+
+function endRate(stars) {
+  document.querySelectorAll('.end-star-btn').forEach(function(b, i){ b.classList.toggle('lit', i < stars); });
+  var uid = myUid || (boardUser ? boardUser.uid : null);
+  sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: true, rating: stars }).then(function(){});
+  setTimeout(function(){ showEndThanks(true); }, 500);
+}
+
+function showEndThanks(metUp) {
+  document.getElementById('endStep1').style.display = 'none';
+  document.getElementById('endStep2').style.display = 'none';
+  document.getElementById('endStep3').style.display = '';
+  if (metUp) {
+    document.getElementById('endThanksIcon').textContent     = '🎉';
+    document.getElementById('endThanksHeadline').textContent = 'Awesome!';
+    document.getElementById('endThanksSub').textContent      = 'Really glad it worked out. Share Out so more people can meet up too.';
+  } else {
+    document.getElementById('endThanksIcon').textContent     = '🙏';
+    document.getElementById('endThanksHeadline').textContent = 'Thanks.';
+    document.getElementById('endThanksSub').textContent      = 'Maybe next time. The more people on Out, the better the chances.';
+  }
+}
+
+function shareOutApp() {
+  var name = '';
+  try { var s = JSON.parse(localStorage.getItem('out_user') || 'null'); if (s) name = s.name || ''; } catch(e) {}
+  var url = window.location.origin + window.location.pathname + (name ? '?invite=' + encodeURIComponent(name) : '');
+  var msg = 'I just tried Out — an app where you find someone nearby who\'s free right now. No profiles, no algorithm. ' + url;
+  if (navigator.share) {
+    navigator.share({ title: 'Out — meet someone nearby', text: msg, url: url }).catch(function(){});
+  } else {
+    navigator.clipboard.writeText(url).then(function() {
+      var btn = document.querySelector('.end-share-btn');
+      if (btn) { btn.textContent = '✓ Link copied!'; setTimeout(function(){ btn.innerHTML = '↗ Share Out with a friend'; }, 2500); }
+    }).catch(function(){ prompt('Share this link:', url); });
+  }
+}
+
+// Keep old names for board-chat feedback overlay (still used)
 function showFeedback() {
   document.querySelectorAll('.star-btn').forEach(function(b){ b.classList.remove('lit'); });
   document.getElementById('feedbackOverlay').classList.add('show');
 }
-
 function closeFeedback() {
   document.getElementById('feedbackOverlay').classList.remove('show');
-  closeApp();
 }
-
 function submitFeedback(metUp) {
-  var uid = (typeof myUid !== 'undefined' && myUid) ? myUid : (boardUser ? boardUser.uid : null);
-  sb.from('meetup_feedback').insert({
-    user_uid: uid || null,
-    met_up:   metUp,
-    rating:   null,
-  }).then(function(){});
+  var uid = myUid || (boardUser ? boardUser.uid : null);
+  sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: metUp, rating: null }).then(function(){});
   closeFeedback();
 }
-
 function rateMeetup(stars) {
-  document.querySelectorAll('.star-btn').forEach(function(s, i) {
-    s.classList.toggle('lit', i < stars);
-  });
-  var uid = (typeof myUid !== 'undefined' && myUid) ? myUid : (boardUser ? boardUser.uid : null);
-  sb.from('meetup_feedback').insert({
-    user_uid: uid || null,
-    met_up:   true,
-    rating:   stars,
-  }).then(function(){});
-  setTimeout(closeFeedback, 800);
+  document.querySelectorAll('.star-btn').forEach(function(s, i){ s.classList.toggle('lit', i < stars); });
+  var uid = myUid || (boardUser ? boardUser.uid : null);
+  sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: true, rating: stars }).then(function(){});
+  setTimeout(closeFeedback, 600);
 }
 
 // ── In-chat location share ────────────────────────────────────
