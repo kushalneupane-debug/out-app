@@ -1847,119 +1847,186 @@ footer {
 /* ── APP HOME SCREEN ─────────────────────────────────────────── */
 .home-inner {
   flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding: 0 28px 52px;
+}
+.home-hero {
+  flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 28px 24px; gap: 14px;
+  text-align: center; padding-bottom: 8px;
 }
-.home-greeting {
-  font-size: 1.35rem; font-weight: 700; letter-spacing: -0.04em;
-  color: #111; text-align: center; margin-bottom: 4px;
+.home-live-row {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.77rem; font-weight: 500; color: #22C55E;
+  margin-bottom: 24px; letter-spacing: 0.02em;
 }
-.home-sub {
-  font-size: 0.85rem; color: #999; text-align: center;
-  margin-bottom: 14px; line-height: 1.6; max-width: 280px;
+.home-live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22C55E; flex-shrink: 0;
+  animation: dotFade 1.5s ease-in-out infinite;
 }
-.home-card {
-  width: 100%; max-width: 340px; padding: 22px 20px;
-  border-radius: 18px; border: 1.5px solid #E5E5E5;
-  background: #fff; cursor: pointer; text-align: left;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-family: inherit;
+.home-headline {
+  font-size: 2rem; font-weight: 800; letter-spacing: -0.05em;
+  color: #111; line-height: 1.1; margin-bottom: 12px;
 }
-.home-card:hover { border-color: #BBB; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-.home-card.primary { background: #111; border-color: #111; }
-.home-card.primary:hover { background: #333; }
-.home-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
-.home-card-title {
-  font-size: 1.02rem; font-weight: 700; letter-spacing: -0.02em;
-  color: #111; margin-bottom: 4px;
+.home-tagline {
+  font-size: 0.88rem; color: #999; line-height: 1.65;
+  max-width: 240px;
 }
-.home-card.primary .home-card-title { color: #fff; }
-.home-card-desc { font-size: 0.8rem; color: #888; line-height: 1.55; }
-.home-card.primary .home-card-desc { color: rgba(255,255,255,0.55); }
+.home-actions { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 10px; }
+.home-live-btn {
+  width: 100%; padding: 17px 24px;
+  background: #111; color: #fff; border: none;
+  border-radius: 14px; font-family: inherit;
+  font-size: 1rem; font-weight: 700; letter-spacing: -0.02em;
+  cursor: pointer; text-align: center;
+  transition: background 0.15s, transform 0.1s;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.home-live-btn:hover  { background: #2a2a2a; }
+.home-live-btn:active { transform: scale(0.98); }
+.home-live-btn-left { display: flex; align-items: center; gap: 10px; }
+.home-live-btn-dot  {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+  animation: dotFade 1.5s ease-in-out infinite;
+}
+.home-live-btn-arrow { font-size: 1.1rem; opacity: 0.7; }
+.home-board-btn {
+  width: 100%; padding: 15px 24px;
+  background: #F4F4F4; color: #333; border: none;
+  border-radius: 14px; font-family: inherit;
+  font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em;
+  cursor: pointer; text-align: center;
+  transition: background 0.15s, transform 0.1s;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.home-board-btn:hover  { background: #EBEBEB; }
+.home-board-btn:active { transform: scale(0.98); }
+.home-board-btn-left { display: flex; align-items: center; gap: 10px; }
 
 /* ── APP BOARD SCREEN ────────────────────────────────────────── */
 .app-board-wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+
+/* Compose bar — Twitter-style row, expands on click */
 .app-board-compose {
-  background: #fff; border-bottom: 1.5px solid #EBEBEB;
-  padding: 14px 18px; flex-shrink: 0;
+  background: #fff; border-bottom: 1px solid #F0F0F0;
+  padding: 12px 16px 0; flex-shrink: 0;
 }
-.app-board-name-row {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+.app-board-compose-row {
+  display: flex; align-items: flex-start; gap: 11px; padding-bottom: 12px;
 }
-.app-board-name-label { font-size: 0.75rem; color: #888; white-space: nowrap; }
-.app-board-name-input {
-  flex: 1; border: 1.5px solid #E5E5E5; border-radius: 8px;
-  padding: 7px 11px; font-size: 0.83rem; font-family: inherit;
-  color: #111; background: #FAFAFA; max-width: 140px;
-}
-.app-board-name-input:focus { outline: none; border-color: #111; background: #fff; }
-.app-board-name-input::placeholder { color: #CCC; }
-.app-board-name-saved { font-size: 0.77rem; color: #888; }
-.app-board-name-change {
-  font-size: 0.7rem; color: #BBB; text-decoration: underline;
-  cursor: pointer; background: none; border: none; padding: 0; font-family: inherit;
-}
-.app-board-post-input {
-  width: 100%; border: 1.5px solid #E5E5E5; border-radius: 10px;
-  padding: 10px 13px; font-size: 0.9rem; font-family: inherit;
-  color: #111; background: #FAFAFA; margin-bottom: 8px;
-}
-.app-board-post-input:focus { outline: none; border-color: #111; background: #fff; }
-.app-board-post-input::placeholder { color: #CCC; }
-.app-board-post-textarea {
-  width: 100%; border: 1.5px solid #E5E5E5; border-radius: 10px;
-  padding: 10px 13px; font-size: 0.85rem; font-family: inherit;
-  color: #111; background: #FAFAFA; resize: none; margin-bottom: 8px; display: block;
-}
-.app-board-post-textarea:focus { outline: none; border-color: #111; background: #fff; }
-.app-board-post-textarea::placeholder { color: #CCC; }
-.app-board-compose-footer { display: flex; align-items: center; justify-content: space-between; }
-.app-board-compose-hint { font-size: 0.7rem; color: #CCC; }
-.app-board-post-btn {
-  padding: 8px 20px; border-radius: 9999px; background: #111; color: #fff;
-  font-size: 0.82rem; font-weight: 600; font-family: inherit;
-  cursor: pointer; border: none; transition: background 0.15s;
-}
-.app-board-post-btn:disabled { background: #DDD; cursor: not-allowed; }
-.app-board-post-btn:hover:not(:disabled) { background: #333; }
-.app-board-feed { flex: 1; overflow-y: auto; }
-.app-post-card {
-  padding: 16px 18px; border-bottom: 1px solid #F3F3F3;
-  cursor: pointer; transition: background 0.1s;
-}
-.app-post-card:hover { background: #FAFAFA; }
-.app-post-card-top {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 7px;
-}
-.app-post-avatar {
-  width: 30px; height: 30px; border-radius: 50%; background: #111;
-  color: #fff; font-size: 0.75rem; font-weight: 700;
+.app-board-compose-av {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #111; color: #fff;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
+.app-board-compose-body { flex: 1; min-width: 0; }
+.app-board-compose-trigger {
+  width: 100%; padding: 9px 13px;
+  background: #F6F6F6; border: none; border-radius: 22px;
+  font-family: inherit; font-size: 0.9rem; color: #AAA;
+  text-align: left; cursor: text; line-height: 1;
+}
+.app-board-compose-trigger:hover { background: #F0F0F0; }
+/* expanded compose */
+.app-board-compose-expanded { display: none; }
+.app-board-compose-expanded.open { display: block; }
+.app-board-compose-name-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+}
+.app-board-name-label { font-size: 0.73rem; font-weight: 600; color: #999; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em; }
+.app-board-name-input {
+  border: none; border-bottom: 1.5px solid #E5E5E5;
+  padding: 4px 0; font-size: 0.88rem; font-family: inherit;
+  color: #111; background: transparent; width: 120px;
+}
+.app-board-name-input:focus { outline: none; border-bottom-color: #111; }
+.app-board-name-input::placeholder { color: #CCC; }
+.app-board-name-saved { font-size: 0.77rem; color: #666; font-weight: 600; }
+.app-board-name-change {
+  font-size: 0.7rem; color: #CCC; cursor: pointer;
+  background: none; border: none; padding: 0; font-family: inherit; margin-left: 4px;
+}
+.app-board-post-input {
+  width: 100%; border: none; outline: none;
+  font-size: 1rem; font-family: inherit; font-weight: 500;
+  color: #111; background: transparent; margin-bottom: 6px;
+  letter-spacing: -0.01em; line-height: 1.4;
+}
+.app-board-post-input::placeholder { color: #CCC; }
+.app-board-post-textarea {
+  width: 100%; border: none; outline: none; resize: none;
+  font-size: 0.88rem; font-family: inherit; color: #555;
+  background: transparent; line-height: 1.6; margin-bottom: 10px; display: block;
+}
+.app-board-post-textarea::placeholder { color: #DDD; }
+.app-board-compose-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px; border-top: 1px solid #F0F0F0;
+}
+.app-board-compose-hint { font-size: 0.7rem; color: #CCC; }
+.app-board-post-btn {
+  padding: 7px 18px; border-radius: 9999px; background: #111; color: #fff;
+  font-size: 0.8rem; font-weight: 700; font-family: inherit; letter-spacing: -0.01em;
+  cursor: pointer; border: none; transition: background 0.15s;
+}
+.app-board-post-btn:disabled { background: #E0E0E0; color: #BBB; cursor: not-allowed; }
+.app-board-post-btn:hover:not(:disabled) { background: #333; }
+
+.app-board-feed { flex: 1; overflow-y: auto; }
+
+/* Post cards */
+.app-post-card {
+  padding: 15px 16px 12px;
+  border-bottom: 1px solid #F5F5F5;
+  cursor: pointer; transition: background 0.1s;
+  display: flex; gap: 11px;
+}
+.app-post-card:hover { background: #FAFAFA; }
+.app-post-av {
+  width: 38px; height: 38px; border-radius: 50%;
+  color: #fff; font-size: 0.82rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.app-post-content { flex: 1; min-width: 0; }
+.app-post-meta {
+  display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px;
+}
 .app-post-author { font-size: 0.82rem; font-weight: 700; color: #111; }
-.app-post-time   { font-size: 0.7rem; color: #CCC; margin-left: auto; }
+.app-post-time   { font-size: 0.7rem; color: #CCC; }
 .app-post-title  {
-  font-size: 0.97rem; font-weight: 600; color: #111;
-  line-height: 1.4; margin-bottom: 5px; letter-spacing: -0.01em;
+  font-size: 0.95rem; font-weight: 600; color: #111;
+  line-height: 1.45; letter-spacing: -0.01em; margin-bottom: 4px;
 }
 .app-post-body {
-  font-size: 0.84rem; color: #666; line-height: 1.55; margin-bottom: 10px;
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 0.83rem; color: #777; line-height: 1.55; margin-bottom: 9px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.app-post-footer { display: flex; align-items: center; gap: 12px; }
-.app-post-comment-count { font-size: 0.74rem; color: #BBB; }
-.app-post-view-btn {
-  margin-left: auto; padding: 5px 14px; border-radius: 9999px;
-  border: 1.5px solid #E5E5E5; background: none;
-  font-size: 0.74rem; font-weight: 600; color: #555;
-  cursor: pointer; font-family: inherit; transition: all 0.15s;
+.app-post-footer { display: flex; align-items: center; gap: 14px; }
+.app-post-comments-btn {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.75rem; color: #AAA; background: none; border: none;
+  cursor: pointer; font-family: inherit; padding: 0; transition: color 0.15s;
 }
-.app-post-view-btn:hover { border-color: #111; color: #111; }
+.app-post-comments-btn:hover { color: #555; }
+.app-post-join-btn {
+  margin-left: auto; padding: 5px 13px; border-radius: 9999px;
+  background: #111; color: #fff; border: none;
+  font-size: 0.73rem; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: background 0.15s; letter-spacing: -0.01em;
+}
+.app-post-join-btn:hover { background: #333; }
 .app-board-empty {
-  text-align: center; padding: 60px 24px;
-  font-size: 0.88rem; color: #CCC; line-height: 2;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 64px 24px; gap: 8px;
 }
-.app-board-empty strong { display: block; color: #AAA; font-size: 0.95rem; margin-bottom: 6px; }
+.app-board-empty-icon { font-size: 2rem; margin-bottom: 4px; opacity: 0.4; }
+.app-board-empty-title { font-size: 0.95rem; font-weight: 600; color: #CCC; }
+.app-board-empty-sub   { font-size: 0.8rem; color: #DDD; text-align: center; line-height: 1.6; }
 
 </style>
 </head>
@@ -2372,62 +2439,86 @@ footer {
     </div>
   </div>
 
-  <!-- Home screen: choose Go Live or Board -->
+  <!-- Home screen -->
   <div class="app-screen" id="screen-home">
     <div class="app-topbar">
       <div class="app-logo">Out</div>
-      <button class="app-back" onclick="closeApp()">✕ Close</button>
+      <button class="app-back" onclick="closeApp()">✕</button>
     </div>
     <div class="home-inner">
-      <div class="home-greeting">What do you want to do?</div>
-      <div class="home-sub">Go live to find people nearby, or browse the Community Board — no location needed.</div>
-      <button class="home-card primary" onclick="goToLiveFlow()">
-        <div class="home-card-icon">🟢</div>
-        <div class="home-card-title">Go Live</div>
-        <div class="home-card-desc">See real people within 3 miles who are free right now. Ephemeral, instant, real.</div>
-      </button>
-      <button class="home-card" onclick="goToBoardScreen()">
-        <div class="home-card-icon">📋</div>
-        <div class="home-card-title">Community Board</div>
-        <div class="home-card-desc">Post where you're going, comment, chat with people — no location or account needed.</div>
-      </button>
+      <div class="home-hero">
+        <div class="home-live-row">
+          <span class="home-live-dot"></span>
+          <span id="homeLiveCount">people out right now</span>
+        </div>
+        <div class="home-headline">Someone near you<br>is free right now.</div>
+        <div class="home-tagline">No profiles. No swiping. Just real people within 3 miles.</div>
+      </div>
+      <div class="home-actions">
+        <button class="home-live-btn" onclick="goToLiveFlow()">
+          <div class="home-live-btn-left">
+            <span class="home-live-btn-dot"></span>
+            Go Live
+          </div>
+          <span class="home-live-btn-arrow">→</span>
+        </button>
+        <button class="home-board-btn" onclick="goToBoardScreen()">
+          <div class="home-board-btn-left">
+            <span>📋</span>
+            Community Board
+          </div>
+          <span style="color:#BBB;font-size:0.85rem">→</span>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Board screen -->
   <div class="app-screen" id="screen-board">
-    <div class="app-topbar">
-      <div class="app-logo">Out</div>
-      <button class="app-back" onclick="showScreen('screen-home')">← Back</button>
+    <div class="app-topbar" style="border-bottom:1px solid #F0F0F0">
+      <div style="font-size:0.95rem;font-weight:700;letter-spacing:-0.02em">Board</div>
+      <button class="app-back" onclick="showScreen('screen-home')" style="color:#888;font-size:0.8rem">← Back</button>
     </div>
     <div class="app-board-wrap">
       <!-- Compose -->
       <div class="app-board-compose">
-        <!-- Name not yet set -->
-        <div class="app-board-name-row" id="appBoardNameRow">
-          <span class="app-board-name-label">Your name:</span>
-          <input class="app-board-name-input" id="appBoardNameInput" type="text"
-            placeholder="e.g. Alex" maxlength="12"
-            autocomplete="off" autocorrect="off" spellcheck="false">
+        <div class="app-board-compose-row">
+          <div class="app-board-compose-av" id="composeAv">?</div>
+          <div class="app-board-compose-body">
+            <button class="app-board-compose-trigger" id="composeTrigger" onclick="openBoardCompose()">What's happening around you?</button>
+          </div>
         </div>
-        <!-- Name saved -->
-        <div class="app-board-name-row" id="appBoardNameSaved" style="display:none">
-          <span class="app-board-name-saved" id="appBoardNameDisplay"></span>
-          <button class="app-board-name-change" onclick="changeBoardName()">change</button>
-        </div>
-        <input class="app-board-post-input" id="appBoardTitleInput" type="text"
-          placeholder="What are you up to? (e.g. Anyone for coffee at 3pm?)"
-          maxlength="100" autocomplete="off" autocorrect="off" spellcheck="false">
-        <textarea class="app-board-post-textarea" id="appBoardBodyInput"
-          placeholder="More details… (optional)" maxlength="400" rows="2"></textarea>
-        <div class="app-board-compose-footer">
-          <span class="app-board-compose-hint">Posts are anonymous · anyone can see</span>
-          <button class="app-board-post-btn" id="appBoardPostBtn" onclick="submitAppPost()">Post</button>
+        <!-- Expanded compose form -->
+        <div class="app-board-compose-expanded" id="boardComposeExpanded">
+          <!-- Name row -->
+          <div class="app-board-compose-name-row" id="appBoardNameRow">
+            <span class="app-board-name-label">Name</span>
+            <input class="app-board-name-input" id="appBoardNameInput" type="text"
+              placeholder="Anonymous" maxlength="12"
+              autocomplete="off" autocorrect="off" spellcheck="false">
+          </div>
+          <div class="app-board-compose-name-row" id="appBoardNameSaved" style="display:none">
+            <span class="app-board-name-saved" id="appBoardNameDisplay"></span>
+            <button class="app-board-name-change" onclick="changeBoardName()">change</button>
+          </div>
+          <input class="app-board-post-input" id="appBoardTitleInput" type="text"
+            placeholder="What are you up to? e.g. Anyone for coffee at 3pm?"
+            maxlength="100" autocomplete="off" autocorrect="off" spellcheck="false">
+          <textarea class="app-board-post-textarea" id="appBoardBodyInput"
+            placeholder="More details… (optional)" maxlength="400" rows="3"></textarea>
+          <div class="app-board-compose-footer">
+            <span class="app-board-compose-hint">Anyone can see · no location needed</span>
+            <button class="app-board-post-btn" id="appBoardPostBtn" onclick="submitAppPost()">Post</button>
+          </div>
         </div>
       </div>
       <!-- Feed -->
       <div class="app-board-feed" id="appBoardFeed">
-        <div class="app-board-empty"><strong>Loading…</strong></div>
+        <div class="app-board-empty">
+          <div class="app-board-empty-icon">💬</div>
+          <div class="app-board-empty-title">No posts yet</div>
+          <div class="app-board-empty-sub">Be the first — post where you're going or what you're up to.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -4076,12 +4167,19 @@ function appendLocationCard(lat, lng, isMe, ts) {
 function initLiveCounter() {
   var pill  = document.getElementById('liveCounter');
   var numEl = document.getElementById('liveCountNum');
-  if (!pill || !numEl) return;
   var counterChannel = sb.channel('out-live-counter');
   counterChannel.on('presence', { event: 'sync' }, function() {
     var count = Object.keys(counterChannel.presenceState()).length;
-    numEl.textContent = count;
-    pill.classList.toggle('show', count > 0);
+    // Landing page pill
+    if (numEl) numEl.textContent = count;
+    if (pill)  pill.classList.toggle('show', count > 0);
+    // Home screen count
+    var homeEl = document.getElementById('homeLiveCount');
+    if (homeEl) {
+      homeEl.textContent = count > 0
+        ? count + ' ' + (count === 1 ? 'person' : 'people') + ' out right now'
+        : 'free to join · no account needed';
+    }
   }).subscribe();
 }
 
@@ -4321,17 +4419,41 @@ function goToBoardScreen() {
   showScreen('screen-board');
   initAppBoardName();
   loadAppBoardPosts();
+  // collapse compose if re-entering
+  var exp = document.getElementById('boardComposeExpanded');
+  if (exp) exp.classList.remove('open');
+  var trig = document.getElementById('composeTrigger');
+  if (trig) trig.style.display = '';
+}
+
+// ── Compose expand/collapse ───────────────────────────────────
+function openBoardCompose() {
+  var exp  = document.getElementById('boardComposeExpanded');
+  var trig = document.getElementById('composeTrigger');
+  if (!exp) return;
+  exp.classList.add('open');
+  trig.style.display = 'none';
+  // Focus title input after animation frame
+  setTimeout(function() {
+    var inp = document.getElementById('appBoardTitleInput');
+    if (inp) inp.focus();
+  }, 50);
 }
 
 // ── App Board name management ─────────────────────────────────
 function initAppBoardName() {
   var name = null;
   try { name = localStorage.getItem('out_board_name'); } catch(e) {}
+  // Update compose avatar
+  var av = document.getElementById('composeAv');
+  if (av) {
+    av.textContent  = name ? name.charAt(0).toUpperCase() : '?';
+    av.style.background = name ? nameColor(name) : '#CCC';
+  }
   if (name) {
     document.getElementById('appBoardNameRow').style.display   = 'none';
     document.getElementById('appBoardNameSaved').style.display = '';
-    document.getElementById('appBoardNameDisplay').textContent = 'Posting as ' + name;
-    // Sync boardUser
+    document.getElementById('appBoardNameDisplay').textContent = name;
     if (!boardUser || !boardUser.uid) {
       saveBoardUser({ name: name, uid: getOrCreateUid(), email: null });
     }
@@ -4348,6 +4470,16 @@ function changeBoardName() {
   document.getElementById('appBoardNameSaved').style.display = 'none';
   var inp = document.getElementById('appBoardNameInput');
   if (inp) { inp.value = ''; inp.focus(); }
+  var av = document.getElementById('composeAv');
+  if (av) { av.textContent = '?'; av.style.background = '#CCC'; }
+}
+
+// ── Avatar color helper ───────────────────────────────────────
+var AVATAR_COLORS = ['#E11D48','#7C3AED','#2563EB','#059669','#D97706','#0891B2','#9333EA','#DC2626','#0D9488','#EA580C'];
+function nameColor(name) {
+  var code = 0;
+  for (var i = 0; i < (name || '').length; i++) code += name.charCodeAt(i);
+  return AVATAR_COLORS[code % AVATAR_COLORS.length];
 }
 
 // ── App Board post submit ─────────────────────────────────────
@@ -4389,6 +4521,11 @@ function submitAppPost() {
     }
     document.getElementById('appBoardTitleInput').value = '';
     document.getElementById('appBoardBodyInput').value  = '';
+    // Collapse compose
+    var exp = document.getElementById('boardComposeExpanded');
+    if (exp) exp.classList.remove('open');
+    var trig = document.getElementById('composeTrigger');
+    if (trig) trig.style.display = '';
     loadAppBoardPosts();
   }).catch(function(err) {
     btn.disabled = false; btn.textContent = 'Post';
@@ -4400,7 +4537,7 @@ function submitAppPost() {
 // ── App Board feed ────────────────────────────────────────────
 function loadAppBoardPosts() {
   var feed = document.getElementById('appBoardFeed');
-  if (feed) feed.innerHTML = '<div class="app-board-empty">Loading…</div>';
+  if (feed) feed.innerHTML = '<div class="app-board-empty"><div class="app-board-empty-icon" style="opacity:0.2">⏳</div><div class="app-board-empty-title" style="color:#DDD">Loading…</div></div>';
   sb.from('community_posts')
     .select('*')
     .order('created_at', { ascending: false })
@@ -4425,7 +4562,8 @@ function loadAppCommentCount(postId) {
     .eq('post_id', postId)
     .then(function(res) {
       var el = document.getElementById('apc-' + postId);
-      if (el) el.textContent = '💬 ' + (res.count || 0) + ' comment' + (res.count === 1 ? '' : 's');
+      var n = res.count || 0;
+      if (el) el.textContent = '💬 ' + n + (n === 1 ? ' comment' : ' comments');
     });
 }
 
@@ -4433,25 +4571,33 @@ function renderAppBoardPosts(posts) {
   var feed = document.getElementById('appBoardFeed');
   if (!feed) return;
   if (!posts || !posts.length) {
-    feed.innerHTML = '<div class="app-board-empty"><strong>No posts yet</strong>Be the first to share what you\'re up to!</div>';
+    feed.innerHTML =
+      '<div class="app-board-empty">' +
+        '<div class="app-board-empty-icon">💬</div>' +
+        '<div class="app-board-empty-title">No posts yet</div>' +
+        '<div class="app-board-empty-sub">Be the first — post where you\'re going or what you\'re up to.</div>' +
+      '</div>';
     return;
   }
   feed.innerHTML = '';
   posts.forEach(function(p) {
     var initial = (p.author_name || '?').charAt(0).toUpperCase();
+    var color   = nameColor(p.author_name || '');
     var card = document.createElement('div');
     card.className = 'app-post-card';
     card.innerHTML =
-      '<div class="app-post-card-top">' +
-        '<div class="app-post-avatar">' + esc(initial) + '</div>' +
-        '<span class="app-post-author">' + esc(p.author_name) + '</span>' +
-        '<span class="app-post-time">'   + timeAgo(p.created_at) + '</span>' +
-      '</div>' +
-      '<div class="app-post-title">' + esc(p.title) + '</div>' +
-      (p.body ? '<div class="app-post-body">' + esc(p.body) + '</div>' : '') +
-      '<div class="app-post-footer">' +
-        '<span class="app-post-comment-count" id="apc-' + p.id + '">💬 0 comments</span>' +
-        '<button class="app-post-view-btn" onclick="event.stopPropagation();openCommunityPost(\'' + p.id + '\')">View →</button>' +
+      '<div class="app-post-av" style="background:' + color + '">' + esc(initial) + '</div>' +
+      '<div class="app-post-content">' +
+        '<div class="app-post-meta">' +
+          '<span class="app-post-author">' + esc(p.author_name) + '</span>' +
+          '<span class="app-post-time">' + timeAgo(p.created_at) + '</span>' +
+        '</div>' +
+        '<div class="app-post-title">' + esc(p.title) + '</div>' +
+        (p.body ? '<div class="app-post-body">' + esc(p.body) + '</div>' : '') +
+        '<div class="app-post-footer">' +
+          '<button class="app-post-comments-btn" id="apc-' + p.id + '" onclick="event.stopPropagation();openCommunityPost(\'' + p.id + '\')">💬 0 comments</button>' +
+          '<button class="app-post-join-btn" onclick="event.stopPropagation();openCommunityPost(\'' + p.id + '\')">Join →</button>' +
+        '</div>' +
       '</div>';
     card.onclick = function() { openCommunityPost(p.id); };
     feed.appendChild(card);
