@@ -2838,7 +2838,55 @@ footer {
 
   </div>
 
-</div>
+  <!-- End / thank-you screen -->
+  <div class="app-screen" id="screen-end" style="overflow-y:auto">
+    <div class="app-topbar" style="background:transparent;border:none">
+      <div class="app-logo">Out</div>
+      <button class="app-back" onclick="closeApp()" style="font-size:0.8rem;color:#AAA">Close ✕</button>
+    </div>
+    <div class="end-inner">
+
+      <!-- Step 1: question -->
+      <div id="endStep1">
+        <div class="end-icon">👋</div>
+        <div class="end-headline">Chat ended.</div>
+        <div class="end-sub">How did it go with <span id="endPartnerName">them</span>?</div>
+        <div class="end-step">
+          <button class="end-met-btn" onclick="endMetUp(true)">We met up 🎉</button>
+          <button class="end-notmet-btn" onclick="endMetUp(false)">Not this time</button>
+        </div>
+      </div>
+
+      <!-- Step 2: stars (shown after "We met up") -->
+      <div id="endStep2" style="display:none;width:100%;max-width:320px;text-align:center">
+        <div class="end-icon">🌟</div>
+        <div class="end-headline">How was it?</div>
+        <div class="end-sub">Rate the experience — it helps us improve.</div>
+        <div class="end-stars-label">Your rating</div>
+        <div class="end-star-row">
+          <button class="end-star-btn" onclick="endRate(1)">★</button>
+          <button class="end-star-btn" onclick="endRate(2)">★</button>
+          <button class="end-star-btn" onclick="endRate(3)">★</button>
+          <button class="end-star-btn" onclick="endRate(4)">★</button>
+          <button class="end-star-btn" onclick="endRate(5)">★</button>
+        </div>
+      </div>
+
+      <!-- Step 3: thank you + share -->
+      <div id="endStep3" style="display:none;width:100%;max-width:320px;text-align:center">
+        <div class="end-icon" id="endThanksIcon">🙏</div>
+        <div class="end-headline" id="endThanksHeadline">Thanks!</div>
+        <div class="end-sub" id="endThanksSub">Your feedback helps make Out better for everyone.</div>
+        <div class="end-divider"></div>
+        <div class="end-share-label">Know someone who'd enjoy this? Send them the link — it takes 5 seconds.</div>
+        <button class="end-share-btn" onclick="shareOutApp()">↗ Share Out with a friend</button>
+        <button class="end-close-btn" onclick="closeApp()">No thanks, close</button>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end #app-overlay -->
 
 <!-- Incoming connect banner (shown on top of everything) -->
 <div class="incoming-banner" id="incomingBanner">
@@ -2904,56 +2952,7 @@ footer {
       <button class="report-cancel" onclick="closeChatMenu()">Cancel</button>
     </div>
   </div>
-
-  <!-- End / thank-you screen -->
-  <div class="app-screen" id="screen-end" style="overflow-y:auto">
-    <div class="app-topbar" style="background:transparent;border:none">
-      <div class="app-logo">Out</div>
-      <button class="app-back" onclick="closeApp()" style="font-size:0.8rem;color:#AAA">Close ✕</button>
-    </div>
-    <div class="end-inner">
-
-      <!-- Step 1: question -->
-      <div id="endStep1">
-        <div class="end-icon">👋</div>
-        <div class="end-headline">Chat ended.</div>
-        <div class="end-sub">How did it go with <span id="endPartnerName">them</span>?</div>
-        <div class="end-step">
-          <button class="end-met-btn" onclick="endMetUp(true)">We met up 🎉</button>
-          <button class="end-notmet-btn" onclick="endMetUp(false)">Not this time</button>
-        </div>
-      </div>
-
-      <!-- Step 2: stars (shown after "We met up") -->
-      <div id="endStep2" style="display:none;width:100%;max-width:320px;text-align:center">
-        <div class="end-icon">🌟</div>
-        <div class="end-headline">How was it?</div>
-        <div class="end-sub">Rate the experience — it helps us improve.</div>
-        <div class="end-stars-label">Your rating</div>
-        <div class="end-star-row">
-          <button class="end-star-btn" onclick="endRate(1)">★</button>
-          <button class="end-star-btn" onclick="endRate(2)">★</button>
-          <button class="end-star-btn" onclick="endRate(3)">★</button>
-          <button class="end-star-btn" onclick="endRate(4)">★</button>
-          <button class="end-star-btn" onclick="endRate(5)">★</button>
-        </div>
-      </div>
-
-      <!-- Step 3: thank you + share -->
-      <div id="endStep3" style="display:none;width:100%;max-width:320px;text-align:center">
-        <div class="end-icon" id="endThanksIcon">🙏</div>
-        <div class="end-headline" id="endThanksHeadline">Thanks!</div>
-        <div class="end-sub" id="endThanksSub">Your feedback helps make Out better for everyone.</div>
-        <div class="end-divider"></div>
-        <div class="end-share-label">Know someone who'd enjoy this? Send them the link — it takes 5 seconds.</div>
-        <button class="end-share-btn" onclick="shareOutApp()">↗ Share Out with a friend</button>
-        <button class="end-close-btn" onclick="closeApp()">No thanks, close</button>
-      </div>
-
-    </div>
-  </div>
-
-</div><!-- end #app-overlay -->
+</div>
 
 <!-- ── LEGAL OVERLAYS ─────────────────────────────────────────── -->
 
