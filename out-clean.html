@@ -2327,6 +2327,18 @@ body.dark .founder-quote-text { color: #AAA; }
   transition: border-color 0.2s, background 0.2s; flex-shrink: 0;
 }
 .dark-toggle:hover { border-color: #111; background: #F0F0F0; }
+.lang-toggle {
+  background: none; border: 1.5px solid #E0E0E0; border-radius: 9999px;
+  padding: 0 11px; height: 36px; display: flex; align-items: center;
+  justify-content: center; font-size: 0.72rem; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.06em; color: #111;
+  transition: border-color 0.2s, background 0.2s; flex-shrink: 0;
+}
+.lang-toggle:hover { border-color: #111; background: #F0F0F0; }
+.msg-system {
+  text-align: center; font-size: 0.73rem; color: #AAA;
+  padding: 10px 16px; font-style: italic;
+}
 
 body.dark { background: #0A0A0A; color: #EDEDED; }
 body.dark nav {
@@ -2340,6 +2352,9 @@ body.dark .nav-btn { background: #EDEDED; color: #111; }
 body.dark .nav-btn:hover { background: #CCC; }
 body.dark .dark-toggle { border-color: #333; color: #EDEDED; }
 body.dark .dark-toggle:hover { border-color: #555; background: #1A1A1A; }
+body.dark .lang-toggle { border-color: #333; color: #EDEDED; }
+body.dark .lang-toggle:hover { border-color: #555; background: #1A1A1A; }
+body.dark .msg-system { color: #555; }
 body.dark .mobile-nav { background: #0A0A0A; border-bottom-color: #1E1E1E; }
 body.dark .mobile-nav a { color: #EDEDED; border-bottom-color: #1E1E1E; }
 body.dark .mobile-nav-btn { background: #EDEDED; color: #111; }
@@ -2466,25 +2481,27 @@ body.dark .why-sub { color: #555; }
 <nav>
   <div class="nav-logo">Out</div>
   <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#how">How it works</a>
-    <a href="#city">Texarkana</a>
-    <a href="#safety">Safety</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#how" data-i18n="nav.how">How it works</a>
+    <a href="#city" data-i18n="nav.city">Texarkana</a>
+    <a href="#safety" data-i18n="nav.safety">Safety</a>
   </div>
-  <div style="display:flex;align-items:center;gap:12px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()" aria-label="Toggle language">ES</button>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Toggle dark mode">☀️</button>
-    <a href="#cta" class="nav-btn">I'm Out →</a>
+    <a href="#cta" class="nav-btn" data-i18n="nav.cta">I'm Out →</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-nav" id="mobileNav">
-  <a href="#about" onclick="closeMobile()">About</a>
-  <a href="#how" onclick="closeMobile()">How it works</a>
-  <a href="#city" onclick="closeMobile()">Texarkana</a>
-  <a href="#safety" onclick="closeMobile()">Safety</a>
-  <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()">I'm Out →</a>
+  <a href="#about" onclick="closeMobile()" data-i18n="nav.about">About</a>
+  <a href="#how" onclick="closeMobile()" data-i18n="nav.how">How it works</a>
+  <a href="#city" onclick="closeMobile()" data-i18n="nav.city">Texarkana</a>
+  <a href="#safety" onclick="closeMobile()" data-i18n="nav.safety">Safety</a>
+  <button class="lang-toggle" style="margin:10px 20px 4px;width:calc(100% - 40px);justify-content:center" onclick="toggleLang();closeMobile()" id="langToggleMobile">ES</button>
+  <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()" data-i18n="nav.cta">I'm Out →</a>
 </div>
 
 <!-- HERO -->
@@ -2492,11 +2509,11 @@ body.dark .why-sub { color: #555; }
   <div class="hero-inner">
     <div class="hero-text">
       <div class="live-counter-pill" id="liveCounter"><div class="live-counter-dot"></div><span id="liveCountNum">0</span> people Out right now</div>
-      <div class="hero-label">Now live in Texarkana &amp; TAMUT</div>
-      <h1 class="hero-headline">Find someone near you,&nbsp;right&nbsp;now.</h1>
-      <p class="hero-sub">No profiles. No swiping. Real people within 3 miles who are free right now.</p>
-      <a href="#cta" class="pill-btn">I'm Out →</a>
-      <p class="hero-footnote">Free. No account. No download.</p>
+      <div class="hero-label" data-i18n="hero.label">Now live in Texarkana &amp; TAMUT</div>
+      <h1 class="hero-headline" data-i18n="hero.headline">Find someone near you,&nbsp;right&nbsp;now.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">No profiles. No swiping. Real people within 3 miles who are free right now.</p>
+      <a href="#cta" class="pill-btn" data-i18n="hero.btn">I'm Out →</a>
+      <p class="hero-footnote" data-i18n="hero.footnote"><strong>Always free.</strong> No account. No download.</p>
     </div>
 
     <!-- PHONE -->
@@ -2645,34 +2662,32 @@ body.dark .why-sub { color: #555; }
 <section id="about">
   <div class="about-inner">
     <div class="about-left reveal">
-      <div class="section-label">Why I built this</div>
-      <h2 class="about-headline">I was bored.<br>Nobody was around.<br>So I built Out.</h2>
+      <div class="section-label" data-i18n="about.label">Why I built this</div>
+      <h2 class="about-headline" data-i18n-html="about.headline">I was bored.<br>Nobody was around.<br>So I built Out.</h2>
     </div>
     <div class="about-body reveal reveal-delay-1">
-      <p>I kept having the same feeling. Free for an hour, nothing to do, phone in hand, scrolling. There were people literally around me and I had no way to know if any of them wanted to do something too.</p>
-      <p>I tried texting people. Half of them were busy. The other half needed a week's notice. I'd end up just sitting there, bored, wasting time I actually had.</p>
-      <p>So I built Out. Not to be an entrepreneur. Just to fix the thing that was annoying me. If you're free right now and someone nearby is free right now, that should be enough to make something happen.</p>
+      <p data-i18n="about.body">Free for an hour with nobody to hang out with. People were literally around me — I just had no way to know which ones were free too. So I built Out. Not to be an entrepreneur. Just to fix boredom.</p>
       <div class="founder-quote reveal">
-        <div class="founder-quote-text">"I built this because I was tired of being bored alone when I didn't have to be. Out is that problem solved."</div>
-        <div class="founder-quote-name">Kushal, founder</div>
+        <div class="founder-quote-text" data-i18n="about.quote">"I built this because I was tired of being bored alone when I didn't have to be. Out is that problem solved."</div>
+        <div class="founder-quote-name" data-i18n="about.quote.name">Kushal, founder</div>
       </div>
     </div>
   </div>
   <div class="solve-grid">
     <div class="solve-card reveal">
       <div class="solve-num">01</div>
-      <div class="solve-title">Boredom is the problem.</div>
-      <p class="solve-body">You're free. You're bored. Someone 5 minutes away is in the exact same spot. You just don't know it. Out fixes that.</p>
+      <div class="solve-title" data-i18n="solve1.title">Boredom is the problem.</div>
+      <p class="solve-body" data-i18n="solve1.body">You're free. Someone 5 minutes away is in the same spot. You just don't know it. Out fixes that.</p>
     </div>
     <div class="solve-card reveal reveal-delay-1">
       <div class="solve-num">02</div>
-      <div class="solve-title">Planning kills it every time.</div>
-      <p class="solve-body">"We should hang out" never happens. By the time you coordinate, the moment is gone. Out is for right now, not next week.</p>
+      <div class="solve-title" data-i18n="solve2.title">Planning kills it every time.</div>
+      <p class="solve-body" data-i18n="solve2.body">"We should hang out" never happens. Out is for right now, not next week.</p>
     </div>
     <div class="solve-card reveal reveal-delay-2">
       <div class="solve-num">03</div>
-      <div class="solve-title">Your phone should get you off your phone.</div>
-      <p class="solve-body">Every other app keeps you scrolling. Out's only job is to get you out the door. Once you match, put it away.</p>
+      <div class="solve-title" data-i18n="solve3.title">Your phone should get you off your phone.</div>
+      <p class="solve-body" data-i18n="solve3.body">Every other app keeps you scrolling. Out's only job is to get you out the door.</p>
     </div>
   </div>
 </section>
@@ -2681,24 +2696,24 @@ body.dark .why-sub { color: #555; }
 <section id="how">
   <div class="container">
     <div class="how-head reveal">
-      <div class="section-label">How it works</div>
-      <h2>Three steps. That's it.</h2>
+      <div class="section-label" data-i18n="how.label">How it works</div>
+      <h2 data-i18n="how.headline">Three steps. That's it.</h2>
     </div>
     <div class="how-steps">
       <div class="how-step reveal">
         <div class="step-num">01</div>
-        <div class="step-title">Tap once</div>
-        <p class="step-body">Signal you're free right now. No status update, no post, no caption. Just a single tap.</p>
+        <div class="step-title" data-i18n="how.step1.title">Tap once</div>
+        <p class="step-body" data-i18n="how.step1.body">Signal you're free right now. No status update, no post, no caption. Just a single tap.</p>
       </div>
       <div class="how-step reveal reveal-delay-1">
         <div class="step-num">02</div>
-        <div class="step-title">See who's nearby</div>
-        <p class="step-body">People within 3 miles who are also Out appear instantly. A name, a vibe, and a distance.</p>
+        <div class="step-title" data-i18n="how.step2.title">See who's nearby</div>
+        <p class="step-body" data-i18n="how.step2.body">People within 3 miles who are also Out appear instantly. A name, a vibe, and a distance.</p>
       </div>
       <div class="how-step reveal reveal-delay-2">
         <div class="step-num">03</div>
-        <div class="step-title">Go do something</div>
-        <p class="step-body">Wave at someone. Pick a spot. Show up. That's the whole app. Nothing more.</p>
+        <div class="step-title" data-i18n="how.step3.title">Go do something</div>
+        <p class="step-body" data-i18n="how.step3.body">Wave at someone. Pick a spot. Show up. That's the whole app. Nothing more.</p>
       </div>
     </div>
   </div>
@@ -2739,8 +2754,8 @@ body.dark .why-sub { color: #555; }
 <section id="safety">
   <div class="container">
     <div class="safety-head reveal">
-      <div class="section-label">Safety</div>
-      <h2>Private by default.</h2>
+      <div class="section-label" data-i18n="safety.label">Safety</div>
+      <h2 data-i18n="safety.headline">Private by default.</h2>
     </div>
     <div class="safety-cards">
       <div class="s-card reveal">
@@ -2798,8 +2813,8 @@ body.dark .why-sub { color: #555; }
 <section id="city">
   <div class="city-inner">
     <div class="city-label">Starting here</div>
-    <h2 class="city-headline reveal">We're starting<br>at TAMUT.</h2>
-    <p class="city-sub reveal">Texarkana first. The rest follows when enough people show up.</p>
+    <h2 class="city-headline reveal" data-i18n-html="city.headline">We're starting<br>at TAMUT.</h2>
+    <p class="city-sub reveal" data-i18n="city.sub">Texarkana first. The rest follows when enough people show up.</p>
 
     <div class="city-grid">
       <div class="city-card reveal">
@@ -2820,8 +2835,8 @@ body.dark .why-sub { color: #555; }
     </div>
 
     <div class="city-cta-row">
-      <a href="#cta" class="city-pill-btn">Try it now →</a>
-      <p class="city-share-note">Free. No download. Opens in any browser.</p>
+      <a href="#cta" class="city-pill-btn" data-i18n="city.cta">Try it now →</a>
+      <p class="city-share-note" data-i18n="city.note">Always free. No download. Opens in any browser.</p>
     </div>
   </div>
 </section>
@@ -2829,10 +2844,10 @@ body.dark .why-sub { color: #555; }
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="container reveal">
-    <h2>Someone in Texarkana is free right now.</h2>
-    <p>Are you?</p>
-    <a href="#" class="pill-btn">I'm Out →</a>
-    <p class="cta-foot">Free · No account · No download</p>
+    <h2 data-i18n="cta.headline">Someone in Texarkana is free right now.</h2>
+    <p data-i18n="cta.sub">Are you?</p>
+    <a href="#" class="pill-btn" data-i18n="cta.btn">I'm Out →</a>
+    <p class="cta-foot" data-i18n="cta.foot">Always free · No account · No download</p>
   </div>
 </section>
 
@@ -2996,6 +3011,7 @@ body.dark .why-sub { color: #555; }
           <span style="color:#BBB;font-size:0.85rem">→</span>
         </button>
       </div>
+      <div style="text-align:center;margin-top:16px;font-size:0.72rem;color:#AAA;font-weight:600;letter-spacing:0.04em">ALWAYS FREE · NO ACCOUNT NEEDED</div>
     </div>
   </div>
 
@@ -3712,6 +3728,129 @@ function toggleDark() {
   } catch(e) {}
 })();
 
+// ── LANGUAGE ─────────────────────────────────────────────────
+var STRINGS = {
+  en: {
+    'nav.about':'About','nav.how':'How it works','nav.city':'Texarkana','nav.safety':'Safety','nav.cta':"I'm Out →",
+    'hero.label':'Now live in Texarkana & TAMUT',
+    'hero.headline':'Find someone near you, right now.',
+    'hero.sub':'No profiles. No swiping. Real people within 3 miles who are free right now.',
+    'hero.btn':"I'm Out →",'hero.footnote':'Always free. No account. No download.',
+    'about.label':'Why I built this',
+    'about.headline':'I was bored.<br>Nobody was around.<br>So I built Out.',
+    'about.body':"Free for an hour with nobody to hang out with. People were literally around me — I just had no way to know which ones were free too. So I built Out. Not to be an entrepreneur. Just to fix boredom.",
+    'about.quote':'"I built this because I was tired of being bored alone when I didn\'t have to be. Out is that problem solved."',
+    'about.quote.name':'Kushal, founder',
+    'solve1.title':'Boredom is the problem.','solve1.body':"You're free. Someone 5 minutes away is in the same spot. You just don't know it. Out fixes that.",
+    'solve2.title':'Planning kills it every time.','solve2.body':'"We should hang out" never happens. Out is for right now, not next week.',
+    'solve3.title':'Your phone should get you off your phone.','solve3.body':"Every other app keeps you scrolling. Out's only job is to get you out the door.",
+    'how.label':'How it works','how.headline':"Three steps. That's it.",
+    'how.step1.title':'Tap once','how.step1.body':"Signal you're free right now. No status update, no post, no caption. Just a single tap.",
+    'how.step2.title':"See who's nearby",'how.step2.body':'People within 3 miles who are also Out appear instantly. A name, a vibe, and a distance.',
+    'how.step3.title':'Go do something','how.step3.body':"Wave at someone. Pick a spot. Show up. That's the whole app. Nothing more.",
+    'safety.label':'Safety','safety.headline':'Private by default.',
+    'city.headline':"We're starting<br>at TAMUT.",'city.sub':'Texarkana first. The rest follows when enough people show up.',
+    'city.cta':'Try it now →','city.note':'Always free. No download. Opens in any browser.',
+    'cta.headline':'Someone in Texarkana is free right now.','cta.sub':'Are you?','cta.btn':"I'm Out →",'cta.foot':'Always free · No account · No download',
+    'app.home.headline':'Someone near you\nis free right now.','app.home.tagline':'No profiles. No swiping. Just real people within 3 miles.',
+    'app.home.golive':'Go Live','app.home.board':'Community Board',
+    'app.live.out':"You're Out",'app.live.nearby':'Nearby','app.live.board':'Board',
+    'app.chat.hint':"You matched 🎉\nSay hey — figure out where to meet.",'app.chat.active':'● Active now',
+    'app.end.headline':'Chat ended.','app.end.sub':'How did it go with','app.end.met':'We met up 🎉','app.end.notmet':'Not this time',
+    'app.end.rate.headline':'How was it?','app.end.rate.sub':'Rate the experience — it helps us improve.',
+    'app.end.thanks.sub':'Your feedback helps make Out better for everyone.',
+    'app.end.share.label':"Know someone who'd enjoy this? Send them the link — it takes 5 seconds.",
+    'app.end.share.btn':'↗ Share Out with a friend','app.end.close':'No thanks, close',
+    'footer.copy':'© 2026 Out. All rights reserved.'
+  },
+  es: {
+    'nav.about':'Acerca','nav.how':'Cómo funciona','nav.city':'Texarkana','nav.safety':'Seguridad','nav.cta':'Estoy libre →',
+    'hero.label':'Ya en Texarkana y TAMUT',
+    'hero.headline':'Encuentra a alguien cerca, ahora mismo.',
+    'hero.sub':'Sin perfiles. Sin deslizar. Personas reales a menos de 3 millas disponibles ahora.',
+    'hero.btn':'Estoy libre →','hero.footnote':'Siempre gratis. Sin cuenta. Sin descarga.',
+    'about.label':'Por qué lo construí',
+    'about.headline':'Estaba aburrido.<br>Nadie estaba cerca.<br>Así que construí Out.',
+    'about.body':'Libre por una hora sin nadie con quien pasar el tiempo. Había personas a mi alrededor — solo no tenía forma de saber cuáles también estaban libres. Así que construí Out. No para ser empresario. Solo para acabar con el aburrimiento.',
+    'about.quote':'"Lo construí porque estaba harto de estar aburrido solo cuando no tenía que estarlo. Out es ese problema resuelto."',
+    'about.quote.name':'Kushal, fundador',
+    'solve1.title':'El aburrimiento es el problema.','solve1.body':'Estás libre. Alguien a 5 minutos está en el mismo lugar. Solo no lo sabes. Out lo arregla.',
+    'solve2.title':'Planear lo arruina siempre.','solve2.body':'"Deberíamos quedar" nunca pasa. Out es para ahora, no para la próxima semana.',
+    'solve3.title':'Tu teléfono debería alejarte del teléfono.','solve3.body':"Cada otra app te mantiene desplazando. El único trabajo de Out es sacarte a la calle.",
+    'how.label':'Cómo funciona','how.headline':'Tres pasos. Eso es todo.',
+    'how.step1.title':'Un toque','how.step1.body':'Señala que estás libre ahora mismo. Sin actualización de estado, sin publicación. Solo un toque.',
+    'how.step2.title':'Ve quién está cerca','how.step2.body':'Las personas a menos de 3 millas que también están Out aparecen al instante.',
+    'how.step3.title':'Haz algo','how.step3.body':'Saluda a alguien. Elige un lugar. Preséntate. Eso es toda la app.',
+    'safety.label':'Seguridad','safety.headline':'Privado por defecto.',
+    'city.headline':"Empezamos<br>en TAMUT.",'city.sub':'Texarkana primero. El resto llega cuando haya suficiente gente.',
+    'city.cta':'Pruébalo ahora →','city.note':'Siempre gratis. Sin descarga. Abre en cualquier navegador.',
+    'cta.headline':'Alguien en Texarkana está libre ahora mismo.','cta.sub':'¿Y tú?','cta.btn':'Estoy libre →','cta.foot':'Siempre gratis · Sin cuenta · Sin descarga',
+    'app.home.headline':'Alguien cerca de ti\nestá libre ahora mismo.','app.home.tagline':'Sin perfiles. Sin deslizar. Solo personas reales a 3 millas.',
+    'app.home.golive':'Ir en vivo','app.home.board':'Tablero comunitario',
+    'app.live.out':'Estás libre','app.live.nearby':'Cerca','app.live.board':'Tablero',
+    'app.chat.hint':"Hiciste match 🎉\nSaluda — decide dónde quedar.",'app.chat.active':'● Activo ahora',
+    'app.end.headline':'Chat terminado.','app.end.sub':'¿Cómo te fue con','app.end.met':'Nos vimos 🎉','app.end.notmet':'Esta vez no',
+    'app.end.rate.headline':'¿Cómo estuvo?','app.end.rate.sub':'Califica la experiencia — nos ayuda a mejorar.',
+    'app.end.thanks.sub':'Tu opinión ayuda a mejorar Out para todos.',
+    'app.end.share.label':'¿Conoces a alguien que disfrutaría esto? Mándales el enlace.',
+    'app.end.share.btn':'↗ Comparte Out con un amigo','app.end.close':'No gracias, cerrar',
+    'footer.copy':'© 2026 Out. Todos los derechos reservados.'
+  }
+};
+
+var currentLang = 'en';
+function toggleLang() { setLang(currentLang === 'en' ? 'es' : 'en'); }
+function setLang(lang) {
+  currentLang = lang;
+  try { localStorage.setItem('out_lang', lang); } catch(e) {}
+  var S = STRINGS[lang] || STRINGS.en;
+  var isEs = (lang === 'es');
+  // Update toggle buttons
+  ['langToggle','langToggleMobile'].forEach(function(id) {
+    var b = document.getElementById(id);
+    if (b) b.textContent = isEs ? 'EN' : 'ES';
+  });
+  // Update all data-i18n elements (textContent)
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (S[key] !== undefined) el.textContent = S[key];
+  });
+  // Update data-i18n-html elements (innerHTML, safe strings only)
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-html');
+    if (S[key] !== undefined) el.innerHTML = S[key];
+  });
+  // App screens (direct DOM, no data-i18n attrs)
+  var q = function(sel) { return document.querySelector(sel); };
+  var homeHL  = q('#screen-home .home-headline');  if (homeHL)  homeHL.textContent  = S['app.home.headline'];
+  var homeTL  = q('#screen-home .home-tagline');   if (homeTL)  homeTL.textContent  = S['app.home.tagline'];
+  var homeGL  = q('.home-live-btn .home-live-btn-left'); if (homeGL) homeGL.childNodes[homeGL.childNodes.length-1].textContent = S['app.home.golive'];
+  var liveOut = q('#screen-live .live-status');    if (liveOut) { liveOut.childNodes[liveOut.childNodes.length-1].textContent = ' ' + S['app.live.out']; }
+  var tabNear = document.getElementById('tab-nearby'); if (tabNear) tabNear.childNodes[0].textContent = S['app.live.nearby'];
+  var tabBrd  = document.getElementById('tab-board');  if (tabBrd)  tabBrd.childNodes[0].textContent  = S['app.live.board'];
+  var chatHint = q('#chatMessages .chat-hint');    if (chatHint) chatHint.innerHTML = S['app.chat.hint'].replace('\n','<br>');
+  var chatStatus = q('.chat-header-status');        if (chatStatus) chatStatus.textContent = S['app.chat.active'];
+  var endHL   = q('#screen-end .end-headline');    if (endHL)   endHL.textContent   = S['app.end.headline'];
+  var endSub  = q('#screen-end .end-sub');         if (endSub)  endSub.innerHTML    = S['app.end.sub'] + ' <span id="endPartnerName">them</span>?';
+  var endMet  = q('.end-met-btn');                 if (endMet)  endMet.textContent  = S['app.end.met'];
+  var endNotM = q('.end-notmet-btn');              if (endNotM) endNotM.textContent = S['app.end.notmet'];
+  var endRHL  = q('#endStep2 .end-headline');      if (endRHL)  endRHL.textContent  = S['app.end.rate.headline'];
+  var endRSub = q('#endStep2 .end-sub');           if (endRSub) endRSub.textContent = S['app.end.rate.sub'];
+  var endTSub = document.getElementById('endThanksSub'); if (endTSub) endTSub.textContent = S['app.end.thanks.sub'];
+  var endSLbl = q('#endStep3 .end-share-label');   if (endSLbl) endSLbl.textContent = S['app.end.share.label'];
+  var endSBtn = q('.end-share-btn');               if (endSBtn) endSBtn.textContent = S['app.end.share.btn'];
+  var endCBtn = q('.end-close-btn');               if (endCBtn) endCBtn.textContent = S['app.end.close'];
+  var footCp  = q('.footer-copy');                 if (footCp)  footCp.textContent  = S['footer.copy'];
+  // html lang attr
+  document.documentElement.lang = lang;
+}
+(function() {
+  try {
+    var saved = localStorage.getItem('out_lang');
+    if (saved === 'es') { setLang('es'); }
+  } catch(e) {}
+})();
+
 // ── MOBILE NAV ───────────────────────────────────────────────
 var ham = document.getElementById('hamburger');
 var mn  = document.getElementById('mobileNav');
@@ -3937,6 +4076,20 @@ function connectRealtime(name, vibe, lat, lng) {
         alert('Your account has been removed due to multiple reports.');
       }
     })
+    .on('broadcast', { event: 'chat_leave' }, function(msg) {
+      var p = msg.payload;
+      if (p && p.chatId === chatId && p.from === chatPartnerKey) {
+        var theirName = p.name || 'They';
+        var savedPartnerName = document.getElementById('chatHeaderName') ? document.getElementById('chatHeaderName').textContent : '';
+        appendSystemMsg(theirName + ' left the chat.');
+        chatId = ''; chatPartnerKey = ''; lastMsgWasMine = null;
+        dismissSafetyWarning();
+        document.getElementById('typingRow').classList.remove('show');
+        document.getElementById('msgSeen').style.display = 'none';
+        if (channel) { channel.untrack(); }
+        setTimeout(function() { showEndScreen(savedPartnerName); }, 1800);
+      }
+    })
     .subscribe(function(status) {
       if (status === 'SUBSCRIBED') {
         channel.track({ name:name, vibe:vibe, lat:myLat, lng:myLng, since:Date.now(), note:myGroupNote, uid:myUid });
@@ -4125,9 +4278,24 @@ function appendMsg(text, isMe, ts) {
   if (!isMe) checkSafety(text);
 }
 
+function appendSystemMsg(text) {
+  var msgs = document.getElementById('chatMessages');
+  var el = document.createElement('div');
+  el.className = 'msg-system';
+  el.textContent = text;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
 function leaveChat() {
   var wasChatting = !!chatId;
   var partnerName = document.getElementById('chatHeaderName') ? document.getElementById('chatHeaderName').textContent : '';
+  // Notify partner we're leaving before clearing state
+  if (channel && chatId && chatPartnerKey) {
+    var myName = document.getElementById('nameInput') ? document.getElementById('nameInput').value.trim() : '';
+    channel.send({ type:'broadcast', event:'chat_leave',
+      payload:{ chatId:chatId, from:myKey, name:myName } });
+  }
   chatId=''; chatPartnerKey=''; lastMsgWasMine=null;
   dismissSafetyWarning();
   document.getElementById('typingRow').classList.remove('show');
