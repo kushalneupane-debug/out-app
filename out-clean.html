@@ -4216,7 +4216,7 @@ var endMetUpChoice = null;
 
 function showEndScreen(partnerName) {
   endMetUpChoice = null;
-  document.getElementById('endStep1').style.display = '';
+  document.getElementById('endStep1').style.display = 'block';
   document.getElementById('endStep2').style.display = 'none';
   document.getElementById('endStep3').style.display = 'none';
   document.querySelectorAll('.end-star-btn').forEach(function(b){ b.classList.remove('lit'); });
@@ -4227,27 +4227,32 @@ function showEndScreen(partnerName) {
 
 function endMetUp(metUp) {
   endMetUpChoice = metUp;
-  var uid = myUid || (boardUser ? boardUser.uid : null);
-  sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: metUp, rating: null }).then(function(){});
+  // UI first — DB call must not block the transition
   if (metUp) {
     document.getElementById('endStep1').style.display = 'none';
-    document.getElementById('endStep2').style.display = '';
+    document.getElementById('endStep2').style.display = 'block';
   } else {
     showEndThanks(false);
   }
+  try {
+    var uid = myUid || (boardUser ? boardUser.uid : null);
+    sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: metUp, rating: null }).then(function(){}).catch(function(){});
+  } catch(e) {}
 }
 
 function endRate(stars) {
   document.querySelectorAll('.end-star-btn').forEach(function(b, i){ b.classList.toggle('lit', i < stars); });
-  var uid = myUid || (boardUser ? boardUser.uid : null);
-  sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: true, rating: stars }).then(function(){});
   setTimeout(function(){ showEndThanks(true); }, 500);
+  try {
+    var uid = myUid || (boardUser ? boardUser.uid : null);
+    sb.from('meetup_feedback').insert({ user_uid: uid || null, met_up: true, rating: stars }).then(function(){}).catch(function(){});
+  } catch(e) {}
 }
 
 function showEndThanks(metUp) {
   document.getElementById('endStep1').style.display = 'none';
   document.getElementById('endStep2').style.display = 'none';
-  document.getElementById('endStep3').style.display = '';
+  document.getElementById('endStep3').style.display = 'block';
   if (metUp) {
     document.getElementById('endThanksIcon').textContent     = '🎉';
     document.getElementById('endThanksHeadline').textContent = 'Awesome!';
