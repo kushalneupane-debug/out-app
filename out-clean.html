@@ -3610,6 +3610,7 @@ function refreshMatches() {
     if (k===myKey) return;
     var u = state[k][0];
     if (!u||u.lat==null) return;
+    if (u.inChat) return; // already matched — skip them
     var dist = haversine(myLat, myLng, u.lat, u.lng);
     if (dist <= RADIUS_MI) {
       matches.push({
@@ -3658,7 +3659,14 @@ function connectRealtime(name, vibe, lat, lng) {
     .on('presence', { event: 'leave'}, function() { refreshMatches(); })
     .on('broadcast', { event: 'connect_req' }, function(msg) {
       var p = msg.payload;
-      if (p && p.to === myKey) showBanner(p);
+      if (p && p.to === myKey) {
+        // Already locked in a chat — silently decline so the sender can match someone else
+        if (chatId) {
+          channel.send({ type:'broadcast', event:'connect_dec', payload:{ to:p.from } });
+          return;
+        }
+        showBanner(p);
+      }
     })
     .on('broadcast', { event: 'connect_acc' }, function(msg) {
       var p = msg.payload;
@@ -3781,6 +3789,13 @@ function startChat(partnerKey, partnerName, partnerVibe, cId) {
   partnerInitial = partnerName[0].toUpperCase();
   lastMsgWasMine = null;
 
+  // Lock this person out of the match pool so no one else can reach them
+  if (channel) {
+    var myName = document.getElementById('nameInput').value.trim();
+    channel.track({ name:myName, vibe:myVibe, lat:myLat, lng:myLng,
+                    since:Date.now(), note:myGroupNote, uid:myUid, inChat:true });
+  }
+
   // header
   var circ = document.getElementById('chatAvatarCircle');
   circ.style.background = partnerColor;
@@ -3898,6 +3913,8 @@ function leaveChat() {
   dismissSafetyWarning();
   document.getElementById('typingRow').classList.remove('show');
   document.getElementById('msgSeen').style.display = 'none';
+  // Untrack so partner and channel are released; closeApp will fully clean up
+  if (channel) { channel.untrack(); }
   if (wasChatting) {
     showEndScreen(partnerName);
   } else {
