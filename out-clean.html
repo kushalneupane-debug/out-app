@@ -51,10 +51,10 @@ nav {
   display: flex; align-items: center; gap: 32px;
 }
 .nav-links a {
-  font-size: 0.875rem; font-weight: 400; color: #555;
-  transition: color 0.15s;
+  font-size: 0.875rem; font-weight: 700; color: #111;
+  transition: color 0.15s; letter-spacing: -0.01em;
 }
-.nav-links a:hover { color: #111; }
+.nav-links a:hover { color: #555; }
 .nav-btn {
   padding: 9px 20px; border-radius: 9999px;
   background: #111; color: #fff;
@@ -80,7 +80,7 @@ nav {
 .mobile-nav.open { opacity: 1; pointer-events: all; transform: translateY(0); }
 .mobile-nav a {
   display: block; padding: 13px 0;
-  font-size: 1rem; color: #555;
+  font-size: 1rem; font-weight: 700; color: #111;
   border-bottom: 1px solid #EFEFEF;
 }
 .mobile-nav-btn {
@@ -638,6 +638,63 @@ footer {
 }
 .safety-tip-body { font-size: 0.825rem; color: #666; line-height: 1.6; }
 
+/* ── CITY SECTION ──────────────────────────────────────────── */
+#city {
+  padding: 120px 40px;
+  background: #111; color: #fff;
+}
+.city-inner {
+  max-width: 1100px; margin: 0 auto;
+}
+.city-label {
+  font-size: 0.72rem; font-weight: 700; color: #555;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px;
+}
+.city-headline {
+  font-size: 2.6rem; font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1.1; margin-bottom: 20px; color: #fff;
+  max-width: 620px;
+}
+.city-sub {
+  font-size: 1rem; color: #777; line-height: 1.75;
+  max-width: 560px; margin-bottom: 64px;
+}
+.city-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.city-card {
+  background: #1A1A1A; border-radius: 16px;
+  padding: 32px 28px; border: 1px solid #222;
+}
+.city-card-tag {
+  display: inline-block;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #22C55E;
+  background: rgba(34,197,94,0.1); border-radius: 9999px;
+  padding: 4px 12px; margin-bottom: 20px;
+}
+.city-card-title {
+  font-size: 1.05rem; font-weight: 700; color: #fff;
+  margin-bottom: 12px; letter-spacing: -0.02em;
+}
+.city-card-body {
+  font-size: 0.875rem; color: #666; line-height: 1.7;
+}
+.city-cta-row {
+  margin-top: 56px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+}
+.city-pill-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: #111;
+  padding: 14px 28px; border-radius: 9999px;
+  font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em;
+  transition: background 0.15s, transform 0.1s;
+}
+.city-pill-btn:hover { background: #E8E8E8; transform: scale(1.02); }
+.city-share-note {
+  font-size: 0.82rem; color: #555; line-height: 1.5; max-width: 280px;
+}
+
 /* ── KEYFRAMES ─────────────────────────────────────────────── */
 @keyframes phoneFloat {
   0%, 100% { transform: translateY(0); }
@@ -693,6 +750,10 @@ footer {
   #about { padding: 80px 20px; }
   .about-inner { grid-template-columns: 1fr; gap: 32px; }
   .solve-grid { grid-template-columns: 1fr; }
+
+  #city { padding: 80px 20px; }
+  .city-grid { grid-template-columns: 1fr; }
+  .city-headline { font-size: 1.9rem; }
 
   #cta { padding: 100px 20px; }
   footer { padding: 24px 20px; }
@@ -2198,23 +2259,23 @@ footer {
 <!-- ANNOUNCEMENT BAR -->
 <div class="announce-bar">
   <div class="announce-track">
-    Try Out — be free, be nearby, be spontaneous
+    Now live in Texarkana &amp; TAMUT
     <span class="announce-sep">·</span>
-    Share with a friend — the more people on Out, the better it gets
+    Try Out — share it with a friend on campus
+    <span class="announce-sep">·</span>
+    TAMUT students: find someone free between classes
     <span class="announce-sep">·</span>
     No profiles. No swiping. No algorithm.
-    <span class="announce-sep">·</span>
-    Find someone near you, right now
     <span class="announce-sep">·</span>
     Free to join. No account needed.
     <span class="announce-sep">·</span>
-    Try Out — be free, be nearby, be spontaneous
+    Now live in Texarkana &amp; TAMUT
     <span class="announce-sep">·</span>
-    Share with a friend — the more people on Out, the better it gets
+    Try Out — share it with a friend on campus
+    <span class="announce-sep">·</span>
+    TAMUT students: find someone free between classes
     <span class="announce-sep">·</span>
     No profiles. No swiping. No algorithm.
-    <span class="announce-sep">·</span>
-    Find someone near you, right now
     <span class="announce-sep">·</span>
     Free to join. No account needed.
     <span class="announce-sep">·</span>
@@ -2227,6 +2288,7 @@ footer {
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#how">How it works</a>
+    <a href="#city">Texarkana</a>
     <a href="#safety">Safety</a>
   </div>
   <a href="#cta" class="nav-btn">I'm Out →</a>
@@ -2237,6 +2299,7 @@ footer {
 <div class="mobile-nav" id="mobileNav">
   <a href="#about" onclick="closeMobile()">About</a>
   <a href="#how" onclick="closeMobile()">How it works</a>
+  <a href="#city" onclick="closeMobile()">Texarkana</a>
   <a href="#safety" onclick="closeMobile()">Safety</a>
   <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()">I'm Out →</a>
 </div>
@@ -2246,11 +2309,11 @@ footer {
   <div class="hero-inner">
     <div class="hero-text">
       <div class="live-counter-pill" id="liveCounter"><div class="live-counter-dot"></div><span id="liveCountNum">0</span> people Out right now</div>
-      <div class="hero-label">Available now in your city</div>
+      <div class="hero-label">Now live in Texarkana &amp; TAMUT</div>
       <h1 class="hero-headline">Find someone near you,&nbsp;right&nbsp;now.</h1>
-      <p class="hero-sub">No profiles. No swiping. No algorithm. Just real people within 3 miles who are free right now.</p>
+      <p class="hero-sub">No profiles. No swiping. No algorithm. Just real people in Texarkana — students, locals, anyone — within 3 miles who are free right now.</p>
       <a href="#cta" class="pill-btn">I'm Out →</a>
-      <p class="hero-footnote">Free to join. No account needed.</p>
+      <p class="hero-footnote">Free to join. No account needed. No download.</p>
     </div>
 
     <!-- PHONE -->
@@ -2558,13 +2621,45 @@ footer {
   </div>
 </section>
 
+<!-- TEXARKANA / TAMUT SECTION -->
+<section id="city">
+  <div class="city-inner">
+    <div class="city-label">Starting here</div>
+    <h2 class="city-headline reveal">Built for Texarkana.<br>Starting at TAMUT.</h2>
+    <p class="city-sub reveal">Every great app starts somewhere. Out is starting here — in Texarkana, with the students, faculty, and locals who call this city home. The bigger the community, the better it works. That means you.</p>
+
+    <div class="city-grid">
+      <div class="city-card reveal">
+        <div class="city-card-tag">For TAMUT Students</div>
+        <div class="city-card-title">Free between classes? Someone else is too.</div>
+        <p class="city-card-body">Campus has hundreds of students at any given time with a 30-minute gap and nobody to fill it with. Out finds the ones nearby who are free right now — for coffee, a walk, lunch, a study session, whatever.</p>
+      </div>
+      <div class="city-card reveal reveal-delay-1">
+        <div class="city-card-tag">For Texarkana Locals</div>
+        <div class="city-card-title">A small city with a big community.</div>
+        <p class="city-card-body">Texarkana is tight-knit by nature. Out makes it even tighter — connecting people who live within miles of each other but have never crossed paths. Whether you're new in town or a lifelong local, there's someone nearby worth meeting.</p>
+      </div>
+      <div class="city-card reveal reveal-delay-2">
+        <div class="city-card-tag">Grow With Us</div>
+        <div class="city-card-title">Share it. The app only works if you do.</div>
+        <p class="city-card-body">Out is built on critical mass. Every person who joins makes it better for everyone else. Send it to your group chat, post it on your story, tell your roommate. The fastest way to find someone is to make sure they're already here.</p>
+      </div>
+    </div>
+
+    <div class="city-cta-row">
+      <a href="#cta" class="city-pill-btn">I'm Out — try it now →</a>
+      <p class="city-share-note">Free. No download. No account. Works on any phone.<br>Share the link and someone you know might be Out right now.</p>
+    </div>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="container reveal">
-    <h2>Stop waiting.</h2>
-    <p>Someone nearby is free too.</p>
+    <h2>Texarkana, someone near you is free.</h2>
+    <p>No profiles. No swiping. Just tap and go.</p>
     <a href="#" class="pill-btn">I'm Out →</a>
-    <p class="cta-foot">Free to join. No account needed.</p>
+    <p class="cta-foot">Free to join · No account needed · No download required</p>
   </div>
 </section>
 
