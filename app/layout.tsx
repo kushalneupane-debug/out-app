@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://meetspont.com"),
   title: "Out — Find someone near you, right now",
   description: "No profiles. No swiping. No history. Just real people who are free right now, within miles of you.",
   manifest: "/manifest.json",
@@ -26,8 +27,11 @@ export const metadata: Metadata = {
     title: "Out",
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/icon-192.png",
   },
   openGraph: {
     title: "Out — Find someone near you, right now",

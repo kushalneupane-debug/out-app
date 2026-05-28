@@ -304,7 +304,7 @@ export default function Home() {
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <span style={{ fontWeight: 800, fontSize: "0.95rem", letterSpacing: "-0.04em", color: "var(--t5)" }}>Out</span>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-            {[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Safety", "#safety"], ["Contact", "mailto:hi@getout.app"]].map(([label, href]) => (
+            {[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Safety", "#safety"], ["Contact", "mailto:hi@meetspont.com"]].map(([label, href]) => (
               <a key={label} href={href}
                 style={{ fontSize: "0.8rem", color: "var(--t5)", textDecoration: "none", transition: "color 0.15s" }}
                 onMouseOver={e => (e.target as HTMLElement).style.color = "var(--t2)"}
