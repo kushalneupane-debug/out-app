@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://meetspont.com"),
   title: "Out — Find someone near you, right now",
   description: "No profiles. No swiping. No history. Just real people who are free right now, within miles of you.",
   manifest: "/manifest.json",

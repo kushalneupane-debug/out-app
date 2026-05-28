@@ -40,11 +40,11 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="Data deletion">
-          <p>Email <a href="mailto:hi@getout.app" style={{ color: "#0062AD", textDecoration: "none" }}>hi@getout.app</a> to delete your account and all associated data. We will process requests within 7 days.</p>
+          <p>Email <a href="mailto:hi@meetspont.com" style={{ color: "#0062AD", textDecoration: "none" }}>hi@meetspont.com</a> to delete your account and all associated data. We will process requests within 7 days.</p>
         </Section>
 
         <Section title="Contact">
-          <p><a href="mailto:hi@getout.app" style={{ color: "#0062AD", textDecoration: "none" }}>hi@getout.app</a></p>
+          <p><a href="mailto:hi@meetspont.com" style={{ color: "#0062AD", textDecoration: "none" }}>hi@meetspont.com</a></p>
         </Section>
       </div>
     </div>
