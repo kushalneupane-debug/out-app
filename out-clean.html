@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- GSI loaded on demand in initGSI() -->
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#F97316">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -5207,23 +5207,20 @@ function saveBoardUser(u) {
 }
 
 function communitySignIn() {
-  if (!gsiReady) { initGSI(); }
-  if (!gsiReady) {
-    alert('Google Sign-In not ready. Refresh and try again.');
-    return;
-  }
-  google.accounts.id.prompt(function(notification) {
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      var wrap = document.getElementById('communityGoogleBtnWrap');
-      if (wrap) {
-        wrap.style.display = 'flex';
-        google.accounts.id.renderButton(wrap, {
-          type:'standard', theme:'outline',
-          size:'large', text:'continue_with',
-          shape:'rectangular', width:280,
-        });
+  loadGSIScript(function() {
+    google.accounts.id.prompt(function(notification) {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        var wrap = document.getElementById('communityGoogleBtnWrap');
+        if (wrap) {
+          wrap.style.display = 'flex';
+          google.accounts.id.renderButton(wrap, {
+            type:'standard', theme:'outline',
+            size:'large', text:'continue_with',
+            shape:'rectangular', width:280,
+          });
+        }
       }
-    }
+    });
   });
 }
 
@@ -5873,6 +5870,23 @@ function closeLegal(page) {
 var GOOGLE_CLIENT_ID = '450530627387-gh88e4m180c241f2hhoi9orovimi1prh.apps.googleusercontent.com';
 
 var gsiReady = false;
+var _gsiLoading = false;
+var _gsiQueue = [];
+
+function loadGSIScript(cb) {
+  if (gsiReady) { cb(); return; }
+  _gsiQueue.push(cb);
+  if (_gsiLoading) return;
+  _gsiLoading = true;
+  var s = document.createElement('script');
+  s.src = 'https://accounts.google.com/gsi/client';
+  s.onload = function() {
+    initGSI();
+    _gsiQueue.forEach(function(fn) { fn(); });
+    _gsiQueue = [];
+  };
+  document.head.appendChild(s);
+}
 
 function initGSI() {
   if (typeof google === 'undefined' || !google.accounts) return;
@@ -5931,13 +5945,7 @@ function decodeJwt(token) {
 
 function signInWithGoogle() {
   document.getElementById('authError').textContent = '';
-  if (!gsiReady) {
-    initGSI();
-    if (!gsiReady) {
-      document.getElementById('authError').textContent = 'Google Sign-In not ready. Refresh and try again.';
-      return;
-    }
-  }
+  loadGSIScript(function() {
   // Try One Tap first; falls back to rendered button automatically
   google.accounts.id.prompt(function(notification) {
     if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
@@ -5953,18 +5961,15 @@ function signInWithGoogle() {
       }
     }
   });
+  }); // end loadGSIScript
 }
 
-// Initialize GSI once the script loads
 document.addEventListener('DOMContentLoaded', function() {
-  initGSI();
   initBoardUser();
   initLiveCounter();
   initMeetupCounter();
   loadSessionDisplay();
 });
-// Also try immediately in case script already loaded
-initGSI();
 
 // ── UI helpers ────────────────────────────────────────────────
 function openApp() {
