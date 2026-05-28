@@ -90,14 +90,3 @@ body {
   border-radius: 6px;
 }
 
-/* mobile / desktop visibility helpers */
-@media (max-width: 767px) {
-  .desk-only { display: none !important; }
-  .mob-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-
-  /* tighter section padding on mobile */
-  section { padding-top: 60px !important; padding-bottom: 60px !important; }
-}
-@media (min-width: 768px) {
-  .mob-only { display: none !important; }
-}

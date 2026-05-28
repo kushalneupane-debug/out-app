@@ -402,7 +402,7 @@ export default function AppPage() {
           )}
 
           <div style={{ position: "absolute", bottom: 14, left: "50%", transform: "translateX(-50%)", padding: "6px 14px", borderRadius: 9999, background: "rgba(9,9,11,0.85)", border: "1px solid var(--border)", fontSize: "0.68rem", color: "var(--t4)", fontFamily: "var(--font-mono)", backdropFilter: "blur(8px)", whiteSpace: "nowrap" }}>
-            Score = proximity (80 pts) + vibe match (20 pts)
+            Sorted by proximity &amp; vibe
           </div>
         </main>
       </div>

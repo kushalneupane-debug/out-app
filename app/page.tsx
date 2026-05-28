@@ -62,6 +62,7 @@ const SAFETY = [
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 40]);
@@ -70,6 +71,14 @@ export default function Home() {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   const scrollTo = (id: string) =>
@@ -97,16 +106,18 @@ export default function Home() {
             <span style={{ fontWeight: 800, fontSize: "1.05rem", letterSpacing: "-0.04em", color: "var(--t1)" }}>Out</span>
           </div>
 
-          <nav className="desk-only" style={{ display: "flex", alignItems: "center", gap: 2 }}>
-            {NAV_LINKS.map(l => (
-              <button key={l.label} onClick={() => scrollTo(l.id)}
-                style={{ padding: "7px 12px", borderRadius: 8, background: "none", border: "none", color: "var(--t3)", fontSize: "0.875rem", cursor: "pointer", fontFamily: "var(--font-sans)", transition: "color 0.15s" }}
-                onMouseOver={e => (e.currentTarget.style.color = "var(--t1)")}
-                onMouseOut={e =>  (e.currentTarget.style.color = "var(--t3)")}>
-                {l.label}
-              </button>
-            ))}
-          </nav>
+          {!isMobile && (
+            <nav style={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {NAV_LINKS.map(l => (
+                <button key={l.label} onClick={() => scrollTo(l.id)}
+                  style={{ padding: "7px 12px", borderRadius: 8, background: "none", border: "none", color: "var(--t3)", fontSize: "0.875rem", cursor: "pointer", fontFamily: "var(--font-sans)", transition: "color 0.15s" }}
+                  onMouseOver={e => (e.currentTarget.style.color = "var(--t1)")}
+                  onMouseOut={e =>  (e.currentTarget.style.color = "var(--t3)")}>
+                  {l.label}
+                </button>
+              ))}
+            </nav>
+          )}
 
           <Link href="/join"><Button size="sm">I&apos;m Out <ArrowRight size={13} style={{ marginLeft: 4 }} /></Button></Link>
         </div>
@@ -130,7 +141,10 @@ export default function Home() {
 
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.16 }}
             style={{ fontSize: "var(--step-1)", color: "var(--t3)", maxWidth: 480, lineHeight: 1.65, marginBottom: 36, fontWeight: 400 }}>
-            No profiles. No swiping. No history.<span className="desk-only"><br />Just real people who are free right now, within miles of you.</span>
+            {isMobile
+              ? "No profiles. No swiping. No history."
+              : <> No profiles. No swiping. No history.<br />Just real people who are free right now, within miles of you.</>
+            }
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.24 }}
@@ -156,16 +170,18 @@ export default function Home() {
       </section>
 
       {/* How it works */}
-      <section id="how" style={{ position: "relative", zIndex: 1, padding: "100px 20px" }}>
+      <section id="how" style={{ position: "relative", zIndex: 1, padding: isMobile ? "60px 20px" : "100px 20px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Label>How it works</Label>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "var(--step-4)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.08, marginBottom: 12 }}>
             Three steps.<br />No bullshit.
           </h2>
-          <p className="desk-only" style={{ color: "var(--t3)", fontSize: "var(--step-0)", maxWidth: 380, marginBottom: 48, lineHeight: 1.65 }}>
-            Every product decision that added friction has been removed.
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 10 }}>
+          {!isMobile && (
+            <p style={{ color: "var(--t3)", fontSize: "var(--step-0)", maxWidth: 380, marginBottom: 48, lineHeight: 1.65 }}>
+              Every product decision that added friction has been removed.
+            </p>
+          )}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 10, marginTop: isMobile ? 24 : 0 }}>
             {STEPS.map((s, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
@@ -178,8 +194,7 @@ export default function Home() {
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: "var(--t5)", letterSpacing: "0.1em" }}>{s.n}</span>
                 </div>
                 <h3 style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 8, color: "var(--t1)" }}>{s.title}</h3>
-                <p className="desk-only" style={{ fontSize: "0.875rem", color: "var(--t3)", lineHeight: 1.7 }}>{s.body}</p>
-                <p className="mob-only" style={{ fontSize: "0.875rem", color: "var(--t3)", lineHeight: 1.6 }}>{s.bodyShort}</p>
+                <p style={{ fontSize: "0.875rem", color: "var(--t3)", lineHeight: 1.65 }}>{isMobile ? s.bodyShort : s.body}</p>
               </motion.div>
             ))}
           </div>
@@ -187,16 +202,18 @@ export default function Home() {
       </section>
 
       {/* Why Out */}
-      <section id="why" style={{ position: "relative", zIndex: 1, padding: "100px 20px" }}>
+      <section id="why" style={{ position: "relative", zIndex: 1, padding: isMobile ? "60px 20px" : "100px 20px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Label>Why Out</Label>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "var(--step-4)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.08, marginBottom: 12 }}>
             Built different<br />on purpose.
           </h2>
-          <p className="desk-only" style={{ color: "var(--t3)", fontSize: "var(--step-0)", maxWidth: 400, marginBottom: 48, lineHeight: 1.65 }}>
-            Every other social app wants your data, your attention, your time. Out just wants you to go outside.
-          </p>
-          <div className="mob-scroll" style={{ borderRadius: 14, border: "1px solid var(--border)", overflow: "hidden" }}>
+          {!isMobile && (
+            <p style={{ color: "var(--t3)", fontSize: "var(--step-0)", maxWidth: 400, marginBottom: 48, lineHeight: 1.65 }}>
+              Every other social app wants your data, your attention, your time. Out just wants you to go outside.
+            </p>
+          )}
+          <div style={{ borderRadius: 14, border: "1px solid var(--border)", overflow: "hidden", overflowX: isMobile ? "auto" : "visible", marginTop: isMobile ? 24 : 0 }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "var(--surface)", borderBottom: "1px solid var(--border)" }}>
@@ -222,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* Safety */}
-      <section id="safety" style={{ position: "relative", zIndex: 1, padding: "100px 20px" }}>
+      <section id="safety" style={{ position: "relative", zIndex: 1, padding: isMobile ? "60px 20px" : "100px 20px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Label>Safety &amp; Privacy</Label>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "var(--step-4)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.08, marginBottom: 48 }}>
@@ -238,8 +255,7 @@ export default function Home() {
                   {item.icon}
                 </div>
                 <h3 style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: 7, color: "var(--t1)" }}>{item.title}</h3>
-                <p className="desk-only" style={{ fontSize: "0.8rem", color: "var(--t4)", lineHeight: 1.65 }}>{item.body}</p>
-                <p className="mob-only" style={{ fontSize: "0.8rem", color: "var(--t4)", lineHeight: 1.6 }}>{item.bodyShort}</p>
+                <p style={{ fontSize: "0.8rem", color: "var(--t4)", lineHeight: 1.65 }}>{isMobile ? item.bodyShort : item.body}</p>
               </motion.div>
             ))}
           </div>
@@ -247,7 +263,7 @@ export default function Home() {
       </section>
 
       {/* Cities */}
-      <section style={{ position: "relative", zIndex: 1, padding: "70px 20px" }}>
+      <section style={{ position: "relative", zIndex: 1, padding: isMobile ? "50px 20px" : "70px 20px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Label>Live cities</Label>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "var(--step-3)", fontWeight: 800, letterSpacing: "-0.04em", marginBottom: 32 }}>
@@ -271,17 +287,19 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section style={{ position: "relative", zIndex: 1, padding: "120px 20px", textAlign: "center" }}>
+      <section style={{ position: "relative", zIndex: 1, padding: isMobile ? "70px 20px" : "120px 20px", textAlign: "center" }}>
         <div style={{ maxWidth: 620, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "var(--step-5)", fontWeight: 800, letterSpacing: "-0.045em", lineHeight: 1.04, marginBottom: 18 }}>
               <span style={{ color: "var(--t1)" }}>Stop waiting.</span>
               <br /><span style={{ color: "var(--t3)" }}>Go be out there.</span>
             </h2>
-            <p className="desk-only" style={{ color: "var(--t4)", fontSize: "var(--step-0)", marginBottom: 36, lineHeight: 1.7 }}>
-              Someone near you is also bored, also free, also wondering if anything&apos;s happening.
-            </p>
-            <Link href="/join"><Button size="xl">I&apos;m Out <ArrowRight size={16} style={{ marginLeft: 6 }} /></Button></Link>
+            {!isMobile && (
+              <p style={{ color: "var(--t4)", fontSize: "var(--step-0)", marginBottom: 36, lineHeight: 1.7 }}>
+                Someone near you is also bored, also free, also wondering if anything&apos;s happening.
+              </p>
+            )}
+            <Link href="/join" style={{ marginTop: isMobile ? 18 : 0, display: "inline-block" }}><Button size="xl">I&apos;m Out <ArrowRight size={16} style={{ marginLeft: 6 }} /></Button></Link>
           </motion.div>
         </div>
       </section>
