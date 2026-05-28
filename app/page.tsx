@@ -45,12 +45,7 @@ const COMPARE = [
 ];
 
 const CITIES = [
-  { city: "New York",    count: 89 },
-  { city: "Los Angeles", count: 67 },
-  { city: "Chicago",     count: 43 },
-  { city: "Austin",      count: 31 },
-  { city: "Denver",      count: 18 },
-  { city: "Seattle",     count: 22 },
+  "New York", "Los Angeles", "Chicago", "Austin", "Denver", "Seattle",
 ];
 
 const SAFETY = [
@@ -265,21 +260,21 @@ export default function Home() {
       {/* Cities */}
       <section style={{ position: "relative", zIndex: 1, padding: isMobile ? "50px 20px" : "70px 20px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <Label>Live cities</Label>
+          <Label>Early access</Label>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "var(--step-3)", fontWeight: 800, letterSpacing: "-0.04em", marginBottom: 32 }}>
-            People are out right now in
+            Launching in
           </h2>
           <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 8, scrollbarWidth: "none" }}>
-            {CITIES.map((c, i) => (
+            {CITIES.map((city, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-                className="card" style={{ flexShrink: 0, padding: "14px 18px", minWidth: 130 }}>
+                className="card" style={{ flexShrink: 0, padding: "14px 18px", minWidth: 120 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", flexShrink: 0, animation: "glow-pulse 2s infinite" }} />
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: "#22c55e", fontWeight: 600 }}>{c.count} out</span>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#0062AD", flexShrink: 0 }} />
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--t5)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Soon</span>
                 </div>
-                <div style={{ fontWeight: 700, fontSize: "0.9rem", letterSpacing: "-0.02em", color: "var(--t1)" }}>{c.city}</div>
+                <div style={{ fontWeight: 700, fontSize: "0.9rem", letterSpacing: "-0.02em", color: "var(--t1)" }}>{city}</div>
               </motion.div>
             ))}
           </div>

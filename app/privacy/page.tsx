@@ -13,7 +13,7 @@ export default function PrivacyPage() {
         </Link>
 
         <h1 style={{ fontSize: "var(--step-4)", fontWeight: 800, letterSpacing: "-0.04em", marginBottom: 8, color: "var(--t1)" }}>Privacy Policy</h1>
-        <p style={{ fontSize: "0.82rem", color: "var(--t4)", marginBottom: 48, fontFamily: "var(--font-mono)" }}>Last updated: {new Date().getFullYear()}</p>
+        <p style={{ fontSize: "0.82rem", color: "var(--t4)", marginBottom: 48, fontFamily: "var(--font-mono)" }}>Last updated: May 28, 2025</p>
 
         <Section title="The short version">
           <p>We collect the absolute minimum. Your precise location is never stored. When you go offline, everything deletes. We don&apos;t sell your data. We never will.</p>
@@ -32,11 +32,11 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="Phone number">
-          <p>Your phone number is used only to verify you are a real person. We use Supabase Auth (SMS) for this. We do not share it with anyone and do not use it for marketing.</p>
+          <p>Your phone number is used only to verify you are a real person. We do not share it with anyone and do not use it for marketing.</p>
         </Section>
 
         <Section title="Third parties">
-          <p>We use Supabase (auth + database), Twilio (SMS), and Mapbox (maps). None of these receive your exact location or usage patterns beyond what is strictly necessary for the service to function.</p>
+          <p>We use Supabase (auth + database). It does not receive your exact location or usage patterns beyond what is strictly necessary for the service to function.</p>
         </Section>
 
         <Section title="Data deletion">

@@ -19,10 +19,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Out — Find someone near you, right now",
   description: "No profiles. No swiping. No history. Just real people who are free right now, within miles of you.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Out",
+  },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
     title: "Out — Find someone near you, right now",
-    description: "No profiles. No swiping. No history.",
+    description: "No profiles. No swiping. No history. Just real people free right now, near you.",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Out" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Out — Find someone near you, right now",
+    description: "No profiles. No swiping. No history.",
+    images: ["/og.png"],
   },
 };
 

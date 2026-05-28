@@ -57,11 +57,12 @@ export default function AppPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [pending, setPending]   = useState<Record<string, true>>({});
   const [incoming, setIncoming] = useState<{ reqId: string; from: string; name: string; vibe: string; matchScore: number } | null>(null);
-  const [declined, setDeclined] = useState(false);
-  const [chat, setChat]         = useState<ChatData | null>(null);
-  const [chatMsgs, setChatMsgs] = useState<{ from: string; text: string; ts: number }[]>([]);
-  const [chatText, setChatText] = useState("");
-  const [error, setError]       = useState("");
+  const [declined, setDeclined]       = useState(false);
+  const [chat, setChat]               = useState<ChatData | null>(null);
+  const [chatMsgs, setChatMsgs]       = useState<{ from: string; text: string; ts: number }[]>([]);
+  const [chatText, setChatText]       = useState("");
+  const [error, setError]             = useState("");
+  const [socketDown, setSocketDown]   = useState(false);
   const chatBottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -90,6 +91,8 @@ export default function AppPage() {
   useEffect(() => {
     const socket = getSocket();
 
+    socket.on("connect",          () => setSocketDown(false));
+    socket.on("disconnect",       () => { if (isOut) setSocketDown(true); });
     socket.on("match_list",      (list: MatchedUser[]) => setMatches(list));
     socket.on("nearby_changed",  () => refresh());
     socket.on("incoming_connect", (d: { reqId: string; from: string; name: string; vibe: string; matchScore: number }) => setIncoming(d));
@@ -111,13 +114,14 @@ export default function AppPage() {
 
     const ri = setInterval(refresh, 15000);
     return () => {
+      socket.off("connect"); socket.off("disconnect");
       socket.off("match_list"); socket.off("nearby_changed");
       socket.off("incoming_connect"); socket.off("connect_expired");
       socket.off("connect_error"); socket.off("connect_declined");
       socket.off("chat_started"); socket.off("chat_message");
       clearInterval(ri);
     };
-  }, [refresh]);
+  }, [refresh, isOut]);
 
   function toggleOut() {
     if (isOut) { goOffline(); return; }
@@ -406,6 +410,17 @@ export default function AppPage() {
           </div>
         </main>
       </div>
+
+      {/* Server disconnected banner */}
+      <AnimatePresence>
+        {socketDown && (
+          <motion.div initial={{ y: -60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -60, opacity: 0 }}
+            style={{ position: "fixed", top: 56, left: 0, right: 0, zIndex: 60, padding: "10px 20px", background: "rgba(239,68,68,0.12)", borderBottom: "1px solid rgba(239,68,68,0.25)", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444", flexShrink: 0 }} />
+            <span style={{ fontSize: "0.8rem", color: "#fca5a5", fontFamily: "var(--font-mono)" }}>Connection lost — reconnecting…</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Incoming connect banner */}
       <AnimatePresence>

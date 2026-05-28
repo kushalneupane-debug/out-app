@@ -12,7 +12,7 @@ export default function TermsPage() {
         </Link>
 
         <h1 style={{ fontSize: "var(--step-4)", fontWeight: 800, letterSpacing: "-0.04em", marginBottom: 8, color: "var(--t1)" }}>Terms of Service</h1>
-        <p style={{ fontSize: "0.82rem", color: "var(--t4)", marginBottom: 48, fontFamily: "var(--font-mono)" }}>Last updated: {new Date().getFullYear()}</p>
+        <p style={{ fontSize: "0.82rem", color: "var(--t4)", marginBottom: 48, fontFamily: "var(--font-mono)" }}>Last updated: May 28, 2025</p>
 
         <Section title="Using Out">
           <p>You must be 18+ to use Out. By using the app you agree to treat other users with respect. Out is for real, in-person meetups — not harassment, spam, or any kind of abuse.</p>
