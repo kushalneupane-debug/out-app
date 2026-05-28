@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: out
+    runtime: static
+    rootDir: .
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
