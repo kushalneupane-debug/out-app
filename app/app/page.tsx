@@ -59,6 +59,7 @@ export default function AppPage() {
   const [incoming, setIncoming] = useState<{ reqId: string; from: string; name: string; vibe: string; matchScore: number } | null>(null);
   const [declined, setDeclined]       = useState(false);
   const [reported, setReported]       = useState<Record<string, true>>({});
+  const [blocked, setBlocked]         = useState<Record<string, true>>({});
   const [chat, setChat]               = useState<ChatData | null>(null);
   const [chatMsgs, setChatMsgs]       = useState<{ from: string; text: string; ts: number }[]>([]);
   const [chatText, setChatText]       = useState("");
@@ -94,7 +95,7 @@ export default function AppPage() {
 
     socket.on("connect",          () => setSocketDown(false));
     socket.on("disconnect",       () => { if (isOut) setSocketDown(true); });
-    socket.on("match_list",      (list: MatchedUser[]) => setMatches(list));
+    socket.on("match_list",      (list: MatchedUser[]) => setMatches(list.filter(u => !blocked[u.id])));
     socket.on("nearby_changed",  () => refresh());
     socket.on("incoming_connect", (d: { reqId: string; from: string; name: string; vibe: string; matchScore: number }) => setIncoming(d));
     socket.on("connect_expired", () => setIncoming(null));
@@ -150,6 +151,13 @@ export default function AppPage() {
   function reportUser(user: MatchedUser) {
     getSocket().emit("report_user", { reportedId: user.id });
     setReported(r => ({ ...r, [user.id]: true }));
+    setSelected(null);
+  }
+
+  function blockUser(user: MatchedUser) {
+    getSocket().emit("block_user", { blockedId: user.id });
+    setBlocked(b => ({ ...b, [user.id]: true }));
+    setMatches(prev => prev.filter(u => u.id !== user.id));
     setSelected(null);
   }
 
@@ -513,22 +521,30 @@ export default function AppPage() {
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {pending[selectedUser.id]
                 ? <Button fullWidth size="lg" variant="outline" disabled>Request sent ✓</Button>
                 : <Button fullWidth size="lg" onClick={() => sendConnect(selectedUser)}>Connect →</Button>
               }
-              {reported[selectedUser.id] ? (
-                <button disabled
-                  style={{ padding: "0 18px", borderRadius: 12, background: "none", border: "1px solid var(--border-2)", color: "var(--t5)", fontSize: "0.8rem", cursor: "default", fontFamily: "var(--font-sans)" }}>
-                  Reported ✓
+              <div style={{ display: "flex", gap: 8 }}>
+                {reported[selectedUser.id] ? (
+                  <button disabled
+                    style={{ flex: 1, padding: "10px 0", borderRadius: 12, background: "none", border: "1px solid var(--border-2)", color: "var(--t5)", fontSize: "0.8rem", cursor: "default", fontFamily: "var(--font-sans)" }}>
+                    Reported ✓
+                  </button>
+                ) : (
+                  <button onClick={() => reportUser(selectedUser)}
+                    style={{ flex: 1, padding: "10px 0", borderRadius: 12, background: "none", border: "1px solid rgba(239,68,68,0.3)", color: "#f87171", fontSize: "0.8rem", cursor: "pointer", fontFamily: "var(--font-sans)" }}>
+                    Report
+                  </button>
+                )}
+                <button onClick={() => {
+                  if (confirm(`Block ${selectedUser.name}? You won't see them again this session.`)) blockUser(selectedUser);
+                }}
+                  style={{ flex: 1, padding: "10px 0", borderRadius: 12, background: "none", border: "1px solid var(--border-2)", color: "var(--t3)", fontSize: "0.8rem", cursor: "pointer", fontFamily: "var(--font-sans)" }}>
+                  Block
                 </button>
-              ) : (
-                <button onClick={() => reportUser(selectedUser)}
-                  style={{ padding: "0 18px", borderRadius: 12, background: "none", border: "1px solid rgba(239,68,68,0.3)", color: "#f87171", fontSize: "0.8rem", cursor: "pointer", fontFamily: "var(--font-sans)" }}>
-                  Report
-                </button>
-              )}
+              </div>
             </div>
           </motion.div>
         )}
