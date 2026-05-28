@@ -1,4 +1,23 @@
 services:
+  # ── Next.js frontend ──────────────────────────────────────────
+  - type: web
+    name: out-app
+    runtime: node
+    rootDir: .
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_SOCKET_URL
+        value: https://meetspont.com
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: https://yejceoruchvbuwlzkbze.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+
+  # ── Socket.io server ──────────────────────────────────────────
   - type: web
     name: out-server
     runtime: node
