@@ -2,6 +2,8 @@
 
 > No profiles. No swiping. No algorithm. Just real people within 3 miles who are free right now.
 
+🌐 **Live at [meetspont.com](https://meetspont.com)**
+
 ---
 
 ## What is Out?
@@ -62,6 +64,11 @@ Out removes all of that friction. You're free now. So is someone nearby. That's 
 - Report system — repeat offenders are removed
 - Everything deletes when you go offline
 
+### PWA — Installable on any device
+- Add to home screen on iOS and Android — no app store needed
+- Works offline after first visit
+- Full-screen experience, no browser chrome
+
 ---
 
 ## Tech Stack
@@ -72,6 +79,7 @@ Out removes all of that friction. You're free now. So is someone nearby. That's 
 | Backend | [Supabase](https://supabase.com) — Realtime Presence + Broadcast + Postgres |
 | Auth | Google Identity Services (optional, for Community Board) |
 | Hosting | Render (static + Node server) |
+| Domain | [meetspont.com](https://meetspont.com) |
 | PWA | Web App Manifest + Service Worker (`sw.js`) |
 
 ### Supabase Realtime
@@ -123,6 +131,7 @@ out-app/
 ├── out-clean.html   # The entire app — HTML, CSS, and JS in one file
 ├── manifest.json    # PWA manifest
 ├── sw.js            # Service worker (offline caching)
+├── careers.html     # Careers page
 ├── icon-192.png     # App icon
 ├── icon-512.png     # App icon (large)
 ├── render.yaml      # Render hosting config
@@ -154,6 +163,14 @@ Out takes safety seriously. Built-in features include:
 ## Contributing
 
 This project is in active development. If you find a bug or have an idea, open an issue.
+
+---
+
+## Contact
+
+- General: hi@meetspont.com
+- Safety: safety@meetspont.com
+- Careers: careers@meetspont.com
 
 ---
 
