@@ -4449,7 +4449,14 @@ var liveTimerInterval = null;
 var liveStartTime     = 0;
 var SESSION_LIMIT_MS  = 3 * 60 * 60 * 1000; // 3 hours
 
-var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    flowType: 'pkce',
+    autoRefreshToken: false,
+    persistSession: false,
+    detectSessionInUrl: false,
+  }
+});
 
 // ── Matching math ─────────────────────────────────────────────
 var R_MI = 3958.8;
