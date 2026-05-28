@@ -1,6 +1,6 @@
-const CACHE_NAME = 'out-v2';
+const CACHE_NAME = 'out-v3';
 const PRECACHE = [
-  '/out-clean.html',
+  '/',
   '/manifest.json',
 ];
 

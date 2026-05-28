@@ -6,5 +6,5 @@ services:
     staticPublishPath: .
     routes:
       - type: rewrite
-        source: /
-        destination: /out-clean.html
+        source: /*
+        destination: /index.html
