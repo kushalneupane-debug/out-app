@@ -149,13 +149,13 @@ export default function AppPage() {
   }
 
   function reportUser(user: MatchedUser) {
-    getSocket().emit("report_user", { reportedId: user.id });
+    getSocket().emit("report_user", { targetId: user.id });
     setReported(r => ({ ...r, [user.id]: true }));
     setSelected(null);
   }
 
   function blockUser(user: MatchedUser) {
-    getSocket().emit("block_user", { blockedId: user.id });
+    getSocket().emit("block_user", { targetId: user.id });
     setBlocked(b => ({ ...b, [user.id]: true }));
     setMatches(prev => prev.filter(u => u.id !== user.id));
     setSelected(null);
