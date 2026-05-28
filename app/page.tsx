@@ -51,7 +51,7 @@ const CITIES = [
 const SAFETY = [
   { icon: <MapPin size={17} />, title: "Fuzzy location", body: "We add ±0.5mi noise before storing. Your exact GPS never touches our servers.", bodyShort: "±0.5mi noise. Exact GPS never stored." },
   { icon: <EyeOff size={17} />, title: "Zero history",   body: "When you go In, your location deletes instantly. No logs. No trace. Nothing.", bodyShort: "Go In → location deleted instantly." },
-  { icon: <Lock size={17} />,   title: "Phone-verified", body: "Every user verified by SMS. No anonymous accounts. No throwaway burners.", bodyShort: "SMS-verified. No anonymous accounts." },
+  { icon: <Lock size={17} />,   title: "Real people only", body: "3-strike ban system removes bad actors fast. No anonymous throwaway accounts.", bodyShort: "3-strike system. Bad actors removed fast." },
   { icon: <Shield size={17} />, title: "3-strike ban",   body: "Three reports in 24h triggers auto-suspension. Human review follows.", bodyShort: "3 reports = auto-suspension." },
 ];
 

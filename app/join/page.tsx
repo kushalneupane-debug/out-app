@@ -28,6 +28,8 @@ export default function JoinPage() {
   const [locGranted, setLocGranted] = useState<boolean | null>(null);
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState("");
+  const [ageOk, setAgeOk]         = useState(false);
+  const [tosOk, setTosOk]         = useState(false);
 
   const progress = (step / (STEP_LABELS.length - 1)) * 100;
 
@@ -120,10 +122,32 @@ export default function JoinPage() {
                   onFocus={e => { e.target.style.borderColor = "#0062AD"; e.target.style.boxShadow = "0 0 0 2px rgba(0,98,173,0.15)"; }}
                   onBlur={e  => { e.target.style.borderColor = "var(--border-2)"; e.target.style.boxShadow = "none"; }}
                 />
-                <div style={{ textAlign: "right", marginBottom: 24 }}>
+                <div style={{ textAlign: "right", marginBottom: 20 }}>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--t4)" }}>{name.length}/12</span>
                 </div>
-                <Button fullWidth size="lg" disabled={!name.trim()} onClick={() => setStep(1)}>
+
+                {/* Age verification */}
+                <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 12, cursor: "pointer" }}>
+                  <input type="checkbox" checked={ageOk} onChange={e => setAgeOk(e.target.checked)}
+                    style={{ marginTop: 2, accentColor: "#0062AD", flexShrink: 0, width: 15, height: 15 }} />
+                  <span style={{ fontSize: "0.82rem", color: "var(--t3)", lineHeight: 1.5 }}>
+                    I am 18 years of age or older
+                  </span>
+                </label>
+
+                {/* Terms + Privacy consent */}
+                <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 24, cursor: "pointer" }}>
+                  <input type="checkbox" checked={tosOk} onChange={e => setTosOk(e.target.checked)}
+                    style={{ marginTop: 2, accentColor: "#0062AD", flexShrink: 0, width: 15, height: 15 }} />
+                  <span style={{ fontSize: "0.82rem", color: "var(--t3)", lineHeight: 1.5 }}>
+                    I agree to the{" "}
+                    <a href="/terms" target="_blank" style={{ color: "#0062AD", textDecoration: "none" }}>Terms of Service</a>
+                    {" "}and{" "}
+                    <a href="/privacy" target="_blank" style={{ color: "#0062AD", textDecoration: "none" }}>Privacy Policy</a>
+                  </span>
+                </label>
+
+                <Button fullWidth size="lg" disabled={!name.trim() || !ageOk || !tosOk} onClick={() => setStep(1)}>
                   That&apos;s me <ArrowRight size={15} style={{ marginLeft: 5 }} />
                 </Button>
               </div>

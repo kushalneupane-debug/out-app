@@ -34,6 +34,22 @@ export default function TermsPage() {
           <p>Out is provided as-is. We do not guarantee uptime, accuracy of location, or that you will find someone nearby. Meet people in public, well-lit places. Use common sense.</p>
         </Section>
 
+        <Section title="Limitation of liability">
+          <p>To the fullest extent permitted by law, Out and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including personal injury, property damage, or harm arising from in-person meetings arranged through the app. Your use of Out and any resulting in-person interactions are entirely at your own risk. Our total liability to you for any claim shall not exceed $100 USD.</p>
+        </Section>
+
+        <Section title="Indemnification">
+          <p>You agree to indemnify, defend, and hold harmless Out and its operators from any claims, liabilities, damages, losses, or expenses (including legal fees) arising out of your use of the app, your violation of these terms, or your interactions with other users, whether online or in person.</p>
+        </Section>
+
+        <Section title="Governing law">
+          <p>These terms are governed by the laws of the State of Texas, United States, without regard to conflict of law principles. You consent to the exclusive jurisdiction of the courts located in Texas for any dispute arising from these terms or your use of Out.</p>
+        </Section>
+
+        <Section title="Dispute resolution">
+          <p>Any dispute arising out of or relating to these terms or the Out service shall first be attempted to be resolved through good-faith negotiation by emailing <a href="mailto:hi@meetspont.com" style={{ color: "#0062AD", textDecoration: "none" }}>hi@meetspont.com</a>. If unresolved within 30 days, disputes shall be resolved by binding arbitration in Texas under the rules of the American Arbitration Association, on an individual basis. You waive any right to participate in a class action lawsuit or class-wide arbitration.</p>
+        </Section>
+
         <Section title="Changes">
           <p>We may update these terms. Continued use of Out after changes means you accept the new terms. Material changes will be communicated via the app.</p>
         </Section>

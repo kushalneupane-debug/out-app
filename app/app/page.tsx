@@ -58,6 +58,7 @@ export default function AppPage() {
   const [pending, setPending]   = useState<Record<string, true>>({});
   const [incoming, setIncoming] = useState<{ reqId: string; from: string; name: string; vibe: string; matchScore: number } | null>(null);
   const [declined, setDeclined]       = useState(false);
+  const [reported, setReported]       = useState<Record<string, true>>({});
   const [chat, setChat]               = useState<ChatData | null>(null);
   const [chatMsgs, setChatMsgs]       = useState<{ from: string; text: string; ts: number }[]>([]);
   const [chatText, setChatText]       = useState("");
@@ -143,6 +144,12 @@ export default function AppPage() {
   function sendConnect(user: MatchedUser) {
     getSocket().emit("connect_request", { toId: user.id, matchScore: user.matchScore });
     setPending(p => ({ ...p, [user.id]: true }));
+    setSelected(null);
+  }
+
+  function reportUser(user: MatchedUser) {
+    getSocket().emit("report_user", { reportedId: user.id });
+    setReported(r => ({ ...r, [user.id]: true }));
     setSelected(null);
   }
 
@@ -275,7 +282,8 @@ export default function AppPage() {
         </motion.button>
 
         <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <button style={{ width: 34, height: 34, borderRadius: 8, background: "none", border: "none", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--t4)", cursor: "pointer" }}>
+          <button title="To report someone, open their profile from the match list"
+            style={{ width: 34, height: 34, borderRadius: 8, background: "none", border: "none", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--t4)", cursor: "default" }}>
             <Shield size={16} />
           </button>
           <button onClick={handleLogout} title="Sign out"
@@ -510,10 +518,17 @@ export default function AppPage() {
                 ? <Button fullWidth size="lg" variant="outline" disabled>Request sent ✓</Button>
                 : <Button fullWidth size="lg" onClick={() => sendConnect(selectedUser)}>Connect →</Button>
               }
-              <button onClick={() => setSelected(null)}
-                style={{ padding: "0 18px", borderRadius: 12, background: "none", border: "1px solid var(--border-2)", color: "var(--t4)", fontSize: "0.8rem", cursor: "pointer", fontFamily: "var(--font-sans)" }}>
-                Block
-              </button>
+              {reported[selectedUser.id] ? (
+                <button disabled
+                  style={{ padding: "0 18px", borderRadius: 12, background: "none", border: "1px solid var(--border-2)", color: "var(--t5)", fontSize: "0.8rem", cursor: "default", fontFamily: "var(--font-sans)" }}>
+                  Reported ✓
+                </button>
+              ) : (
+                <button onClick={() => reportUser(selectedUser)}
+                  style={{ padding: "0 18px", borderRadius: 12, background: "none", border: "1px solid rgba(239,68,68,0.3)", color: "#f87171", fontSize: "0.8rem", cursor: "pointer", fontFamily: "var(--font-sans)" }}>
+                  Report
+                </button>
+              )}
             </div>
           </motion.div>
         )}
