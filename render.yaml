@@ -5,6 +5,6 @@ services:
     rootDir: .
     staticPublishPath: .
     routes:
-      - type: redirect
+      - type: rewrite
         source: /
         destination: /out-clean.html
