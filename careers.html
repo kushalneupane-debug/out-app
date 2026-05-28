@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — Out</title>
+<meta name="description" content="Join the team building Out — the real-time meetup app for Texarkana and TAMUT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#111111">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F8F8F7; color: #111;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; line-height: 1.6;
+}
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(248,248,247,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E8E8E8;
+}
+.nav-logo {
+  font-size: 1.1rem; font-weight: 700; letter-spacing: -0.03em; color: #111;
+}
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 700; color: #111;
+  transition: color 0.15s; letter-spacing: -0.01em;
+}
+.nav-links a:hover { color: #555; }
+.nav-btn {
+  padding: 9px 20px; border-radius: 9999px;
+  background: #111; color: #fff;
+  font-size: 0.82rem; font-weight: 600;
+  transition: background 0.15s;
+}
+.nav-btn:hover { background: #333; }
+
+/* HERO */
+.careers-hero {
+  padding: 100px 40px 60px;
+  max-width: 1120px; margin: 0 auto;
+  border-bottom: 1px solid #E8E8E8;
+}
+.section-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #999; margin-bottom: 14px;
+}
+.careers-headline {
+  font-size: clamp(36px, 5vw, 64px); font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1.05;
+  margin-bottom: 20px;
+}
+.careers-sub {
+  font-size: 1.05rem; color: #555; line-height: 1.7;
+  max-width: 560px; margin-bottom: 32px;
+}
+.careers-facts {
+  display: flex; gap: 32px; flex-wrap: wrap;
+}
+.careers-fact {
+  font-size: 0.8rem; color: #999; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.careers-fact::before {
+  content: ''; width: 6px; height: 6px;
+  border-radius: 50%; background: #111; flex-shrink: 0;
+}
+
+/* POSITIONS */
+.positions-wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding: 80px 40px;
+}
+.positions-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #999; margin-bottom: 40px;
+}
+.position-row {
+  border-top: 1px solid #E8E8E8;
+  padding: 40px 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  align-items: start;
+}
+.position-row:last-child { border-bottom: 1px solid #E8E8E8; }
+.position-left { display: flex; flex-direction: column; gap: 12px; }
+.position-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #111; background: #EFEFEF;
+  border-radius: 9999px; padding: 4px 12px; width: fit-content;
+}
+.position-title {
+  font-size: 1.5rem; font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.2;
+}
+.position-meta {
+  display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px;
+}
+.position-meta span {
+  font-size: 0.78rem; color: #888; font-weight: 500;
+}
+.position-right { display: flex; flex-direction: column; gap: 20px; }
+.position-body { font-size: 0.93rem; color: #555; line-height: 1.75; }
+.position-what {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.position-what-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #111; margin-bottom: 2px;
+}
+.position-what li {
+  font-size: 0.88rem; color: #555; line-height: 1.6;
+  padding-left: 16px; position: relative; list-style: none;
+}
+.position-what li::before {
+  content: '—'; position: absolute; left: 0; color: #CCC;
+}
+.apply-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 44px; padding: 0 24px; border-radius: 9999px;
+  background: #111; color: #fff;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: -0.01em;
+  transition: background 0.15s; border: none; cursor: pointer;
+  width: fit-content;
+}
+.apply-btn:hover { background: #2A2A2A; }
+
+/* NOTE */
+.careers-bottom {
+  background: #fff; border-top: 1px solid #E8E8E8;
+  padding: 60px 40px; text-align: center;
+}
+.careers-bottom h2 {
+  font-size: 1.5rem; font-weight: 700;
+  letter-spacing: -0.03em; margin-bottom: 12px;
+}
+.careers-bottom p {
+  font-size: 0.93rem; color: #666; max-width: 420px;
+  margin: 0 auto 24px; line-height: 1.65;
+}
+.careers-bottom a {
+  display: inline-flex; align-items: center;
+  font-size: 0.85rem; font-weight: 700; color: #111;
+  border-bottom: 1.5px solid #111; padding-bottom: 2px;
+}
+
+/* FOOTER */
+footer {
+  padding: 32px 40px; text-align: center;
+  border-top: 1px solid #E8E8E8;
+  font-size: 0.78rem; color: #AAA;
+}
+footer a { color: #AAA; margin: 0 10px; }
+footer a:hover { color: #111; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .careers-hero { padding: 60px 20px 40px; }
+  .positions-wrap { padding: 40px 20px; }
+  .position-row { grid-template-columns: 1fr; gap: 24px; }
+  .careers-bottom { padding: 48px 20px; }
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  body { background: #0A0A0A; color: #EDEDED; }
+  nav { background: rgba(10,10,10,0.92); border-bottom-color: #1E1E1E; }
+  .nav-logo, .nav-links a { color: #EDEDED; }
+  .nav-btn { background: #EDEDED; color: #111; }
+  .position-row { border-color: #1E1E1E; }
+  .position-row:last-child { border-color: #1E1E1E; }
+  .position-tag { background: #1A1A1A; color: #EDEDED; }
+  .position-body, .position-what li { color: #777; }
+  .position-what li::before { color: #333; }
+  .position-meta span { color: #555; }
+  .careers-sub { color: #666; }
+  .careers-fact { color: #555; }
+  .careers-fact::before { background: #EDEDED; }
+  .careers-bottom { background: #0D0D0D; border-color: #1E1E1E; }
+  .careers-bottom p { color: #666; }
+  .careers-bottom a { color: #EDEDED; border-color: #EDEDED; }
+  footer { border-color: #1E1E1E; }
+  .apply-btn { background: #EDEDED; color: #111; }
+  .apply-btn:hover { background: #CCC; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="out-clean.html">Out</a>
+  <div class="nav-links">
+    <a href="out-clean.html#about">About</a>
+    <a href="out-clean.html#how">How it works</a>
+    <a href="out-clean.html#safety">Safety</a>
+    <a href="careers.html" style="color:#111;border-bottom:1.5px solid #111;padding-bottom:1px">Careers</a>
+  </div>
+  <a href="out-clean.html#cta" class="nav-btn">I'm Out →</a>
+</nav>
+
+<!-- HERO -->
+<div class="careers-hero">
+  <div class="section-label">We're hiring</div>
+  <h1 class="careers-headline">Help us get<br>Texarkana outside.</h1>
+  <p class="careers-sub">Out is early. That means every role has real ownership and direct impact. We're not a corporate team — we're a small group trying to solve a real problem. If that sounds good, read on.</p>
+  <div class="careers-facts">
+    <div class="careers-fact">Remote-friendly</div>
+    <div class="careers-fact">Early stage</div>
+    <div class="careers-fact">Real ownership</div>
+    <div class="careers-fact">Texarkana-based mission</div>
+  </div>
+</div>
+
+<!-- POSITIONS -->
+<div class="positions-wrap">
+  <div class="positions-label">Open positions — 3 roles</div>
+
+  <!-- Social Media Manager -->
+  <div class="position-row">
+    <div class="position-left">
+      <div class="position-tag">📱 Marketing</div>
+      <div class="position-title">Social Media Manager</div>
+      <div class="position-meta">
+        <span>Part-time</span>
+        <span>Remote</span>
+        <span>Flexible hours</span>
+      </div>
+    </div>
+    <div class="position-right">
+      <p class="position-body">Own our presence on TikTok, Instagram, and X. You're not posting into a void — you're telling the story of a real product that real people use. Short-form content, campus moments, growth from zero. This is a ground-floor role that will define how Out is seen.</p>
+      <ul class="position-what">
+        <div class="position-what-label">What you'll do</div>
+        <li>Create and post short-form content on TikTok, Instagram Reels, and X</li>
+        <li>Document real Out moments — campus meetups, user stories</li>
+        <li>Grow our following from zero in Texarkana and TAMUT</li>
+        <li>Work directly with the founder on brand voice and strategy</li>
+      </ul>
+      <a class="apply-btn" href="mailto:careers@getout.app?subject=Social Media Manager — Application">Apply for this role →</a>
+    </div>
+  </div>
+
+  <!-- Community Moderator -->
+  <div class="position-row">
+    <div class="position-left">
+      <div class="position-tag">🛡️ Safety</div>
+      <div class="position-title">Community Moderator</div>
+      <div class="position-meta">
+        <span>Part-time</span>
+        <span>Remote</span>
+        <span>Flexible hours</span>
+      </div>
+    </div>
+    <div class="position-right">
+      <p class="position-body">You're the first line of defense. Review reports, handle bad actors, and make sure people feel safe using Out. A single good call here can protect someone. This role has direct impact — and it's one of the most important we're hiring for.</p>
+      <ul class="position-what">
+        <div class="position-what-label">What you'll do</div>
+        <li>Review user reports and escalate or resolve them</li>
+        <li>Monitor the community board for violations</li>
+        <li>Handle ban decisions and maintain the blocklist</li>
+        <li>Help shape safety policies as the platform grows</li>
+      </ul>
+      <a class="apply-btn" href="mailto:careers@getout.app?subject=Community Moderator — Application">Apply for this role →</a>
+    </div>
+  </div>
+
+  <!-- Campus Ambassador -->
+  <div class="position-row">
+    <div class="position-left">
+      <div class="position-tag">🎓 Growth</div>
+      <div class="position-title">Campus Ambassador — TAMUT</div>
+      <div class="position-meta">
+        <span>Flexible hours</span>
+        <span>On-campus</span>
+        <span>Performance perks</span>
+      </div>
+    </div>
+    <div class="position-right">
+      <p class="position-body">Be the face of Out at TAMUT. Talk to real people, make Out a thing on campus, and grow word-of-mouth from the ground up. Word-of-mouth is how we win and you're the engine. Flexible hours, performance-based perks, and you get to say you helped launch it.</p>
+      <ul class="position-what">
+        <div class="position-what-label">What you'll do</div>
+        <li>Spread Out on campus through events, flyers, and conversations</li>
+        <li>Be the main contact point for TAMUT users</li>
+        <li>Report back on what students actually want from the app</li>
+        <li>Organize the first real Out meetup on campus</li>
+      </ul>
+      <a class="apply-btn" href="mailto:careers@getout.app?subject=Campus Ambassador — Application">Apply for this role →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="careers-bottom">
+  <h2>Not sure which role fits?</h2>
+  <p>Send us an email and tell us what you're good at. We're early enough that the right person can define their own role.</p>
+  <a href="mailto:careers@getout.app">careers@getout.app</a>
+</div>
+
+<footer>
+  <a href="out-clean.html">← Back to Out</a>
+  <span>© 2026 Out. All rights reserved.</span>
+</footer>
+
+</body>
+</html>

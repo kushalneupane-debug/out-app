@@ -2416,6 +2416,125 @@ body.dark .lang-toggle { border-color: #333; color: #EDEDED; }
 body.dark .lang-toggle:hover { border-color: #555; background: #1A1A1A; }
 body.dark .msg-system { color: #555; }
 body.dark .nav-careers-link { color: #EDEDED; }
+
+/* ── FEATURE CSS ────────────────────────────────────────────── */
+/* Verified badge */
+.verified-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #111; color: #fff;
+  font-size: 0.55rem; font-weight: 700;
+  margin-left: 4px; vertical-align: middle; flex-shrink: 0;
+}
+body.dark .verified-badge { background: #EDEDED; color: #111; }
+.chat-verified { font-size: 0.65rem; color: #999; margin-left: 4px; }
+
+/* Session stats on home screen */
+.session-stats {
+  display: none; font-size: 0.7rem; font-weight: 600;
+  color: #AAA; letter-spacing: 0.04em; text-transform: uppercase;
+  text-align: center; margin-top: 10px;
+}
+body.dark .session-stats { color: #444; }
+
+/* Meetup counter pill on landing */
+.meetup-counter-pill {
+  display: none; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 600; color: #555;
+  background: #EFEFEF; border-radius: 9999px;
+  padding: 6px 14px; width: fit-content; margin-top: 16px;
+}
+.meetup-counter-pill.show { display: flex; }
+body.dark .meetup-counter-pill { background: #1A1A1A; color: #777; }
+
+/* Scheduled post badge in board */
+.board-sched-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.65rem; font-weight: 700; color: #111;
+  background: #FFF3CD; border-radius: 9999px;
+  padding: 2px 8px; margin-right: 6px;
+}
+body.dark .board-sched-badge { background: #2A2200; color: #FFD060; }
+
+/* Schedule toggle in board compose */
+.sched-toggle {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; font-weight: 600; color: #888;
+  cursor: pointer; padding: 6px 0; user-select: none;
+}
+.sched-toggle input[type=checkbox] { cursor: pointer; }
+.sched-time-input {
+  display: none; font-size: 0.8rem; border: 1.5px solid #E5E5E5;
+  border-radius: 8px; padding: 6px 10px; margin-top: 6px;
+  font-family: inherit; color: #111; background: #fff; width: 100%;
+}
+.sched-time-input:focus { outline: none; border-color: #111; }
+body.dark .sched-time-input { background: #111; border-color: #333; color: #EDEDED; }
+
+/* Notify me button on landing page */
+.notif-landing-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 40px; padding: 0 18px; border-radius: 9999px;
+  border: 1.5px solid #E0E0E0; background: none;
+  font-size: 0.78rem; font-weight: 600; color: #555;
+  cursor: pointer; transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.notif-landing-btn:hover { border-color: #111; color: #111; }
+.notif-landing-btn.active { border-color: #111; color: #111; background: #F5F5F5; }
+body.dark .notif-landing-btn { border-color: #333; color: #AAA; }
+body.dark .notif-landing-btn:hover { border-color: #EDEDED; color: #EDEDED; }
+body.dark .notif-landing-btn.active { background: #1A1A1A; }
+
+/* Share card modal */
+.share-modal {
+  position: fixed; inset: 0; z-index: 9000;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.share-modal.show { opacity: 1; pointer-events: all; }
+.share-sheet {
+  background: #fff; border-radius: 24px 24px 0 0;
+  padding: 28px 24px 36px; width: 100%; max-width: 420px;
+  transform: translateY(20px); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.share-modal.show .share-sheet { transform: translateY(0); }
+.share-drag { width: 36px; height: 4px; border-radius: 2px; background: #E0E0E0; margin: 0 auto 20px; }
+.share-card-preview {
+  background: #111; border-radius: 16px; padding: 24px;
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
+}
+.share-card-logo { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
+.share-card-vibe { font-size: 2.2rem; }
+.share-card-name { font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+.share-card-sub { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+.share-card-url { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+.share-btns { display: flex; gap: 10px; }
+.share-btn-primary {
+  flex: 1; height: 44px; border-radius: 9999px;
+  background: #111; color: #fff; border: none;
+  font-size: 0.85rem; font-weight: 700; cursor: pointer;
+  transition: background 0.15s;
+}
+.share-btn-primary:hover { background: #333; }
+.share-btn-secondary {
+  flex: 1; height: 44px; border-radius: 9999px;
+  background: none; color: #111;
+  border: 1.5px solid #E0E0E0;
+  font-size: 0.85rem; font-weight: 700; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.share-btn-secondary:hover { border-color: #111; }
+.share-modal-close {
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none; font-size: 1.2rem;
+  cursor: pointer; color: #AAA;
+}
+body.dark .share-sheet { background: #111; }
+body.dark .share-btn-secondary { color: #EDEDED; border-color: #333; }
+body.dark .share-btn-secondary:hover { border-color: #EDEDED; }
+body.dark .share-modal-close { color: #555; }
 body.dark .mobile-nav { background: #0A0A0A; border-bottom-color: #1E1E1E; }
 body.dark .mobile-nav a { color: #EDEDED; border-bottom-color: #1E1E1E; }
 body.dark .mobile-nav-btn { background: #EDEDED; color: #111; }
@@ -2548,7 +2667,7 @@ body.dark .why-sub { color: #555; }
     <a href="#safety" data-i18n="nav.safety">Safety</a>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
-    <a href="#careers" style="font-size:0.8rem;font-weight:700;color:#111;letter-spacing:-0.01em;transition:color 0.15s;white-space:nowrap" class="nav-careers-link">Careers</a>
+    <a href="careers.html" style="font-size:0.8rem;font-weight:700;color:#111;letter-spacing:-0.01em;transition:color 0.15s;white-space:nowrap" class="nav-careers-link">Careers</a>
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()" aria-label="Toggle language">ES</button>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Toggle dark mode">☀️</button>
     <a href="#cta" class="nav-btn" data-i18n="nav.cta">I'm Out →</a>
@@ -2562,7 +2681,7 @@ body.dark .why-sub { color: #555; }
   <a href="#how" onclick="closeMobile()" data-i18n="nav.how">How it works</a>
   <a href="#city" onclick="closeMobile()" data-i18n="nav.city">Texarkana</a>
   <a href="#safety" onclick="closeMobile()" data-i18n="nav.safety">Safety</a>
-  <a href="#careers" onclick="closeMobile()">Careers</a>
+  <a href="careers.html" onclick="closeMobile()">Careers</a>
   <button class="lang-toggle" style="margin:10px 20px 4px;width:calc(100% - 40px);justify-content:center" onclick="toggleLang();closeMobile()" id="langToggleMobile">ES</button>
   <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()" data-i18n="nav.cta">I'm Out →</a>
 </div>
@@ -2577,6 +2696,10 @@ body.dark .why-sub { color: #555; }
       <p class="hero-sub" data-i18n="hero.sub">No profiles. No swiping. Real people within 3 miles who are free right now.</p>
       <a href="#cta" class="pill-btn" data-i18n="hero.btn">I'm Out →</a>
       <p class="hero-footnote" data-i18n="hero.footnote"><strong>Always free.</strong> No account. No download.</p>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <div class="meetup-counter-pill" id="meetupCounterPill">🤝 <span id="meetupCountNum">0</span> real meetups in Texarkana</div>
+        <button class="notif-landing-btn" id="notifLandingBtn" onclick="requestLandingNotif()">🔔 Notify me when someone's nearby</button>
+      </div>
     </div>
 
     <!-- PHONE -->
@@ -2904,42 +3027,6 @@ body.dark .why-sub { color: #555; }
   </div>
 </section>
 
-<!-- CAREERS -->
-<section id="careers">
-  <div class="careers-head reveal">
-    <div class="section-label">Join the team</div>
-    <h2 class="careers-headline">We're just getting started.<br>Come build with us.</h2>
-    <p class="careers-sub">Out is a lean, early-stage product run by a small team. Every role here has real ownership. If you want to do something that matters in Texarkana, this is it.</p>
-  </div>
-
-  <div class="careers-grid">
-
-    <div class="career-card reveal">
-      <div class="career-tag">📱 Marketing</div>
-      <div class="career-title">Social Media Manager</div>
-      <p class="career-body">Own our presence on TikTok, Instagram, and X. You're not posting into a void — you're telling the story of a real product that real people use. Short-form content, campus moments, growth from zero. This is a ground-floor role.</p>
-      <a class="career-apply" href="mailto:careers@getout.app?subject=Social Media Manager">Apply →</a>
-    </div>
-
-    <div class="career-card reveal reveal-delay-1">
-      <div class="career-tag">🛡️ Safety</div>
-      <div class="career-title">Community Moderator</div>
-      <p class="career-body">You are the first line of defense. Review reports, handle bad actors, keep the platform safe and worth using. This role has real impact — a single good call can protect someone. Remote-friendly, part-time to start.</p>
-      <a class="career-apply" href="mailto:careers@getout.app?subject=Community Moderator">Apply →</a>
-    </div>
-
-    <div class="career-card reveal reveal-delay-2">
-      <div class="career-tag">🎓 Growth</div>
-      <div class="career-title">Campus Ambassador — TAMUT</div>
-      <p class="career-body">Be the face of Out at TAMUT. Talk to people, spread the word, make Out a thing on campus. Word-of-mouth is how we grow and you're the engine. Flexible hours, performance-based perks, and you get to say you helped launch it.</p>
-      <a class="career-apply" href="mailto:careers@getout.app?subject=Campus Ambassador">Apply →</a>
-    </div>
-
-  </div>
-
-  <p class="careers-note">All roles are remote-friendly. Send a short email — no resume required, just tell us why you're interested.</p>
-</section>
-
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="container reveal">
@@ -2958,7 +3045,7 @@ body.dark .why-sub { color: #555; }
     <a href="#" onclick="event.preventDefault();openLegal('safety')">Safety</a>
     <a href="#" onclick="event.preventDefault();openLegal('cookies')">Cookies</a>
     <a href="#" onclick="event.preventDefault();openLegal('contact')">Contact</a>
-    <a href="#careers">Careers</a>
+    <a href="careers.html">Careers</a>
   </div>
   <div class="footer-copy">© 2026 Out. All rights reserved.</div>
 </footer>
@@ -3111,7 +3198,8 @@ body.dark .why-sub { color: #555; }
           <span style="color:#BBB;font-size:0.85rem">→</span>
         </button>
       </div>
-      <div style="text-align:center;margin-top:16px;font-size:0.72rem;color:#AAA;font-weight:600;letter-spacing:0.04em">ALWAYS FREE · NO ACCOUNT NEEDED</div>
+      <div class="session-stats" id="sessionStats"></div>
+      <div style="text-align:center;margin-top:8px;font-size:0.72rem;color:#AAA;font-weight:600;letter-spacing:0.04em">ALWAYS FREE · NO ACCOUNT NEEDED</div>
     </div>
   </div>
 
@@ -3322,6 +3410,11 @@ body.dark .why-sub { color: #555; }
           maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false">
         <textarea class="board-body-input" id="boardBodyInput"
           placeholder="More details… (optional)" maxlength="300" rows="2"></textarea>
+        <label class="sched-toggle">
+          <input type="checkbox" id="schedCheck" onchange="toggleSchedTime()">
+          📅 Plan a hangout at a specific time
+        </label>
+        <input type="time" class="sched-time-input" id="schedTimeInput">
         <div class="board-compose-footer">
           <span class="board-compose-hint">Visible to people within 3 miles · expires in 3h</span>
           <button class="board-post-btn" id="boardPostBtn" onclick="createPost()">Post</button>
@@ -3492,6 +3585,25 @@ body.dark .why-sub { color: #555; }
 </div>
 
 <!-- Block / Report sheet -->
+<!-- Share card modal -->
+<div class="share-modal" id="shareModal" onclick="if(event.target===this)closeShareModal()">
+  <div class="share-sheet" style="position:relative">
+    <button class="share-modal-close" onclick="closeShareModal()">✕</button>
+    <div class="share-drag"></div>
+    <div class="share-card-preview">
+      <div class="share-card-logo">OUT</div>
+      <div class="share-card-vibe" id="shareCardVibe">👋</div>
+      <div class="share-card-name" id="shareCardName">Someone</div>
+      <div class="share-card-sub" id="shareCardSub">is Out right now</div>
+      <div class="share-card-url">getout.app</div>
+    </div>
+    <div class="share-btns">
+      <button class="share-btn-primary" onclick="doShare()">Share →</button>
+      <button class="share-btn-secondary" id="shareCopyBtn" onclick="doCopyLink()">Copy link</button>
+    </div>
+  </div>
+</div>
+
 <div class="report-sheet" id="reportSheet" onclick="if(event.target===this)closeChatMenu()">
   <div class="report-inner">
     <div class="report-drag"></div>
@@ -4043,7 +4155,7 @@ function renderMatches(matches) {
     card.innerHTML=
       '<div class="nc-avatar">'+(VIBE_EMOJI[u.vibe]||'👋')+'</div>'+
       '<div class="nc-info">'+
-        '<div class="nc-name">'+esc(u.name)+'</div>'+
+        '<div class="nc-name">'+esc(u.name)+(u.verified?'<span class="verified-badge" title="Google verified">✓</span>':'')+'</div>'+
         '<div class="nc-vibe">'+esc(u.vibe)+' &middot; '+distLabel+'</div>'+
         noteHtml+
       '</div>'+
@@ -4051,7 +4163,7 @@ function renderMatches(matches) {
         (isTop?'<span class="score-label">Top</span>':'')+
         '<span class="score-num '+cls+'">'+score+'</span>'+
       '</div>'+
-      '<button class="connect-btn" onclick="sendConnect(\''+esc(u.key)+'\',\''+esc(u.name)+'\','+score+',this)">Wave 👋</button>';
+      '<button class="connect-btn" onclick="sendConnect(\''+esc(u.key)+'\',\''+esc(u.name)+'\','+score+',this,'+u.verified+')">Wave 👋</button>';
     list.appendChild(card);
   });
   var n=matches.length;
@@ -4079,6 +4191,7 @@ function refreshMatches() {
         distMiles: Math.round(dist*10)/10,
         matchScore:distScore(dist)+vibeScore(myVibe,u.vibe),
         since:     u.since,
+        verified:  !!u.verified,
       });
     }
   });
@@ -4130,7 +4243,7 @@ function connectRealtime(name, vibe, lat, lng) {
       var p = msg.payload;
       if (p && p.to === myKey) {
         hideBanner();
-        startChat(p.from, p.name, p.vibe, p.chatId);
+        startChat(p.from, p.name, p.vibe, p.chatId, p.verified);
       }
     })
     .on('broadcast', { event: 'connect_dec' }, function(msg) {
@@ -4192,7 +4305,7 @@ function connectRealtime(name, vibe, lat, lng) {
     })
     .subscribe(function(status) {
       if (status === 'SUBSCRIBED') {
-        channel.track({ name:name, vibe:vibe, lat:myLat, lng:myLng, since:Date.now(), note:myGroupNote, uid:myUid });
+        channel.track({ name:name, vibe:vibe, lat:myLat, lng:myLng, since:Date.now(), note:myGroupNote, uid:myUid, verified:!!(boardUser && boardUser.email) });
         showNotifPromptIfNeeded();
       } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
         showState('error', 'Could not connect to matching server. Check your internet connection.');
@@ -4201,18 +4314,21 @@ function connectRealtime(name, vibe, lat, lng) {
 }
 
 // ── Send / accept / decline connect ──────────────────────────
-function sendConnect(toKey, toName, score, btn) {
+var pendingPartnerVerified = false;
+function sendConnect(toKey, toName, score, btn, verified) {
   if (!channel) return;
+  pendingPartnerVerified = !!verified;
   btn.textContent='Sent ✓'; btn.classList.add('sent');
   channel.send({ type:'broadcast', event:'connect_req',
-    payload:{ to:toKey, from:myKey, name:esc(document.getElementById('nameInput').value.trim()), vibe:myVibe, score:score }
+    payload:{ to:toKey, from:myKey, name:esc(document.getElementById('nameInput').value.trim()), vibe:myVibe, score:score, verified:!!(boardUser && boardUser.email) }
   });
 }
 
 function showBanner(p) {
   pendingFrom=p.from; pendingFromName=p.name; pendingFromVibe=p.vibe||'';
+  pendingPartnerVerified = !!p.verified;
   document.getElementById('incomingEmoji').textContent = VIBE_EMOJI[p.vibe]||'👋';
-  document.getElementById('incomingName').textContent  = p.name;
+  document.getElementById('incomingName').textContent  = p.name + (p.verified ? ' ✓' : '');
   document.getElementById('incomingSub').textContent   = 'wants to connect · '+p.score+' match score';
   document.getElementById('incomingBanner').classList.add('show');
 }
@@ -4227,7 +4343,7 @@ function acceptConnect() {
   channel.send({ type:'broadcast', event:'connect_acc',
     payload:{ to:pendingFrom, from:myKey, name:myName, vibe:myVibe, chatId:cId }
   });
-  startChat(pendingFrom, pendingFromName, pendingFromVibe, cId);
+  startChat(pendingFrom, pendingFromName, pendingFromVibe, cId, pendingPartnerVerified);
   hideBanner();
 }
 function declineConnect() {
@@ -4254,7 +4370,7 @@ var partnerColor   = '#0062AD';
 var partnerInitial = '?';
 var lastMsgWasMine = null;
 
-function startChat(partnerKey, partnerName, partnerVibe, cId) {
+function startChat(partnerKey, partnerName, partnerVibe, cId, partnerVerified) {
   chatId = cId || [myKey, partnerKey].sort().join('::');
   chatPartnerKey = partnerKey;
   partnerColor   = avatarColor(partnerName);
@@ -4265,14 +4381,14 @@ function startChat(partnerKey, partnerName, partnerVibe, cId) {
   if (channel) {
     var myName = document.getElementById('nameInput').value.trim();
     channel.track({ name:myName, vibe:myVibe, lat:myLat, lng:myLng,
-                    since:Date.now(), note:myGroupNote, uid:myUid, inChat:true });
+                    since:Date.now(), note:myGroupNote, uid:myUid, inChat:true, verified:!!(boardUser && boardUser.email) });
   }
 
   // header
   var circ = document.getElementById('chatAvatarCircle');
   circ.style.background = partnerColor;
   document.getElementById('chatAvatarInitial').textContent = partnerInitial;
-  document.getElementById('chatHeaderName').textContent    = partnerName;
+  document.getElementById('chatHeaderName').textContent    = partnerName + (partnerVerified ? ' ✓' : '');
   document.getElementById('chatHeaderVibe').textContent    = (VIBE_EMOJI[partnerVibe]||'') + ' ' + partnerVibe;
 
   // typing avatar color
@@ -4543,6 +4659,15 @@ var boardRefreshTimer = null;
 function createPost() {
   var title = document.getElementById('boardTitleInput').value.trim();
   var body  = document.getElementById('boardBodyInput').value.trim();
+  // Scheduled hangout prefix
+  var schedChk = document.getElementById('schedCheck');
+  var schedTime = document.getElementById('schedTimeInput');
+  if (schedChk && schedChk.checked && schedTime && schedTime.value) {
+    var t = schedTime.value; // HH:MM
+    var h = parseInt(t.split(':')[0]); var m = t.split(':')[1];
+    var ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+    title = '📅 ' + h + ':' + m + ' ' + ampm + ' — ' + title;
+  }
   if (!title || !myKey || !myLat) return;
   var btn = document.getElementById('boardPostBtn');
   btn.disabled = true; btn.textContent = 'Posting…';
@@ -4562,6 +4687,8 @@ function createPost() {
     if (res.error) { alert('Could not post. Try again.'); return; }
     document.getElementById('boardTitleInput').value = '';
     document.getElementById('boardBodyInput').value  = '';
+    var sc = document.getElementById('schedCheck'); if (sc) sc.checked = false;
+    var si = document.getElementById('schedTimeInput'); if (si) si.style.display = 'none';
     loadBoardPosts();
     var badge = document.getElementById('boardBadge');
     badge.textContent = '✓'; badge.style.display = 'inline-flex';
@@ -4670,18 +4797,36 @@ function sendQuickReply(type) {
 // ── Share invite ──────────────────────────────────────────────
 function shareInvite() {
   var name = document.getElementById('nameInput').value.trim() || 'Someone';
-  var url = window.location.origin + window.location.pathname + '?invite=' + encodeURIComponent(name);
-  var msg = name + ' is Out right now — join them nearby on Out: ' + url;
+  var vibeEmoji = VIBE_EMOJI[myVibe] || '👋';
+  var url = window.location.origin + window.location.pathname;
+  // Populate share card
+  document.getElementById('shareCardVibe').textContent = vibeEmoji;
+  document.getElementById('shareCardName').textContent = name;
+  document.getElementById('shareCardSub').textContent  = 'is Out right now — come find me';
+  document.getElementById('shareModal').shareUrl = url;
+  document.getElementById('shareModal').shareText = name + ' is Out right now — join them nearby: ' + url;
+  document.getElementById('shareModal').classList.add('show');
+}
+function closeShareModal() {
+  document.getElementById('shareModal').classList.remove('show');
+}
+function doShare() {
+  var modal = document.getElementById('shareModal');
+  var name = document.getElementById('nameInput').value.trim() || 'Someone';
+  var url = modal.shareUrl || window.location.href;
+  var text = modal.shareText || name + ' is Out right now: ' + url;
   if (navigator.share) {
-    navigator.share({ title: 'Join me on Out', text: msg, url: url }).catch(function(){});
-  } else {
-    navigator.clipboard.writeText(url).then(function() {
-      var btn = document.getElementById('shareBtn');
-      if (btn) { btn.textContent = '✓ Copied'; setTimeout(function(){ btn.textContent = '↗ Invite'; }, 2000); }
-    }).catch(function() {
-      prompt('Copy your invite link:', url);
-    });
-  }
+    navigator.share({ title: 'Join me on Out', text: text, url: url }).catch(function(){});
+  } else { doCopyLink(); }
+}
+function doCopyLink() {
+  var modal = document.getElementById('shareModal');
+  var url = modal.shareUrl || window.location.href;
+  var btn = document.getElementById('shareCopyBtn');
+  navigator.clipboard.writeText(url).then(function() {
+    btn.textContent = '✓ Copied!';
+    setTimeout(function(){ btn.textContent = 'Copy link'; }, 2000);
+  }).catch(function() { prompt('Copy your invite link:', url); });
 }
 
 function closeInviteBanner() {
@@ -5148,6 +5293,111 @@ function appendLocationCard(lat, lng, isMe, ts) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
+// ── Session tracking (Feature 6: streak / count) ─────────────
+function trackSession() {
+  try {
+    var count = parseInt(localStorage.getItem('out_session_count') || '0') + 1;
+    localStorage.setItem('out_session_count', count);
+    var today = new Date().toDateString();
+    var lastDate = localStorage.getItem('out_last_date');
+    var yesterday = new Date(Date.now() - 86400000).toDateString();
+    var streak = parseInt(localStorage.getItem('out_streak') || '0');
+    if (lastDate === today) {
+      // same day, no change to streak
+    } else if (lastDate === yesterday) {
+      streak++;
+    } else {
+      streak = 1;
+    }
+    localStorage.setItem('out_last_date', today);
+    localStorage.setItem('out_streak', streak);
+    updateSessionDisplay(count, streak);
+  } catch(e) {}
+}
+function loadSessionDisplay() {
+  try {
+    var count  = parseInt(localStorage.getItem('out_session_count') || '0');
+    var streak = parseInt(localStorage.getItem('out_streak') || '0');
+    updateSessionDisplay(count, streak);
+  } catch(e) {}
+}
+function updateSessionDisplay(count, streak) {
+  var el = document.getElementById('sessionStats');
+  if (!el) return;
+  var parts = [];
+  if (count > 1) parts.push('Out ' + count + ' times');
+  if (streak > 1) parts.push(streak + '-day streak 🔥');
+  el.textContent = parts.join(' · ');
+  el.style.display = parts.length > 0 ? 'block' : 'none';
+}
+
+// ── Meetup counter on landing page (Feature 5) ───────────────
+function initMeetupCounter() {
+  sb.from('meetup_feedback')
+    .select('id', { count: 'exact', head: true })
+    .eq('met_up', true)
+    .then(function(result) {
+      var count = (result && result.count) ? result.count : 0;
+      if (count > 0) {
+        var pill = document.getElementById('meetupCounterPill');
+        var num  = document.getElementById('meetupCountNum');
+        if (num)  num.textContent = count;
+        if (pill) pill.classList.add('show');
+      }
+    }).catch(function(){});
+}
+
+// ── Landing page notification (Feature 2) ────────────────────
+var landingWatchChannel = null;
+var landingWatchLat = 0, landingWatchLng = 0;
+function requestLandingNotif() {
+  if (!('Notification' in window)) { alert('Notifications not supported in this browser.'); return; }
+  var btn = document.getElementById('notifLandingBtn');
+  Notification.requestPermission().then(function(perm) {
+    if (perm !== 'granted') return;
+    if (!navigator.geolocation) { startLandingWatch(0, 0); return; }
+    navigator.geolocation.getCurrentPosition(
+      function(pos) { startLandingWatch(pos.coords.latitude, pos.coords.longitude); },
+      function()    { startLandingWatch(0, 0); }
+    );
+  });
+}
+function startLandingWatch(lat, lng) {
+  landingWatchLat = lat; landingWatchLng = lng;
+  var btn = document.getElementById('notifLandingBtn');
+  if (btn) { btn.textContent = '🔔 Watching nearby...'; btn.classList.add('active'); btn.onclick = null; }
+  if (landingWatchChannel) { sb.removeChannel(landingWatchChannel); }
+  landingWatchChannel = sb.channel('out-live-v1', { config: { broadcast: { self: false } } });
+  landingWatchChannel.on('presence', { event: 'join' }, function(payload) {
+    if (!payload || !payload.newPresences) return;
+    payload.newPresences.forEach(function(p) {
+      if (!p || !p.name) return;
+      var dist = (lat && lng && p.lat && p.lng) ? haversine(lat, lng, p.lat, p.lng) : 0;
+      if (!lat || !lng || dist <= 5) {
+        new Notification('Someone is Out nearby!', {
+          body: (p.name || 'Someone') + ' is Out ' + (VIBE_EMOJI[p.vibe]||'👋') + (dist ? ' · ~' + Math.round(dist*10)/10 + ' mi away' : ' near you'),
+          icon: '/icon-192.png', tag: 'out-landing-notif', silent: false
+        });
+      }
+    });
+  }).subscribe();
+}
+
+// ── Scheduled hangout compose toggle (Feature 4) ─────────────
+function toggleSchedTime() {
+  var chk = document.getElementById('schedCheck');
+  var inp = document.getElementById('schedTimeInput');
+  if (!inp) return;
+  inp.style.display = chk.checked ? 'block' : 'none';
+  if (chk.checked) {
+    // Default to next half-hour
+    var now = new Date();
+    now.setMinutes(now.getMinutes() >= 30 ? 60 : 30, 0, 0);
+    inp.value = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    inp.focus();
+  }
+}
+
 // ── Live counter on landing page ──────────────────────────────
 function initLiveCounter() {
   var pill  = document.getElementById('liveCounter');
@@ -5358,6 +5608,8 @@ document.addEventListener('DOMContentLoaded', function() {
   initGSI();
   initBoardUser();
   initLiveCounter();
+  initMeetupCounter();
+  loadSessionDisplay();
 });
 // Also try immediately in case script already loaded
 initGSI();
@@ -5380,6 +5632,7 @@ function openApp() {
 
 function proceedAfterAge() {
   showScreen('screen-home');
+  loadSessionDisplay();
 }
 
 function goToLiveFlow() {
@@ -5675,6 +5928,7 @@ function goLive() {
     if (!navigator.geolocation) { showState('error','Geolocation not supported by your browser.'); return; }
     navigator.geolocation.getCurrentPosition(
       function(pos) {
+        trackSession();
         connectRealtime(name, selectedVibe, pos.coords.latitude, pos.coords.longitude);
         startLiveTimer();
         // Periodically refresh board posts
