@@ -4,13 +4,15 @@ var { Server } = require('socket.io');
 var cors    = require('cors');
 var { goLive, goOffline, getMatches, getUser, getTile, blockUser, isBlocked, report, activeCount } = require('./nearby');
 
+var CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
+
 var app = express();
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
 
 var server = http.createServer(app);
 var io = new Server(server, {
-  cors: { origin: '*', methods: ['GET', 'POST'] },
+  cors: { origin: CORS_ORIGIN, methods: ['GET', 'POST'] },
   pingInterval: 25000,
   pingTimeout:  60000,
 });
