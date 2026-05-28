@@ -7,7 +7,7 @@
 <meta name="description" content="No profiles. No swiping. No algorithm. Just real people within 3 miles who are free right now.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="manifest" href="/manifest.json">
@@ -28,6 +28,7 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   line-height: 1.6;
+  transition: background 0.4s, color 0.4s;
 }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -103,16 +104,22 @@ nav {
 .section-label {
   font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
   text-transform: uppercase; color: #999; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: #F97316; flex-shrink: 0;
 }
 .pill-btn {
   display: inline-flex; align-items: center; justify-content: center;
   height: 48px; padding: 0 28px; border-radius: 9999px;
-  background: #111; color: #fff;
+  background: #F97316; color: #fff;
   font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em;
   transition: background 0.15s, transform 0.1s;
   white-space: nowrap;
 }
-.pill-btn:hover { background: #2A2A2A; }
+.pill-btn:hover { background: #EA6C00; }
 .pill-btn:active { transform: scale(0.97); }
 
 /* ── HERO ──────────────────────────────────────────────────── */
@@ -130,10 +137,18 @@ nav {
 .hero-label {
   font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
   text-transform: uppercase; color: #999; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-label::before {
+  content: '';
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: #F97316; flex-shrink: 0;
+  animation: dotBlink 2s ease-in-out infinite;
 }
 .hero-headline {
-  font-size: clamp(36px, 4.5vw, 60px);
-  font-weight: 700; letter-spacing: -0.035em; line-height: 1.08;
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(38px, 4.8vw, 64px);
+  font-weight: 400; letter-spacing: -0.02em; line-height: 1.05;
   margin-bottom: 20px;
 }
 .hero-sub {
@@ -220,8 +235,8 @@ nav {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 10px; height: 10px; border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.12);
+  background: #F97316;
+  box-shadow: 0 0 0 6px rgba(249,115,22,0.22);
 }
 .nearby-dot {
   position: absolute;
@@ -453,9 +468,10 @@ nav {
 .how-step:last-child { border-right: none; padding-right: 0; }
 .how-step:not(:first-child) { padding-left: 40px; }
 .step-num {
-  font-size: 3.5rem; font-weight: 700; color: #111;
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.8rem; font-weight: 400; color: #F97316;
   line-height: 1; margin-bottom: 20px;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
 }
 .step-title {
   font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em;
@@ -479,8 +495,9 @@ nav {
   text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px;
 }
 .why-headline {
-  font-size: clamp(28px, 3vw, 42px);
-  font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 400; letter-spacing: -0.01em; line-height: 1.1;
 }
 .why-sub {
   margin-top: 16px; font-size: 0.95rem; color: rgba(255,255,255,0.45);
@@ -521,6 +538,13 @@ nav {
   border-radius: 16px;
   padding: 28px 24px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  border-top: 3px solid transparent;
+}
+.s-card:hover {
+  border-top-color: #F97316;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(249,115,22,0.12);
 }
 .s-card-icon { font-size: 1.3rem; margin-bottom: 16px; }
 .s-card-title {
@@ -553,6 +577,13 @@ nav {
   border-radius: 16px; padding: 28px 24px;
   display: flex; flex-direction: column; gap: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  border-left: 3px solid transparent;
+}
+.career-card:hover {
+  border-left-color: #F97316;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249,115,22,0.10);
 }
 .career-tag {
   display: inline-flex; align-items: center;
@@ -583,7 +614,7 @@ nav {
   #careers { padding: 80px 20px; }
   .careers-grid { grid-template-columns: 1fr; gap: 16px; }
 }
-body.dark #careers { background: #0A0A0A; }
+body.dark #careers { background: #0D0D0B; }
 body.dark .career-card { background: #111; border-color: #1E1E1E; }
 body.dark .career-tag { background: #1A1A1A; color: #EDEDED; }
 body.dark .career-title { color: #EDEDED; }
@@ -596,8 +627,9 @@ body.dark .career-body { color: #666; }
   border-top: 1px solid #E8E8E8;
 }
 #cta h2 {
-  font-size: clamp(36px, 5vw, 72px);
-  font-weight: 700; letter-spacing: -0.04em; line-height: 1.02;
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(38px, 5.5vw, 80px);
+  font-weight: 400; letter-spacing: -0.02em; line-height: 1.02;
   margin-bottom: 14px;
 }
 #cta p {
@@ -966,6 +998,12 @@ footer {
 }
 .vibe-btn:hover { border-color: #CCC; }
 .vibe-btn.selected { border-color: #111; background: #111; }
+.vibe-btn[data-vibe="coffee"].selected { background: #D97706; border-color: #D97706; }
+.vibe-btn[data-vibe="walk"].selected   { background: #16A34A; border-color: #16A34A; }
+.vibe-btn[data-vibe="chill"].selected  { background: #3B82F6; border-color: #3B82F6; }
+.vibe-btn[data-vibe="food"].selected   { background: #EF4444; border-color: #EF4444; }
+.vibe-btn[data-vibe="talk"].selected   { background: #8B5CF6; border-color: #8B5CF6; }
+.vibe-btn[data-vibe="study"].selected  { background: #06B6D4; border-color: #06B6D4; }
 .vibe-btn .vibe-emoji { font-size: 1.2rem; }
 .vibe-btn .vibe-label {
   font-size: 0.78rem; font-weight: 600; color: #666;
@@ -976,13 +1014,13 @@ footer {
 /* big action button */
 .app-btn {
   width: 100%; height: 52px; border-radius: 14px;
-  background: #111; color: #fff;
+  background: #F97316; color: #fff;
   font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
   cursor: pointer; border: none;
   transition: background 0.15s, transform 0.1s;
   margin-top: auto;
 }
-.app-btn:hover { background: #2A2A2A; }
+.app-btn:hover { background: #EA6C00; }
 .app-btn:active { transform: scale(0.98); }
 .app-btn:disabled { background: #CCC; cursor: not-allowed; }
 
@@ -1955,22 +1993,23 @@ footer {
   font-size: 0.88rem; font-weight: 700; color: #fff;
 }
 .board-chat-name { font-size: 0.92rem; font-weight: 700; color: #F9FAFB; flex: 1; }
-.board-chat-sub  { font-size: 0.7rem; color: #6B7280; margin-top: 1px; }
-.board-chat-close { background: none; border: none; color: #4B5563; cursor: pointer; font-size: 1rem; padding: 4px; }
-.board-chat-close:hover { color: #9CA3AF; }
+.board-chat-sub  { font-size: 0.7rem; color: #9CA3AF; margin-top: 1px; }
+.board-chat-close { background: none; border: none; color: #9CA3AF; cursor: pointer; font-size: 1rem; padding: 4px; }
+.board-chat-close:hover { color: #E5E7EB; }
 .board-chat-messages {
   flex: 1; overflow-y: auto; padding: 16px 20px;
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column; gap: 6px;
 }
-.board-chat-hint { text-align: center; color: #374151; font-size: 0.8rem; padding: 24px; margin: auto; line-height: 1.8; }
-.board-msg-row { display: flex; align-items: flex-end; gap: 8px; }
+.board-chat-hint { text-align: center; color: #9CA3AF; font-size: 0.8rem; padding: 24px; margin: auto; line-height: 1.8; }
+.board-msg-row { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 2px; }
 .board-msg-row.mine { flex-direction: row-reverse; }
 .board-msg-bubble {
-  max-width: 75%; padding: 9px 13px; font-size: 0.88rem; line-height: 1.5; word-break: break-word;
+  max-width: 78%; padding: 10px 14px; font-size: 0.88rem; line-height: 1.55;
+  word-break: break-word; border-radius: 18px;
 }
 .board-msg-row.mine   .board-msg-bubble { background: #2563EB; color: #fff; border-radius: 18px 18px 4px 18px; }
-.board-msg-row.theirs .board-msg-bubble { background: #1F2937; color: #F9FAFB; border-radius: 18px 18px 18px 4px; }
-.board-msg-time { font-size: 0.6rem; color: #374151; padding: 2px 4px; flex-shrink: 0; }
+.board-msg-row.theirs .board-msg-bubble { background: #1F2937; color: #E5E7EB; border-radius: 18px 18px 18px 4px; }
+.board-msg-time { font-size: 0.6rem; color: #6B7280; padding: 2px 4px; flex-shrink: 0; align-self: flex-end; }
 .board-chat-input-bar {
   display: flex; gap: 8px; padding: 12px 16px;
   border-top: 1px solid #1F2937; flex-shrink: 0;
@@ -1981,15 +2020,15 @@ footer {
   font-family: inherit; font-size: 0.88rem; color: #F9FAFB; outline: none;
   transition: border-color 0.15s;
 }
-.board-chat-input:focus { border-color: #4B5563; }
-.board-chat-input::placeholder { color: #4B5563; }
+.board-chat-input:focus { border-color: #6B7280; outline: none; }
+.board-chat-input::placeholder { color: #6B7280; }
 .board-chat-send {
   width: 40px; height: 40px; border-radius: 50%;
   background: #2563EB; color: #fff; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .board-chat-send:hover { background: #1D4ED8; }
-.board-chat-send:disabled { background: #1F2937; color: #374151; cursor: not-allowed; }
+.board-chat-send:disabled { background: #1F2937; color: #6B7280; cursor: not-allowed; }
 .board-chat-signin {
   padding: 16px 20px; text-align: center;
   border-top: 1px solid #1F2937; flex-shrink: 0;
@@ -2400,9 +2439,9 @@ body.dark .founder-quote-text { color: #AAA; }
   padding: 10px 16px; font-style: italic;
 }
 
-body.dark { background: #0A0A0A; color: #EDEDED; }
+body.dark { background: #0D0D0B; color: #EDEDED; }
 body.dark nav {
-  background: rgba(10,10,10,0.92);
+  background: rgba(13,13,11,0.92);
   border-bottom-color: #1E1E1E;
 }
 body.dark .nav-logo { color: #EDEDED; }
@@ -2665,9 +2704,9 @@ body.dark .why-sub { color: #555; }
     <a href="#how" data-i18n="nav.how">How it works</a>
     <a href="#city" data-i18n="nav.city">Texarkana</a>
     <a href="#safety" data-i18n="nav.safety">Safety</a>
+    <a href="careers.html" data-i18n="nav.careers">Careers</a>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
-    <a href="careers.html" style="font-size:0.8rem;font-weight:700;color:#111;letter-spacing:-0.01em;transition:color 0.15s;white-space:nowrap" class="nav-careers-link">Careers</a>
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()" aria-label="Toggle language">ES</button>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Toggle dark mode">☀️</button>
     <a href="#cta" class="nav-btn" data-i18n="nav.cta">I'm Out →</a>
@@ -2681,8 +2720,11 @@ body.dark .why-sub { color: #555; }
   <a href="#how" onclick="closeMobile()" data-i18n="nav.how">How it works</a>
   <a href="#city" onclick="closeMobile()" data-i18n="nav.city">Texarkana</a>
   <a href="#safety" onclick="closeMobile()" data-i18n="nav.safety">Safety</a>
-  <a href="careers.html" onclick="closeMobile()">Careers</a>
-  <button class="lang-toggle" style="margin:10px 20px 4px;width:calc(100% - 40px);justify-content:center" onclick="toggleLang();closeMobile()" id="langToggleMobile">ES</button>
+  <a href="careers.html" onclick="closeMobile()" data-i18n="nav.careers">Careers</a>
+  <div style="display:flex;gap:10px;padding:14px 0">
+    <button class="lang-toggle" style="flex:1;justify-content:center" onclick="toggleLang();closeMobile()" id="langToggleMobile">ES</button>
+    <button class="dark-toggle" onclick="toggleDark()" style="flex-shrink:0">☀️</button>
+  </div>
   <a href="#cta" class="mobile-nav-btn" onclick="closeMobile()" data-i18n="nav.cta">I'm Out →</a>
 </div>
 
@@ -3091,7 +3133,7 @@ body.dark .why-sub { color: #555; }
       <div class="board-chat-avatar" id="boardChatAvatar"></div>
       <div>
         <div class="board-chat-name" id="boardChatName">—</div>
-        <div class="board-chat-sub">Community Board chat</div>
+        <div class="board-chat-sub" id="boardChatSub">Community Board chat</div>
       </div>
       <button class="board-chat-close" onclick="closeBoardChat()">✕</button>
     </div>
@@ -3186,20 +3228,20 @@ body.dark .why-sub { color: #555; }
         <button class="home-live-btn" onclick="goToLiveFlow()">
           <div class="home-live-btn-left">
             <span class="home-live-btn-dot"></span>
-            Go Live
+            <span id="homeLiveBtnText">Go Live</span>
           </div>
           <span class="home-live-btn-arrow">→</span>
         </button>
         <button class="home-board-btn" onclick="goToBoardScreen()">
           <div class="home-board-btn-left">
             <span>📋</span>
-            Community Board
+            <span id="homeBoardBtnText">Community Board</span>
           </div>
           <span style="color:#BBB;font-size:0.85rem">→</span>
         </button>
       </div>
       <div class="session-stats" id="sessionStats"></div>
-      <div style="text-align:center;margin-top:8px;font-size:0.72rem;color:#AAA;font-weight:600;letter-spacing:0.04em">ALWAYS FREE · NO ACCOUNT NEEDED</div>
+      <div id="homeFreeTag" style="text-align:center;margin-top:8px;font-size:0.72rem;color:#AAA;font-weight:600;letter-spacing:0.04em">ALWAYS FREE · NO ACCOUNT NEEDED</div>
     </div>
   </div>
 
@@ -3300,27 +3342,27 @@ body.dark .why-sub { color: #555; }
     <div class="app-title">What are you up for?</div>
     <div class="app-sub">People see this next to your name.</div>
     <div class="vibe-grid">
-      <button class="vibe-btn" onclick="selectVibe(this,'☕','coffee')">
+      <button class="vibe-btn" onclick="selectVibe(this,'☕','coffee')" data-vibe="coffee">
         <span class="vibe-emoji">☕</span>
         <span class="vibe-label">Coffee</span>
       </button>
-      <button class="vibe-btn" onclick="selectVibe(this,'🚶','walk')">
+      <button class="vibe-btn" onclick="selectVibe(this,'🚶','walk')" data-vibe="walk">
         <span class="vibe-emoji">🚶</span>
         <span class="vibe-label">Walk</span>
       </button>
-      <button class="vibe-btn" onclick="selectVibe(this,'🧊','chill')">
+      <button class="vibe-btn" onclick="selectVibe(this,'🧊','chill')" data-vibe="chill">
         <span class="vibe-emoji">🧊</span>
         <span class="vibe-label">Chill</span>
       </button>
-      <button class="vibe-btn" onclick="selectVibe(this,'🍕','food')">
+      <button class="vibe-btn" onclick="selectVibe(this,'🍕','food')" data-vibe="food">
         <span class="vibe-emoji">🍕</span>
         <span class="vibe-label">Food</span>
       </button>
-      <button class="vibe-btn" onclick="selectVibe(this,'💬','talk')">
+      <button class="vibe-btn" onclick="selectVibe(this,'💬','talk')" data-vibe="talk">
         <span class="vibe-emoji">💬</span>
         <span class="vibe-label">Talk</span>
       </button>
-      <button class="vibe-btn" onclick="selectVibe(this,'📚','study')">
+      <button class="vibe-btn" onclick="selectVibe(this,'📚','study')" data-vibe="study">
         <span class="vibe-emoji">📚</span>
         <span class="vibe-label">Study</span>
       </button>
@@ -3339,14 +3381,14 @@ body.dark .why-sub { color: #555; }
     <div class="app-topbar">
       <div class="app-logo">Out</div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button class="share-invite-btn" onclick="shareInvite()" id="shareBtn">↗ Invite</button>
-        <button class="app-back" onclick="closeApp()">✕ Leave</button>
+        <button class="share-invite-btn" onclick="shareInvite()" id="shareBtn"><span id="liveInviteText">↗ Invite</span></button>
+        <button class="app-back" onclick="closeApp()" id="liveLeaveBtn">✕ Leave</button>
       </div>
     </div>
     <div class="live-header">
       <div class="live-status">
         <span class="live-green-dot"></span>
-        You're Out
+        <span id="liveStatusText">You're Out</span>
       </div>
       <div class="live-name" id="liveNameDisplay">Hey, —</div>
       <div class="live-vibe" id="liveVibeDisplay"></div>
@@ -3357,8 +3399,8 @@ body.dark .why-sub { color: #555; }
 
     <!-- Notification permission prompt -->
     <div class="notif-prompt" id="notifPrompt">
-      <div class="notif-prompt-text">Get notified when someone goes live nearby</div>
-      <button class="notif-prompt-btn" onclick="requestNotifyPermission()">Allow</button>
+      <div class="notif-prompt-text" id="notifPromptText">Get notified when someone goes live nearby</div>
+      <button class="notif-prompt-btn" id="notifAllowBtn" onclick="requestNotifyPermission()">Allow</button>
       <button class="notif-dismiss-btn" onclick="dismissNotifPrompt()" title="Dismiss">✕</button>
     </div>
 
@@ -3379,17 +3421,17 @@ body.dark .why-sub { color: #555; }
       <!-- Loading state -->
       <div class="match-state" id="stateLoading">
         <div class="spinner"></div>
-        <div class="match-state-title">Finding your location…</div>
-        <div class="match-state-sub">Allow location access when prompted.</div>
+        <div class="match-state-title" id="stateLoadingTitle">Finding your location…</div>
+        <div class="match-state-sub" id="stateLoadingSub">Allow location access when prompted.</div>
       </div>
       <!-- Empty state -->
       <div class="match-state" id="stateEmpty" style="display:none">
         <div class="match-state-icon">🔍</div>
-        <div class="match-state-title">You're live — no one nearby yet</div>
-        <div class="match-state-sub">Anyone within 3 miles who goes live will appear here automatically.</div>
+        <div class="match-state-title" id="stateEmptyTitle">You're live — no one nearby yet</div>
+        <div class="match-state-sub" id="stateEmptySub">Anyone within 3 miles who goes live will appear here automatically.</div>
         <div class="board-empty-actions">
-          <button class="board-empty-action" onclick="switchLiveTab('board')">📋 Post on Board</button>
-          <button class="board-empty-action" onclick="shareInvite()">↗ Invite a friend</button>
+          <button class="board-empty-action" id="emptyPostBtn" onclick="switchLiveTab('board')">📋 Post on Board</button>
+          <button class="board-empty-action" id="emptyInviteBtn" onclick="shareInvite()">↗ Invite a friend</button>
         </div>
       </div>
       <!-- Error state -->
@@ -3410,13 +3452,13 @@ body.dark .why-sub { color: #555; }
           maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false">
         <textarea class="board-body-input" id="boardBodyInput"
           placeholder="More details… (optional)" maxlength="300" rows="2"></textarea>
-        <label class="sched-toggle">
+        <label class="sched-toggle" id="schedLabel">
           <input type="checkbox" id="schedCheck" onchange="toggleSchedTime()">
-          📅 Plan a hangout at a specific time
+          <span id="schedLabelText">📅 Plan a hangout at a specific time</span>
         </label>
         <input type="time" class="sched-time-input" id="schedTimeInput">
         <div class="board-compose-footer">
-          <span class="board-compose-hint">Visible to people within 3 miles · expires in 3h</span>
+          <span class="board-compose-hint" id="boardComposeHint">Visible to people within 3 miles · expires in 3h</span>
           <button class="board-post-btn" id="boardPostBtn" onclick="createPost()">Post</button>
         </div>
       </div>
@@ -3425,7 +3467,7 @@ body.dark .why-sub { color: #555; }
       </div>
     </div>
 
-    <button class="go-offline-btn" onclick="closeApp()">Go offline</button>
+    <button class="go-offline-btn" id="goOfflineBtn" onclick="closeApp()">Go offline</button>
   </div>
 
 
@@ -3456,17 +3498,17 @@ body.dark .why-sub { color: #555; }
     <!-- Safety card (shown at start of every chat) -->
     <div class="chat-safety-card" id="chatSafetyCard">
       <button class="chat-safety-dismiss" onclick="dismissChatSafetyCard()">✕</button>
-      <div class="chat-safety-title">Stay safe out there</div>
+      <div class="chat-safety-title" id="chatSafetyTitle">Stay safe out there</div>
       <div class="chat-safety-row">
-        <span class="chat-safety-tip">📍 Meet in public first</span>
-        <span class="chat-safety-tip">👥 Tell someone where you're going</span>
-        <span class="chat-safety-tip">🚨 Trust your gut — you can leave anytime</span>
+        <span class="chat-safety-tip" id="chatTip1">📍 Meet in public first</span>
+        <span class="chat-safety-tip" id="chatTip2">👥 Tell someone where you're going</span>
+        <span class="chat-safety-tip" id="chatTip3">🚨 Trust your gut — you can leave anytime</span>
       </div>
     </div>
 
     <!-- Messages -->
     <div class="chat-messages" id="chatMessages">
-      <div class="chat-hint">You matched 🎉<br>Say hey — figure out where to meet.</div>
+      <div class="chat-hint" id="chatMatchHint">You matched 🎉<br>Say hey — figure out where to meet.</div>
     </div>
 
     <!-- Seen indicator (under last sent message) -->
@@ -3565,8 +3607,8 @@ body.dark .why-sub { color: #555; }
     <div class="incoming-name" id="incomingName">Someone</div>
     <div class="incoming-sub" id="incomingSub">wants to connect</div>
   </div>
-  <button class="ib-accept" onclick="acceptConnect()">Accept</button>
-  <button class="ib-pass"   onclick="declineConnect()">Pass</button>
+  <button class="ib-accept" id="bannerAcceptBtn" onclick="acceptConnect()">Accept</button>
+  <button class="ib-pass"   id="bannerPassBtn" onclick="declineConnect()">Pass</button>
 </div>
 
 <!-- Matched toast -->
@@ -3577,10 +3619,10 @@ body.dark .why-sub { color: #555; }
   <div class="checkin-sheet">
     <div class="checkin-drag"></div>
     <div class="checkin-icon">🔒</div>
-    <div class="checkin-title">Tell someone you're going out</div>
-    <div class="checkin-sub">For your safety, let a friend or family member know you matched with someone and where you're meeting. This takes 10 seconds and could matter.</div>
-    <button class="checkin-share-btn" onclick="shareCheckin()">📱 Send a safety check-in</button>
-    <button class="checkin-skip-btn" onclick="closeCheckIn()">Skip for now</button>
+    <div class="checkin-title" id="checkinTitle">Tell someone you're going out</div>
+    <div class="checkin-sub" id="checkinSub">For your safety, let a friend or family member know you matched with someone and where you're meeting. This takes 10 seconds and could matter.</div>
+    <button class="checkin-share-btn" id="checkinShareBtn" onclick="shareCheckin()">📱 Send a safety check-in</button>
+    <button class="checkin-skip-btn" id="checkinSkipBtn" onclick="closeCheckIn()">Skip for now</button>
   </div>
 </div>
 
@@ -3943,9 +3985,9 @@ function toggleDark() {
 // ── LANGUAGE ─────────────────────────────────────────────────
 var STRINGS = {
   en: {
-    'nav.about':'About','nav.how':'How it works','nav.city':'Texarkana','nav.safety':'Safety','nav.cta':"I'm Out →",
+    'nav.about':'About','nav.how':'How it works','nav.city':'Texarkana','nav.safety':'Safety','nav.careers':'Careers','nav.cta':"I'm Out →",
     'hero.label':'Now live in Texarkana & TAMUT',
-    'hero.headline':'Find someone near you, right now.',
+    'hero.headline':'Find someone near you, right now.',
     'hero.sub':'No profiles. No swiping. Real people within 3 miles who are free right now.',
     'hero.btn':"I'm Out →",'hero.footnote':'Always free. No account. No download.',
     'about.label':'Why I built this',
@@ -3965,10 +4007,22 @@ var STRINGS = {
     'city.cta':'Try it now →','city.note':'Always free. No download. Opens in any browser.',
     'cta.headline':'Someone in Texarkana is free right now.','cta.sub':'Are you?','cta.btn':"I'm Out →",'cta.foot':'Always free · No account · No download',
     'app.home.headline':'Someone near you\nis free right now.','app.home.tagline':'No profiles. No swiping. Just real people within 3 miles.',
-    'app.home.golive':'Go Live','app.home.board':'Community Board',
+    'app.home.golive':'Go Live','app.home.board':'Community Board','app.home.free':'ALWAYS FREE · NO ACCOUNT NEEDED',
     'app.live.out':"You're Out",'app.live.nearby':'Nearby','app.live.board':'Board',
-    'app.chat.hint':"You matched 🎉\nSay hey — figure out where to meet.",'app.chat.active':'● Active now',
-    'app.end.headline':'Chat ended.','app.end.sub':'How did it go with','app.end.met':'We met up 🎉','app.end.notmet':'Not this time',
+    'app.live.invite':'Invite someone','app.live.leave':'Leave','app.live.offline':'Go Offline',
+    'app.live.finding':'Finding people nearby…','app.live.finding.sub':'Hang tight — this usually takes a few seconds.',
+    'app.live.empty.title':'Nobody nearby right now.','app.live.empty.sub':'Be the first. Post something on the board or invite a friend.',
+    'app.live.empty.post':'Post on the board','app.live.empty.invite':'Invite a friend',
+    'app.live.notif':'Get notified when someone is nearby','app.live.allow':'Allow notifications',
+    'board.placeholder':'Title — keep it short','board.details':'Details (optional)…',
+    'board.hint':'Anonymous · visible to everyone nearby','board.post':'Post','board.sched':'Scheduled hangout',
+    'board.sub':'Anonymous board chat',
+    'chat.safety.title':'Quick safety reminder','chat.tip1':"Meet in a public place first",'chat.tip2':"Tell someone where you're going",'chat.tip3':"Trust your gut — leave any chat that feels off",
+    'checkin.title':'Safety check-in','checkin.sub':'Share your plans with a friend before heading out.',
+    'checkin.share':'Share my plans','checkin.skip':'Skip for now',
+    'banner.sub':'wants to connect','banner.accept':'Accept','banner.pass':'Pass',
+    'app.chat.hint':"You matched \U0001f389\nSay hey — figure out where to meet.",'app.chat.active':'● Active now',
+    'app.end.headline':'Chat ended.','app.end.sub':'How did it go with','app.end.met':'We met up \U0001f389','app.end.notmet':'Not this time',
     'app.end.rate.headline':'How was it?','app.end.rate.sub':'Rate the experience — it helps us improve.',
     'app.end.thanks.sub':'Your feedback helps make Out better for everyone.',
     'app.end.share.label':"Know someone who'd enjoy this? Send them the link — it takes 5 seconds.",
@@ -3976,9 +4030,9 @@ var STRINGS = {
     'footer.copy':'© 2026 Out. All rights reserved.'
   },
   es: {
-    'nav.about':'Acerca','nav.how':'Cómo funciona','nav.city':'Texarkana','nav.safety':'Seguridad','nav.cta':'Estoy libre →',
+    'nav.about':'Acerca','nav.how':'Cómo funciona','nav.city':'Texarkana','nav.safety':'Seguridad','nav.careers':'Empleos','nav.cta':'Estoy libre →',
     'hero.label':'Ya en Texarkana y TAMUT',
-    'hero.headline':'Encuentra a alguien cerca, ahora mismo.',
+    'hero.headline':'Encuentra a alguien cerca, ahora mismo.',
     'hero.sub':'Sin perfiles. Sin deslizar. Personas reales a menos de 3 millas disponibles ahora.',
     'hero.btn':'Estoy libre →','hero.footnote':'Siempre gratis. Sin cuenta. Sin descarga.',
     'about.label':'Por qué lo construí',
@@ -3988,20 +4042,32 @@ var STRINGS = {
     'about.quote.name':'Kushal, fundador',
     'solve1.title':'El aburrimiento es el problema.','solve1.body':'Estás libre. Alguien a 5 minutos está en el mismo lugar. Solo no lo sabes. Out lo arregla.',
     'solve2.title':'Planear lo arruina siempre.','solve2.body':'"Deberíamos quedar" nunca pasa. Out es para ahora, no para la próxima semana.',
-    'solve3.title':'Tu teléfono debería alejarte del teléfono.','solve3.body':"Cada otra app te mantiene desplazando. El único trabajo de Out es sacarte a la calle.",
+    'solve3.title':'Tu teléfono debería alejarte del teléfono.','solve3.body':'Cada otra app te mantiene desplazando. El único trabajo de Out es sacarte a la calle.',
     'how.label':'Cómo funciona','how.headline':'Tres pasos. Eso es todo.',
     'how.step1.title':'Un toque','how.step1.body':'Señala que estás libre ahora mismo. Sin actualización de estado, sin publicación. Solo un toque.',
     'how.step2.title':'Ve quién está cerca','how.step2.body':'Las personas a menos de 3 millas que también están Out aparecen al instante.',
     'how.step3.title':'Haz algo','how.step3.body':'Saluda a alguien. Elige un lugar. Preséntate. Eso es toda la app.',
     'safety.label':'Seguridad','safety.headline':'Privado por defecto.',
-    'city.headline':"Empezamos<br>en TAMUT.",'city.sub':'Texarkana primero. El resto llega cuando haya suficiente gente.',
+    'city.headline':'Empezamos<br>en TAMUT.','city.sub':'Texarkana primero. El resto llega cuando haya suficiente gente.',
     'city.cta':'Pruébalo ahora →','city.note':'Siempre gratis. Sin descarga. Abre en cualquier navegador.',
     'cta.headline':'Alguien en Texarkana está libre ahora mismo.','cta.sub':'¿Y tú?','cta.btn':'Estoy libre →','cta.foot':'Siempre gratis · Sin cuenta · Sin descarga',
     'app.home.headline':'Alguien cerca de ti\nestá libre ahora mismo.','app.home.tagline':'Sin perfiles. Sin deslizar. Solo personas reales a 3 millas.',
-    'app.home.golive':'Ir en vivo','app.home.board':'Tablero comunitario',
+    'app.home.golive':'Ir en vivo','app.home.board':'Tablero comunitario','app.home.free':'SIEMPRE GRATIS · SIN CUENTA',
     'app.live.out':'Estás libre','app.live.nearby':'Cerca','app.live.board':'Tablero',
-    'app.chat.hint':"Hiciste match 🎉\nSaluda — decide dónde quedar.",'app.chat.active':'● Activo ahora',
-    'app.end.headline':'Chat terminado.','app.end.sub':'¿Cómo te fue con','app.end.met':'Nos vimos 🎉','app.end.notmet':'Esta vez no',
+    'app.live.invite':'Invitar a alguien','app.live.leave':'Salir','app.live.offline':'Desconectarse',
+    'app.live.finding':'Buscando personas cerca…','app.live.finding.sub':'Un momento — esto suele tardar unos segundos.',
+    'app.live.empty.title':'Nadie cerca por ahora.','app.live.empty.sub':'Sé el primero. Publica algo en el tablero o invita a un amigo.',
+    'app.live.empty.post':'Publicar en el tablero','app.live.empty.invite':'Invitar a un amigo',
+    'app.live.notif':'Recibe una notificación cuando alguien esté cerca','app.live.allow':'Permitir notificaciones',
+    'board.placeholder':'Título — que sea corto','board.details':'Detalles (opcional)…',
+    'board.hint':'Anónimo · visible para todos cerca','board.post':'Publicar','board.sched':'Encuentro programado',
+    'board.sub':'Chat anónimo del tablero',
+    'chat.safety.title':'Recordatorio rápido de seguridad','chat.tip1':'Reúnete en un lugar público primero','chat.tip2':'Élite a alguien a dónde vas','chat.tip3':'Confía en tu instinto — sal de cualquier chat que no se sienta bien',
+    'checkin.title':'Verificación de seguridad','checkin.sub':'Comparte tus planes con un amigo antes de salir.',
+    'checkin.share':'Compartir mis planes','checkin.skip':'Omitir por ahora',
+    'banner.sub':'quiere conectar','banner.accept':'Aceptar','banner.pass':'Pasar',
+    'app.chat.hint':"Hiciste match \U0001f389\nSaluda — decide dónde quedar.",'app.chat.active':'● Activo ahora',
+    'app.end.headline':'Chat terminado.','app.end.sub':'¿Cómo te fue con','app.end.met':'Nos vimos \U0001f389','app.end.notmet':'Esta vez no',
     'app.end.rate.headline':'¿Cómo estuvo?','app.end.rate.sub':'Califica la experiencia — nos ayuda a mejorar.',
     'app.end.thanks.sub':'Tu opinión ayuda a mejorar Out para todos.',
     'app.end.share.label':'¿Conoces a alguien que disfrutaría esto? Mándales el enlace.',
@@ -4012,15 +4078,16 @@ var STRINGS = {
 
 var currentLang = 'en';
 function toggleLang() { setLang(currentLang === 'en' ? 'es' : 'en'); }
+function gi(id) { return document.getElementById(id); }
 function setLang(lang) {
   currentLang = lang;
   try { localStorage.setItem('out_lang', lang); } catch(e) {}
   var S = STRINGS[lang] || STRINGS.en;
   var isEs = (lang === 'es');
+  var t;
   // Update toggle buttons
   ['langToggle','langToggleMobile'].forEach(function(id) {
-    var b = document.getElementById(id);
-    if (b) b.textContent = isEs ? 'EN' : 'ES';
+    var b = gi(id); if (b) b.textContent = isEs ? 'EN' : 'ES';
   });
   // Update all data-i18n elements (textContent)
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
@@ -4032,28 +4099,66 @@ function setLang(lang) {
     var key = el.getAttribute('data-i18n-html');
     if (S[key] !== undefined) el.innerHTML = S[key];
   });
-  // App screens (direct DOM, no data-i18n attrs)
+  // App screens (direct DOM)
   var q = function(sel) { return document.querySelector(sel); };
-  var homeHL  = q('#screen-home .home-headline');  if (homeHL)  homeHL.textContent  = S['app.home.headline'];
-  var homeTL  = q('#screen-home .home-tagline');   if (homeTL)  homeTL.textContent  = S['app.home.tagline'];
-  var homeGL  = q('.home-live-btn .home-live-btn-left'); if (homeGL) homeGL.childNodes[homeGL.childNodes.length-1].textContent = S['app.home.golive'];
-  var liveOut = q('#screen-live .live-status');    if (liveOut) { liveOut.childNodes[liveOut.childNodes.length-1].textContent = ' ' + S['app.live.out']; }
-  var tabNear = document.getElementById('tab-nearby'); if (tabNear) tabNear.childNodes[0].textContent = S['app.live.nearby'];
-  var tabBrd  = document.getElementById('tab-board');  if (tabBrd)  tabBrd.childNodes[0].textContent  = S['app.live.board'];
-  var chatHint = q('#chatMessages .chat-hint');    if (chatHint) chatHint.innerHTML = S['app.chat.hint'].replace('\n','<br>');
-  var chatStatus = q('.chat-header-status');        if (chatStatus) chatStatus.textContent = S['app.chat.active'];
-  var endHL   = q('#screen-end .end-headline');    if (endHL)   endHL.textContent   = S['app.end.headline'];
-  var endSub  = q('#screen-end .end-sub');         if (endSub)  endSub.innerHTML    = S['app.end.sub'] + ' <span id="endPartnerName">them</span>?';
-  var endMet  = q('.end-met-btn');                 if (endMet)  endMet.textContent  = S['app.end.met'];
-  var endNotM = q('.end-notmet-btn');              if (endNotM) endNotM.textContent = S['app.end.notmet'];
-  var endRHL  = q('#endStep2 .end-headline');      if (endRHL)  endRHL.textContent  = S['app.end.rate.headline'];
-  var endRSub = q('#endStep2 .end-sub');           if (endRSub) endRSub.textContent = S['app.end.rate.sub'];
-  var endTSub = document.getElementById('endThanksSub'); if (endTSub) endTSub.textContent = S['app.end.thanks.sub'];
-  var endSLbl = q('#endStep3 .end-share-label');   if (endSLbl) endSLbl.textContent = S['app.end.share.label'];
-  var endSBtn = q('.end-share-btn');               if (endSBtn) endSBtn.textContent = S['app.end.share.btn'];
-  var endCBtn = q('.end-close-btn');               if (endCBtn) endCBtn.textContent = S['app.end.close'];
-  var footCp  = q('.footer-copy');                 if (footCp)  footCp.textContent  = S['footer.copy'];
-  // html lang attr
+  var homeHL = q('#screen-home .home-headline'); if (homeHL) homeHL.textContent = S['app.home.headline'];
+  var homeTL = q('#screen-home .home-tagline');  if (homeTL) homeTL.textContent = S['app.home.tagline'];
+  var homeGL = q('.home-live-btn .home-live-btn-left');
+  if (homeGL) homeGL.childNodes[homeGL.childNodes.length-1].textContent = S['app.home.golive'];
+  t = gi('homeBoardBtnText'); if (t) t.textContent = S['app.home.board'];
+  t = gi('homeFreeTag');      if (t) t.textContent = S['app.home.free'];
+  // Live screen
+  var liveOut = q('#screen-live .live-status');
+  if (liveOut) { liveOut.childNodes[liveOut.childNodes.length-1].textContent = ' ' + S['app.live.out']; }
+  t = gi('liveInviteText');    if (t) t.textContent = S['app.live.invite'];
+  t = gi('liveLeaveBtn');      if (t) t.textContent = S['app.live.leave'];
+  t = gi('goOfflineBtn');      if (t) t.textContent = S['app.live.offline'];
+  var tabNear = gi('tab-nearby'); if (tabNear) tabNear.childNodes[0].textContent = S['app.live.nearby'];
+  var tabBrd  = gi('tab-board');  if (tabBrd)  tabBrd.childNodes[0].textContent  = S['app.live.board'];
+  t = gi('stateLoadingTitle'); if (t) t.textContent = S['app.live.finding'];
+  t = gi('stateLoadingSub');   if (t) t.textContent = S['app.live.finding.sub'];
+  t = gi('stateEmptyTitle');   if (t) t.textContent = S['app.live.empty.title'];
+  t = gi('stateEmptySub');     if (t) t.textContent = S['app.live.empty.sub'];
+  t = gi('emptyPostBtn');      if (t) t.textContent = S['app.live.empty.post'];
+  t = gi('emptyInviteBtn');    if (t) t.textContent = S['app.live.empty.invite'];
+  t = gi('notifPromptText');   if (t) t.textContent = S['app.live.notif'];
+  t = gi('notifAllowBtn');     if (t) t.textContent = S['app.live.allow'];
+  // Board compose
+  var bIn = gi('boardTitleInput'); if (bIn) bIn.placeholder = S['board.placeholder'];
+  var bBd = gi('boardBodyInput');  if (bBd) bBd.placeholder = S['board.details'];
+  t = gi('boardComposeHint'); if (t) t.textContent = S['board.hint'];
+  t = gi('boardPostBtn');     if (t) t.textContent = S['board.post'];
+  t = gi('schedLabelText');   if (t) t.textContent = S['board.sched'];
+  t = gi('boardChatSub');     if (t) t.textContent = S['board.sub'];
+  // Chat screen
+  var chatHint = q('#chatMessages .chat-hint');
+  if (chatHint) chatHint.innerHTML = S['app.chat.hint'].replace('\n','<br>');
+  var chatStatus = q('.chat-header-status'); if (chatStatus) chatStatus.textContent = S['app.chat.active'];
+  t = gi('chatSafetyTitle'); if (t) t.textContent = S['chat.safety.title'];
+  t = gi('chatTip1');        if (t) t.textContent = S['chat.tip1'];
+  t = gi('chatTip2');        if (t) t.textContent = S['chat.tip2'];
+  t = gi('chatTip3');        if (t) t.textContent = S['chat.tip3'];
+  // Check-in modal
+  t = gi('checkinTitle');    if (t) t.textContent = S['checkin.title'];
+  t = gi('checkinSub');      if (t) t.textContent = S['checkin.sub'];
+  t = gi('checkinShareBtn'); if (t) t.textContent = S['checkin.share'];
+  t = gi('checkinSkipBtn');  if (t) t.textContent = S['checkin.skip'];
+  // Incoming banner
+  var banSub = gi('incomingSub'); if (banSub) banSub.textContent = S['banner.sub'];
+  t = gi('bannerAcceptBtn'); if (t) t.textContent = S['banner.accept'];
+  t = gi('bannerPassBtn');   if (t) t.textContent = S['banner.pass'];
+  // End screen
+  var endHL  = q('#screen-end .end-headline'); if (endHL)  endHL.textContent  = S['app.end.headline'];
+  var endSub = q('#screen-end .end-sub');      if (endSub) endSub.innerHTML   = S['app.end.sub'] + ' <span id="endPartnerName">them</span>?';
+  var endMet  = q('.end-met-btn');             if (endMet)  endMet.textContent  = S['app.end.met'];
+  var endNotM = q('.end-notmet-btn');          if (endNotM) endNotM.textContent = S['app.end.notmet'];
+  var endRHL  = q('#endStep2 .end-headline');  if (endRHL)  endRHL.textContent  = S['app.end.rate.headline'];
+  var endRSub = q('#endStep2 .end-sub');       if (endRSub) endRSub.textContent = S['app.end.rate.sub'];
+  t = gi('endThanksSub');    if (t) t.textContent = S['app.end.thanks.sub'];
+  var endSLbl = q('#endStep3 .end-share-label'); if (endSLbl) endSLbl.textContent = S['app.end.share.label'];
+  var endSBtn = q('.end-share-btn');  if (endSBtn) endSBtn.textContent = S['app.end.share.btn'];
+  var endCBtn = q('.end-close-btn');  if (endCBtn) endCBtn.textContent = S['app.end.close'];
+  var footCp  = q('.footer-copy');    if (footCp)  footCp.textContent  = S['footer.copy'];
   document.documentElement.lang = lang;
 }
 (function() {
@@ -5139,7 +5244,7 @@ function appendBoardMessage(name, text, isMe, ts) {
   var msgs = document.getElementById('boardChatMessages');
   if (!msgs) return;
   var row = document.createElement('div');
-  row.className = 'board-msg-row' + (isMe ? ' me' : '');
+  row.className = 'board-msg-row ' + (isMe ? 'mine' : 'theirs');
   row.innerHTML =
     '<div class="board-msg-bubble">' + esc(text) + '</div>' +
     '<div class="board-msg-time">' + fmtTime(ts) + '</div>';
