@@ -23,7 +23,7 @@ const STEPS = [
   {
     n: "02", icon: <Users size={18} />,
     title: "See who's nearby",
-    body: "Real people within 3 miles who are available right now. A name, a vibe, and a distance. Nothing more.",
+    body: "Real people within 20 miles who are available right now. A name, a vibe, and a distance. Nothing more.",
     bodyShort: "Real people nearby, available right now.",
   },
   {

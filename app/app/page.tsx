@@ -76,7 +76,7 @@ export default function AppPage() {
   }, [chatMsgs]);
 
   const refresh = useCallback(() => {
-    getSocket().emit("refresh_nearby", { radiusKm: 5 });
+    getSocket().emit("refresh_nearby", { radiusKm: 32 });
   }, []);
 
   const goOffline = useCallback(() => {
@@ -134,10 +134,10 @@ export default function AppPage() {
     if (!socket.connected) {
       socket.connect();
       socket.once("connect", () => {
-        socket.emit("go_live", { name: session.name, vibe: session.vibe, lat, lng, radiusKm: 5 });
+        socket.emit("go_live", { name: session.name, vibe: session.vibe, lat, lng, radiusKm: 32 });
       });
     } else {
-      socket.emit("go_live", { name: session.name, vibe: session.vibe, lat, lng, radiusKm: 5 });
+      socket.emit("go_live", { name: session.name, vibe: session.vibe, lat, lng, radiusKm: 32 });
     }
     setIsOut(true);
   }
